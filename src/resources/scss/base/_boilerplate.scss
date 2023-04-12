@@ -1,0 +1,40 @@
+@use "../util/" as u;
+
+html {
+  box-sizing: border-box;
+
+  font-size: 85%;
+
+  @include u.breakpoint(md) {
+    font-size: 75%;
+  }
+
+  @include u.breakpoint(lg) {
+    font-size: 62.5%;
+  }
+}
+
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
