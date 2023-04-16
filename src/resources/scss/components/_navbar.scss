@@ -1,0 +1,35 @@
+@use "../util/mixins";
+
+.navbar-list {
+  @include mixins.reset-list;
+  display: flex;
+}
+
+.navbar-item {
+  &--link {
+    text-decoration: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--medium-black-clr);
+
+    &:hover {
+      color: var(--primary-clr);
+      transition: 0.2s;
+    }
+  }
+
+  &--icon {
+    font-size: 1.8rem;
+  }
+
+  &--description {
+    display: none;
+    margin-left: 0.5em;
+    font-size: 1.5rem;
+    @include mixins.breakpoint(md) {
+      display: block;
+    }
+  }
+}
