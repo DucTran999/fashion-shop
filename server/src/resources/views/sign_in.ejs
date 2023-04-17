@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/images/pa_favicon.png" />
+    <!-- STYLE CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap latest compiled and minified CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Link themify icon -->
+    <link rel="stylesheet" href="./css/themify-icons.css" />
+
+    <!-- login-page style -->
+    <link rel="stylesheet" type="text/css" href="./css/login_style.css" />
+    <title>Welcome to Atlana Shop</title>
+  </head>
+  <body>
+    <!-- <header class="simple-header">
+      <div class="container-md">
+        <div class="row simple-header__row">
+          <a href="/" class="back-home-btn">
+            <span class="back-home-btn--icon ti-arrow-left"></span>
+          </a>
+          <a href="/" class="logo-link col-md-4">
+            <img
+              src="./images/util/shop_logo.png"
+              alt="Shop logo"
+              class="logo-link--img"
+            />
+          </a>
+          <nav class="simple-header__navbar">
+            <ul class="navbar-list">
+              <li class="navbar-item">
+                <a href="#help" class="navbar-item--link">
+                  <span class="navbar-item--icon ti-help-alt"></span>
+                  <span class="navbar-item--description"> Help centre</span></a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main class="main">
+      <div class="main__background"></div>
+      <div class="main__wrap">
+        <div class="container-md">
+          <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
+              <div class="lg-form d-md-flex">
+                <div class="lg-form__img"></div>
+                <div class="lg-form__wrap">
+                  <div class="form__heading">
+                    <p class="form__heading--primary">Welcome Back</p>
+                    <p class="form__heading--sub">Log into your account</p>
+                  </div>
+                  <form action="#" class="form__input">
+                    <div class="form__group mb-3">
+                      <input type="text" class="form__group--field" required />
+                      <label class="form__group--label" for="name"
+                        >username</label
+                      >
+                    </div>
+                    <div class="form__group mb-3">
+                      <input
+                        id="password"
+                        type="password"
+                        class="form__group--field"
+                        required
+                      />
+                      <label class="form__group--label" for="password"
+                        >password</label
+                      >
+                      <label
+                        id="show-password"
+                        class="form__group--hint"
+                        for="show-password"
+                        >show</label
+                      >
+                    </div>
+                    <div class="form__user-action">
+                      <a
+                        href="#Forgotpassword"
+                        class="form__user-action--forgot-pass"
+                        >Forgot password?</a
+                      >
+                    </div>
+                    <div class="form__btn">
+                      <input type="submit" class="submit-btn" value="Sign in" />
+                    </div>
+                  </form>
+                  <p class="separator-with-text">OR</p>
+                  <div class="social">
+                    <a href="#facebook" class="social__link social__link--fb">
+                      <span class="social__icon ti-facebook"></span>
+                      <span class="social__name">Facebook</span>
+                    </a>
+                    <a href="#google" class="social__link social__link--gg">
+                      <span class="social__icon ti-google"></span>
+                      <span class="social__name">Google</span>
+                    </a>
+                    <a href="#apple" class="social__link social__link--ap">
+                      <span class="social__icon ti-apple"></span>
+                      <span class="social__name">Apple</span>
+                    </a>
+                  </div>
+                  <p class="separator-without-text"></p>
+                  <p class="sign-up__direction">
+                    Don't have an account?
+                    <a
+                      class="sign-up__direction--link"
+                      data-toggle="tab"
+                      href="/signup"
+                      >Sign Up</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer-site">
+      <div class="footer-site__utility">
+        <div class="container-md">
+          <div class="row">
+            <div class="col-xl col-lg col-md-6 col-sm-12">
+              <span class="utility__header">Customer Service </span>
+              <ul class="utility__list">
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> Help Centre </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> Payment </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> Blog </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> How To Buy </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> How To Sell </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-xl col-lg col-md-6 col-sm-12">
+              <span class="utility__header">About Atlana </span>
+              <ul class="utility__list">
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> About Us </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> Careers </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> PA Policy </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> Flash Deals </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link"> Store </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-xl col-lg col-md-6 col-sm-12">
+              <span class="utility__header"> Follow Us </span>
+              <ul class="utility__list">
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link">
+                    <i
+                      class="utility__item--icon fa-brands fa-square-facebook"
+                    ></i>
+                    Instagram
+                  </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link">
+                    <i class="utility__item--icon fa-brands fa-instagram"></i>
+                    Facebook
+                  </a>
+                </li>
+                <li class="utility__item">
+                  <a href="#" class="utility__item--link">
+                    <i class="utility__item--icon fa-brands fa-linkedin"></i>
+                    Link-in
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-xl col-lg col-md-6 col-sm-12">
+              <span class="utility__header">APP Download</span>
+              <div class="app-download">
+                <img
+                  src="./images/util/app_qr_code.png"
+                  alt="qr code to download APP"
+                  class="app-download__qr-code"
+                />
+                <div class="app-download__store">
+                  <a href="#" class="app-download__store--link">
+                    <img
+                      src="./images/util/google-play-icon.png"
+                      alt="gg play download"
+                      class="app-download__store--img"
+                    />
+                  </a>
+                  <a href="#" class="app-download__store--link">
+                    <img
+                      src="./images/util/app-store-icon.png"
+                      alt="app-store-icon download"
+                      class="app-download__store--img"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl col-lg col-md-6 col-sm-12">
+              <span class="utility__header"> Subscribe for news </span>
+              <div class="subscribe-form">
+                <span class="subscribe-form__header">
+                  Please enter your email here to receive the latest fashion
+                  trends and promotions from Atlana.
+                </span>
+                <form action="POST" class="subscribe-form__box">
+                  <input
+                    type="email"
+                    name="email"
+                    class="subscribe-form__box--input"
+                    placeholder="Your email"
+                    required
+                  />
+                  <input
+                    type="submit"
+                    class="subscribe-btn"
+                    value="Subscribe"
+                  />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-site__copyright">
+        <div class="container-md">
+          <span class="footer-site__copyright--copyright">
+            &copy;2023 Atlana Shop. All Rights Reserved.
+          </span>
+        </div>
+      </div>
+    </footer>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/0ef418b93e.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/js/login.js"></script>
+    -->
+  </body>
+</html>

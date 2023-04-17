@@ -1,0 +1,93 @@
+:root {
+  --primary-clr: var(--teal-clr);
+  --primary-opacity-clr: var(--spearmint-clr);
+  --background-clr: #f9f9f9;
+  --gradient-2-clr: linear-gradient(to right, #930cb4, #e45fa1d3);
+  --gradient-3-clr: linear-gradient(to right, #752abb, #930cb4, #dd62a0);
+
+  --dark-gradient-4-clr: linear-gradient(
+    to right,
+    var(--teal-clr),
+    var(--mint-blue-clr),
+    var(--tiffany-blue-clr),
+    var(--spearmint-clr)
+  );
+
+  // Pink
+  --baby-pink-clr: #f4c2c2;
+  --plum-clr: #dda0dd;
+  --lily-clr: #c5a1af;
+  --light-pink-clr: #ffb6c1;
+  --pink-clr: #edaec0;
+  --hot-pink-clr: #ff69b4;
+  --mulberry-clr: #c54b8c;
+
+  // Purple
+  --lilac-clr: #ee82ee;
+  --violet-clr: #ee82ee;
+  --purple-clr: #800080;
+  --indigo-clr: #4b0082;
+  --medium-purple-clr: #9370db;
+
+  // Blue
+  --very-peri-clr: #6667ab;
+  --lavender-clr: #e6e6fa;
+  --periwinkle-clr: #ccccff;
+  --medium-state-blue-clr: #7b68ee;
+  --state-blue-clr: #6a5acd;
+  --dark-blue-clr: #00008b;
+
+  //aqua
+  --teal-clr: #008080;
+  --mint-blue-clr: #429e9d;
+  --tiffany-blue-clr: #0abab5;
+  --turquoise-clr: #40e0d0;
+  --cyan-clr: #00ffff;
+  --aquamarine-clr: #7fffd4;
+
+  //Green
+  --spearmint-clr: #45b08c;
+  --emerald-green-clr: #50c878;
+
+  // brand icon color
+  --facebook-theme-clr: #3a559f;
+  --google-theme-clr: #dc4e41;
+  --apple-theme-clr: #0a0a0a;
+  --instagram-theme-clr: linear-gradient(to bottom, #7f37c9, #ff2992, #ff9807);
+  --youtube-theme-clr: #ff0000;
+
+  // White
+  --white-clr: #fefefe;
+  --white-opacity-clr: rgba(254, 254, 254, 0.6);
+  --dark-white-clr: #ececec;
+
+  // Gray
+  --light-grey-clr: #d3d3d3;
+  --cool-grey-clr: #8c92ac;
+  --silver-clr: #c0c0c0;
+  --grey-clr: #808080;
+  --dark-grey-clr: #5f5f5f;
+
+  // Black
+  --text-clr: #333;
+  --dark-black-clr: #292929;
+  --very-dark-black-clr: #0a0a0a;
+  --medium-black-clr: #2e2d2d;
+  --opacity-black-clr: rgba(46, 45, 45, 0.6);
+  --gradient-black-clr: linear-gradient(
+    to bottom,
+    var(--dark-black-clr),
+    var(--medium-black-clr),
+    var(--dark-black-clr)
+  );
+
+  // Orange
+  --coral-red-clr: #ff7f50;
+
+  // Red
+  --orange-red-clr: #ff5349;
+  --pastel-clr: #ff6961;
+  --raspberry-clr: #e30b5d;
+  --crimson-clr: #dc143c;
+  --rose-color: #dc143c;
+}

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest src/test/"
   },
   "repository": {
     "type": "git",
@@ -36,11 +36,15 @@
     "@babel/core": "^7.21.4",
     "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.21.4",
+    "babel-jest": "^29.5.0",
     "body-parser": "^1.20.2",
+    "bootstrap": "^5.2.3",
     "ejs": "^3.1.9",
+    "jest": "^29.5.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "parcel": "^2.8.3",
+    "pg": "^8.10.0",
     "sass": "^1.61.0"
   }
 }
