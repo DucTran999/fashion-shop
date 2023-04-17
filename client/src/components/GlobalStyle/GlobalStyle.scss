@@ -1,0 +1,32 @@
+@use "../../styles";
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1.6rem;
+  text-rendering: optimizeSpeed;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
