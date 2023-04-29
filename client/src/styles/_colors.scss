@@ -13,6 +13,13 @@
     var(--spearmint-clr)
   );
 
+  --dark-gradient-3-clr: linear-gradient(
+    to right,
+    var(--mint-blue-clr),
+    var(--tiffany-blue-clr),
+    var(--spearmint-clr)
+  );
+
   // Pink
   --baby-pink-clr: #f4c2c2;
   --plum-clr: #dda0dd;
