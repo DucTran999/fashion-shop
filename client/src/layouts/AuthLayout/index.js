@@ -3,15 +3,15 @@ import React from "react";
 import HeaderSimplified from "../HeaderSimplified";
 import Footer from "../Footer";
 
-// This layout use for both Login and Signup Pages.
-function LoginLayout({ children }) {
+// This layout use for both Signin and Signup Pages.
+function AuthLayout({ children }) {
   return (
     <React.Fragment>
       <HeaderSimplified />
-      <div className="container">{children}</div>
+      <div>{children}</div>
       <Footer />
     </React.Fragment>
   );
 }
 
-export default LoginLayout;
+export default AuthLayout;

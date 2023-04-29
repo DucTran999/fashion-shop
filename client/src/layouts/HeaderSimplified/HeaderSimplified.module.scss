@@ -1,0 +1,30 @@
+@use "../../styles/" as u;
+
+.header--simplified {
+  height: 4.5em;
+  background-color: var(--dark-white-clr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // Responsive
+  @include u.breakpoint("sm") {
+    height: 6em;
+  }
+
+  @include u.breakpoint("md") {
+    height: 8em;
+  }
+}
+
+.row-items-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col-items-center {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}

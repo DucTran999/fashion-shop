@@ -1,14 +1,12 @@
-import { PrimaryLayout, LoginLayout } from "../layouts/";
+import { PrimaryLayout, AuthLayout } from "../layouts/";
 
 import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Category from "../pages/Category";
+import Auth from "../pages/Auth";
 
 // Pages can access without authentication.
 const publicRoutes = [
   { path: "/", component: Home, layout: PrimaryLayout },
-  { path: "/login", component: Login, layout: LoginLayout },
-  { path: "/Category", component: Category, layout: PrimaryLayout },
+  { path: "/auth", component: Auth, layout: AuthLayout },
 ];
 
 // Pages need authenticate before accessing

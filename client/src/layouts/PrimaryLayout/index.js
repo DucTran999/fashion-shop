@@ -4,6 +4,8 @@ import HeaderAdvanced from "../HeaderAdvanced";
 import Footer from "../Footer";
 
 function PrimaryLayout(props) {
+  document.title = "Atlana Fashion";
+
   return (
     <div>
       <HeaderAdvanced />
