@@ -29,6 +29,8 @@ function AuthForm() {
   const [buttonState, setButtonState] = useState("inactive");
   const [pageTitle, setPageTitle] = useState("Login now to start shopping!");
 
+  document.title = pageTitle;
+
   const handleSwitchMode = () => {
     if (isLoginMode) {
       setFormData(
@@ -124,7 +126,6 @@ function AuthForm() {
 
   return (
     <Fragment>
-      {(document.title = pageTitle)}
       <FormHeader />
       <form className={cx("form-body")} onSubmit={handleSubmit}>
         {!isLoginMode && (
