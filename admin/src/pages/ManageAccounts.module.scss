@@ -1,0 +1,41 @@
+@use "../styles/" as s;
+
+.row-cent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col-cent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tbl-header {
+  margin: 1em 0;
+  width: 20em;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--primary-clr);
+}
+
+.btn-reload {
+  font-size: 1.6rem;
+  margin: 1em 0;
+  width: 10em;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+
+  background: var(--light-grey-clr);
+  color: var(--dark-black-clr);
+
+  &:hover {
+    transition: 0.25s;
+    opacity: 0.8;
+    color: var(--dark-white-clr);
+    background: var(--primary-clr);
+  }
+}
