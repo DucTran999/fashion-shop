@@ -1,0 +1,18 @@
+@use "../../styles/" as s;
+
+.log__link {
+  width: fit-content;
+}
+
+.logo__img {
+  height: 3em;
+
+  // Responsive
+  @include s.breakpoint("md") {
+    height: 4em;
+  }
+
+  @include s.breakpoint("lg") {
+    height: 5em;
+  }
+}

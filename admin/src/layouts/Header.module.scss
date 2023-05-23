@@ -1,0 +1,45 @@
+@use "../styles/" as s;
+
+// General
+.wrap {
+  height: 7rem;
+  color: var(--dark-white-clr);
+  border-bottom: 1px solid var(--medium-black-clr);
+}
+
+.row-cen {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.col-cen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// main
+.logo {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--medium-black-clr);
+}
+
+.nav-link {
+  padding: 1em;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--medium-black-clr);
+
+  &:hover {
+    color: var(--primary-clr);
+  }
+}
+
+.user-info {
+  font-size: 2rem;
+  padding: 0 1em;
+  color: var(--medium-black-clr);
+  font-weight: 500;
+}

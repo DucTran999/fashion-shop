@@ -1,17 +1,48 @@
-import { PrimaryLayout, LoginLayout } from "../layouts/";
+import { createBrowserRouter } from "react-router-dom";
 
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Category from "../pages/Category";
+import { AuthLayout, PrimaryLayout } from "../layouts/index";
+import Home from "../pages/Home/index";
+import Login from "../pages/Auth/Login";
+import Register from "../pages/Auth/Register";
+import MissingPage from "../pages/MissingPage/MissingPage";
+import PersistLogin from "../routes/PersistLogin";
 
-// Pages can access without authentication.
-const publicRoutes = [
-  { path: "/", component: Home, layout: PrimaryLayout },
-  { path: "/login", component: Login, layout: LoginLayout },
-  { path: "/Category", component: Category, layout: PrimaryLayout },
+const configRoutes = [
+  {
+    element: <PersistLogin />,
+    children: [
+      {
+        path: "/",
+        element: (
+          <PrimaryLayout>
+            <Home />
+          </PrimaryLayout>
+        ),
+      },
+      {
+        path: "*",
+        element: (
+          <PrimaryLayout>
+            <MissingPage />,
+          </PrimaryLayout>
+        ),
+      },
+    ],
+  },
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
 ];
+const router = createBrowserRouter(configRoutes);
 
-// Pages need authenticate before accessing
-const privateRoutes = [];
-
-export { publicRoutes, privateRoutes };
+export default router;
