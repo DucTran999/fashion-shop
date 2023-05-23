@@ -1,19 +1,18 @@
-import React from "react";
+import React, { Fragment } from "react";
 
-import HeaderAdvanced from "../HeaderAdvanced";
-import Footer from "../Footer";
+import PrimaryHeader from "../Header/PrimaryHeader";
+import Footer from "../Footer/Footer";
 
 function PrimaryLayout(props) {
   document.title = "Atlana Fashion";
+  document.body.style.overflowY = "scroll";
 
   return (
-    <div>
-      <HeaderAdvanced />
-      <div className="container">
-        <div className="content">{props.children}</div>
-      </div>
+    <Fragment>
+      <PrimaryHeader />
+      <main>{props.children}</main>
       <Footer />
-    </div>
+    </Fragment>
   );
 }
 

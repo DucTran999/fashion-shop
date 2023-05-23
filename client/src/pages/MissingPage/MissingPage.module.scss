@@ -1,0 +1,37 @@
+@use "../../styles";
+
+.wrapper {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0.3em 0;
+}
+
+.message {
+  font-size: 1.6rem;
+}
+
+.back-home-btn {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  margin: 1em;
+  font-weight: 500;
+
+  color: var(--text-clr);
+  background: var(--light-grey-clr);
+
+  &:hover {
+    transition: 0.15s;
+    color: white;
+    background: var(--dark-gradient-3-clr);
+  }
+}

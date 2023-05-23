@@ -4,20 +4,20 @@ import classNames from "classnames/bind";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 
-import styles from "./HeaderSimplified.module.scss";
+import styles from "./SimpleHeader.module.scss";
 import Logo from "../../components/Logo/Logo";
 import Button from "../../components/Button/Button";
 
 const cx = classNames.bind(styles);
 
-function HeaderSimplified() {
+function SimpleHeader() {
   return (
     <header className={cx("header--simplified")}>
       <Container>
         <Row className={cx("row-items-center")}>
           <Col xs={4} className={cx("col-items-center", "d-sm-none")}>
             <Button
-              linkTo={"/"}
+              linkTo="/"
               icon={"backArrow"}
               styles={"line-style-center light-theme"}
             />
@@ -40,4 +40,4 @@ function HeaderSimplified() {
   );
 }
 
-export default HeaderSimplified;
+export default React.memo(SimpleHeader);

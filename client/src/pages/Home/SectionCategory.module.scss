@@ -1,0 +1,70 @@
+@use "../../styles/" as s;
+
+.row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.category__header {
+  font-size: 1.5em;
+  font-weight: 500;
+  padding-bottom: 0.1em;
+
+  @include s.text-gradient;
+  @include s.border-bottom-linear-3;
+
+  @include s.breakpoint(md) {
+    font-size: 2em;
+  }
+}
+
+.category__wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .category__img {
+    border-radius: 45px;
+    width: 4.5em;
+    height: 4.5em;
+    margin-top: 1.2em;
+
+    @include s.breakpoint(sm) {
+      margin-top: 1.5em;
+      width: 5.5em;
+      height: 5.5em;
+    }
+
+    @include s.breakpoint(md) {
+      margin-top: 1.5em;
+      width: 7em;
+      height: 7em;
+    }
+
+    @include s.breakpoint(lg) {
+      width: 6.5em;
+      height: 6.5em;
+    }
+  }
+
+  .category__title {
+    padding: 0.5em 0;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--dark-white-clr);
+  }
+}
