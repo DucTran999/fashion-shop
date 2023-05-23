@@ -1,8 +1,8 @@
 const ERROR_MESSAGES = {
   nameInvalid: "Cannot be empty! Only letters allowed.",
-  emailInvalid: "Email address format is invalid.",
-  emailExisted: "Email is already in use.",
-  lengthError: "At least 8 characters.",
+  emailInvalid: "Only gmail is allowed!",
+  emailExisted: "Email is already used.",
+  lengthError: "Length allow 8 to 32",
 };
 
 export default ERROR_MESSAGES;

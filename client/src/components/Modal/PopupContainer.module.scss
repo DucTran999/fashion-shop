@@ -1,0 +1,50 @@
+@use "../../styles/" as s;
+
+.popup-box {
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  // Animation
+  animation: growFromCenter 0.8s;
+
+  // Dimension
+  width: 17em;
+  height: 9em;
+  overflow: hidden;
+
+  border-radius: 5px;
+  background-color: var(--darker-black-clr);
+  border: 1px solid var(--primary-clr);
+
+  @include s.breakpoint(sm) {
+    height: 10em;
+    width: 22em;
+  }
+
+  @include s.breakpoint(md) {
+    // Animation
+    height: 11em;
+    width: 25em;
+  }
+
+  &__header {
+    height: 25%;
+    width: 100%;
+
+    padding-top: 0.4em;
+    padding-left: 1em;
+
+    font-size: 1.4rem;
+    background-image: var(--dark-gradient-3-clr);
+    color: var(--very-dark-black-clr);
+
+    @include s.breakpoint(md) {
+      padding-top: 0.5em;
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+  }
+}
