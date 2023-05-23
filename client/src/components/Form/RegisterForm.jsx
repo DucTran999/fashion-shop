@@ -114,20 +114,13 @@ function RegisterForm() {
           {alert === "loading" && <LoadingAlert />}
           {alert === "success" && (
             <SuccessAlertNavigate
-              linkTo={"/login"}
+              linkTo="/login"
               message="Thank you"
               btnTitle="Return to Login Page"
             />
           )}
           {alert === "error" && (
-            <ErrorAlert
-              message={
-                errorCause === "timeout"
-                  ? "Sorry, Server is maintaining"
-                  : "Email registered!"
-              }
-              onClose={handleCloseModal}
-            />
+            <ErrorAlert message={errorCause} onClose={handleCloseModal} />
           )}
         </Popup>
       </ModalContainer>
