@@ -5,16 +5,16 @@ node_modules
 .vscode
 
 # testing
-rests
 src/tests
+rests
 coverage
 
 # Logs
-/server/src/logs
+src/logs
 
 # production
 /build
-/server/src/db
+src/db
 docker-compose.yml
 
 # misc
