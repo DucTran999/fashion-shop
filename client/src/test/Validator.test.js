@@ -11,10 +11,14 @@ describe("email validation", () => {
     ["email@gmai&l.comsdas", false],
     ["email@gma5il.comsdas", false],
     ["Email@gma.c", false],
-    ["email@abc.com", true],
-    ["Email@yahoo.com.vn", true],
-    ["atlana@hotmail.com", true],
-  ])(`The email: '%s' must return %i grades.`, (sample, expectedResult) => {
+    ["email@abc.com", false],
+    ["Email@yahoo.com.vn", false],
+    ["atlana@hotmail.com", false],
+    ["atla na@gmail.com", false],
+    ["atlana@gmail.com", true],
+    ["atlana99@gmail.com", true],
+    ["atlana.99.shop@gmail.com", true],
+  ])(`The email: '%s' must return %s .`, (sample, expectedResult) => {
     // When
     let actualResult = isEmail(sample);
     // Then

@@ -12,14 +12,14 @@ const isEmail = (input) => {
    * Pattern guide:
    * Local part can contain all characters without @ symbol
    * At least one domain name.
-   * TLD: max 4 characters.
+   * Only allow Gmail
    */
-  const regex = /^([\w+!#$%&*\-"]\.{0,1})+@([a-zA-Z\-\s]+\.){1,}[a-z]{2,4}$/gi;
+  const regex = /^([a-zA-z0-9]\.{0,1})+@gmail.com$/gi;
   return input.length <= 255 && regex.test(input);
 };
 
 const isLengthValid = (input) => {
-  return input.length > 8;
+  return input.length >= 8 && input.length <= 32;
 };
 
 export { isName, isEmail, isLengthValid };
