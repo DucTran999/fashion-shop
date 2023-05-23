@@ -1,0 +1,46 @@
+@use "../../styles/" as s;
+
+.card__wrap {
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Size
+.medium {
+  position: relative;
+  display: block;
+
+  width: 95%;
+  padding-top: 125%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  border-radius: 25px;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:hover + .card-title--abs {
+    display: block;
+  }
+}
+
+// Tittle position
+.card__title--abs {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  text-align: center;
+
+  font-size: 2rem;
+  font-weight: 500;
+  color: white;
+
+  display: none;
+}
