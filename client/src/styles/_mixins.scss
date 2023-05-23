@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  text-decoration: none;
 }
 
 @mixin abs-center {
@@ -14,10 +15,20 @@
 }
 
 @mixin text-gradient {
-  background-image: var(--gradient-3-clr);
+  background-image: var(--dark-gradient-2-clr);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@mixin border-bottom-linear-3 {
+  color: var(--turquoise-clr);
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-style: solid;
+  border-image: var(--dark-gradient-3-clr);
+  border-image-slice: 1;
 }
 
 @mixin breakpoint($size) {
