@@ -14,19 +14,17 @@ const formReducer = (state, action) => {
           [action.fieldName]: action.status,
         },
       };
-    case "SET_FORM_DATA":
-      return { ...state, inputs: action.inputs, statuses: action.statuses };
     default:
       return state;
   }
 };
 
 /**
- * [Hook to manage the submit form]
+
+ * @returns {array} * [Hook to manage the submit form]
  * @param {Object} initialInput hold field's data
  * @param {Object} initialStatus fields' statuses are valid or not
  *
- * @returns {array}
  */
 const useForm = (initialInput, initialStatus) => {
   const [formState, dispatch] = useReducer(formReducer, {
@@ -44,16 +42,7 @@ const useForm = (initialInput, initialStatus) => {
     });
   }, []);
 
-  /* Setup form data when switch mode  */
-  const setFormData = useCallback((inputData, inputStatus) => {
-    dispatch({
-      type: "SET_FORM_DATA",
-      inputs: inputData,
-      statuses: inputStatus,
-    });
-  }, []);
-
-  return [formState, handleInput, setFormData];
+  return [formState, handleInput];
 };
 
 export default useForm;
