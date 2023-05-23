@@ -36,16 +36,21 @@ const loginUser = async (user, dispatch, navigate, location) => {
     const res = await axios.post(URL.LOGIN, user, {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
+      timeout: 5000,
     });
     const userInfo = getUserCredential(res);
     dispatch(loginSuccess(userInfo));
 
     navigate("/", { state: location, replace: true });
   } catch (err) {
-    if (err?.response) {
-      dispatch(loginFailed("timeout"));
+    if (!err?.response) {
+      dispatch(loginFailed("Server is maintaining"));
+    } else if (err.response?.status === 400) {
+      dispatch(loginFailed("Input not valid"));
+    } else if (err.response?.status === 401) {
+      dispatch(loginFailed("Wrong email or password"));
     } else {
-      dispatch(loginFailed(err.response.data.message));
+      dispatch(loginFailed("Login Failed!"));
     }
   }
 };
@@ -63,10 +68,14 @@ const registerUser = async (user, dispatch, navigate) => {
     navigate("/login");
   } catch (err) {
     // Response timeout when api server have problem
-    if (err?.response) {
-      dispatch(loginFailed("timeout"));
+    if (!err?.response) {
+      dispatch(registerFailed("Server is maintaining"));
+    } else if (err.response?.status === 400) {
+      dispatch(registerFailed("Input not valid"));
+    } else if (err.response?.status === 409) {
+      dispatch(registerFailed("Email already in use!"));
     } else {
-      dispatch(registerFailed(err.response.data.message));
+      dispatch(registerFailed("Register Failed!"));
     }
   }
 };

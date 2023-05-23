@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import useRefreshToken from "../../hooks/useRefreshToken";
 
 // Component
 import useForm from "../../hooks/useForm";
@@ -22,12 +23,16 @@ const cx = classNames.bind(styles);
 
 function LoginForm() {
   document.title = "Login to start shopping!";
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const refresh = useRefreshToken();
+  const isCalled = useRef(false);
 
   const [showModal, setShowModal] = useState(false);
   const [alert, setAlert] = useState("loading");
+
   const [formState, handleInput] = useForm(
     {
       email: "",
@@ -45,7 +50,6 @@ function LoginForm() {
   const loginLoading = useSelector((state) => state.auth.login.isFetching);
   const loginError = useSelector((state) => state.auth.login.error);
   const errorCause = useSelector((state) => state.auth.login.errorCause);
-  const user = useSelector((state) => state.auth.login.currentUser);
 
   const [buttonState, setButtonState] = useState("inactive");
 
@@ -72,12 +76,27 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    if (user) {
-      navigate("/", { state: location, replace: true });
+    document.body.style.overflowY = "scroll";
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const isLogged = async () => {
+      isCalled.current = true;
+      const newAccessToken = await refresh();
+
+      // If refresh success redirect to home page
+      if (newAccessToken) {
+        navigate("/", { state: location, replace: true });
+      }
+    };
+
+    if (!isCalled.current) {
+      isLogged();
     }
 
     // eslint-disable-next-line
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     if (loginLoading) {
@@ -105,14 +124,7 @@ function LoginForm() {
         <Popup header="Announcement">
           {alert === "loading" && <LoadingAlert />}
           {alert === "error" && (
-            <ErrorAlert
-              message={
-                errorCause === "timeout"
-                  ? "Sorry, Server is maintaining"
-                  : "Wrong username or password"
-              }
-              onClose={handleCloseModal}
-            />
+            <ErrorAlert message={errorCause} onClose={handleCloseModal} />
           )}
         </Popup>
       </ModalContainer>

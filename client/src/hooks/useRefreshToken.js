@@ -1,6 +1,6 @@
 import axios from "../api/init.axios";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../features/auth/authSlice";
+import { loginFailed, loginSuccess } from "../features/auth/authSlice";
 
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];
@@ -29,7 +29,7 @@ const useRefreshToken = () => {
 
       return newAccessToken;
     } catch (err) {
-      console.log(err.message);
+      dispatch(loginFailed("Session expired!"));
     }
   };
 
