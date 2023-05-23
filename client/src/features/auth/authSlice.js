@@ -61,7 +61,7 @@ const authSlice = createSlice({
       state.logout.error = false;
       state.login.currentUser = null;
     },
-    logOutFailed: (state, action) => {
+    logOutFailed: (state) => {
       state.register.isFetching = false;
       state.register.error = true;
     },
