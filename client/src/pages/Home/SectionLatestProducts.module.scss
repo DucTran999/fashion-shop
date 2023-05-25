@@ -1,0 +1,27 @@
+@use "../../styles/" as s;
+
+.row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2em 0;
+}
+
+.section__header {
+  font-size: 1.5em;
+  font-weight: 500;
+  padding-bottom: 0.1em;
+
+  @include s.text-gradient;
+  @include s.border-bottom-linear-3;
+
+  @include s.breakpoint(md) {
+    font-size: 2em;
+  }
+}
+
+.align-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
