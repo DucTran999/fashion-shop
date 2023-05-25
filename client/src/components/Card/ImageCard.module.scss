@@ -2,7 +2,7 @@
 
 .card__wrap {
   height: 100%;
-
+  padding: 1.5em 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,10 +24,7 @@
 
   &:hover {
     opacity: 0.5;
-  }
-
-  &:hover + .card-title--abs {
-    display: block;
+    transition: 0.25s;
   }
 }
 
@@ -35,12 +32,20 @@
 .card__title--abs {
   position: absolute;
   top: 50%;
-  z-index: 5;
+  z-index: 6;
   text-align: center;
 
   font-size: 2rem;
   font-weight: 500;
   color: white;
 
-  display: none;
+  pointer-events: none;
+
+  &.inactive {
+    display: none;
+  }
+
+  &.active {
+    display: block;
+  }
 }
