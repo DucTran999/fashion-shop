@@ -10,12 +10,12 @@ const cx = classNames.bind(styles);
 function SectionCategory() {
   const categories = [
     { images: IMAGES.category1, title: "Bikini" },
-    { images: IMAGES.category2, title: "Flare" },
+    { images: IMAGES.category2, title: "Flare pants" },
     { images: IMAGES.category3, title: "Blouse" },
     { images: IMAGES.category4, title: "Croptop" },
     { images: IMAGES.category5, title: "Dress" },
-    { images: IMAGES.category6, title: "Short" },
-    { images: IMAGES.category7, title: "Shirt" },
+    { images: IMAGES.category6, title: "Shorts" },
+    { images: IMAGES.category7, title: "Skirt" },
     { images: IMAGES.category8, title: "Blazer" },
   ];
 

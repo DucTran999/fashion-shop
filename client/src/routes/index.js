@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { AuthLayout, PrimaryLayout } from "../layouts/index";
-import Home from "../pages/Home/index";
+import Home from "../pages/Home/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import MissingPage from "../pages/MissingPage/MissingPage";
