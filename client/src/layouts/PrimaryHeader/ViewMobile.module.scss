@@ -1,0 +1,132 @@
+@use "../../styles/" as s;
+
+// General
+.row-cent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-cent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-right {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.no-gutter {
+  padding: 0;
+}
+
+// Mobile style
+.btn-back-home {
+  display: flex;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--dark-black-clr);
+
+  &:hover {
+    transition: 1s;
+    color: var(--primary-clr);
+  }
+}
+
+.menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--dark-black-clr);
+  padding: 1em;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--primary-clr);
+  }
+}
+
+.sidebar-wrap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+
+  width: 80%;
+  height: 100vh;
+  background: var(--dark-black-clr);
+  border-radius: 3px;
+
+  overflow-y: scroll !important;
+  // sidebar animation
+  &.active {
+    animation: slideIn 0.5s;
+  }
+
+  &.inactive {
+    animation: slideOut 0.5s;
+  }
+
+  .sidebar-header {
+    padding: 1em 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+    color: var(--tiffany-blue-clr);
+    font-weight: 500;
+    border-bottom: 1px solid var(--tiffany-blue-clr);
+
+    &__title {
+      width: 90%;
+      user-select: none;
+    }
+
+    &__close {
+      width: 10%;
+      color: var(--tiffany-blue-clr);
+      margin: 0.5em 0;
+
+      &:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .sidebar-service {
+    border-bottom: 1px solid var(--tiffany-blue-clr);
+
+    &.last-service {
+      border-bottom: 1px solid var(--dark-black-clr);
+    }
+    .service-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-item {
+      margin: 1em 1em 0.3em 1em;
+      padding-bottom: 0.3em;
+      color: var(--dark-white-clr);
+
+      &:hover {
+        cursor: pointer;
+        transition: 0.25s;
+        color: var(--tiffany-blue-clr);
+      }
+    }
+  }
+}

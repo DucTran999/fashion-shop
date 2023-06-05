@@ -1,16 +1,17 @@
 import React, { Fragment } from "react";
+import { Outlet } from "react-router-dom";
 
-import PrimaryHeader from "../Header/PrimaryHeader";
+import PrimaryHeader from "../PrimaryHeader";
 import Footer from "../Footer/Footer";
 
-function PrimaryLayout(props) {
+function PrimaryLayout() {
   document.title = "Atlana Fashion";
   document.body.style.overflowY = "scroll";
 
   return (
     <Fragment>
       <PrimaryHeader />
-      <main>{props.children}</main>
+      <Outlet />
       <Footer />
     </Fragment>
   );
