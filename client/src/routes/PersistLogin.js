@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 import useRefreshToken from "../hooks/useRefreshToken";
+import PageLoadingSpinner from "../components/LoadingSpinner/PageLoadingSpinner";
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +30,7 @@ const PersistLogin = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+  return <>{isLoading ? <PageLoadingSpinner /> : <Outlet />}</>;
 };
 
 export default PersistLogin;
