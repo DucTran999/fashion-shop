@@ -4,6 +4,8 @@ node_modules
 .pnp.js
 .vscode
 
+/public/product
+
 # testing
 src/tests
 rests
