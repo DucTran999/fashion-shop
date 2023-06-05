@@ -1,0 +1,10 @@
+@use "../../styles/" as s;
+
+.logo-link {
+  background-color: transparent;
+  text-decoration: none;
+
+  .logo-img {
+    height: 5rem;
+  }
+}

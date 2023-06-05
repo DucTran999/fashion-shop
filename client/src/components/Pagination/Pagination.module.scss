@@ -1,0 +1,75 @@
+@use "../../styles/" as s;
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8em;
+}
+
+.page-nav {
+  color: var(--light-grey-clr);
+  font-size: 1.6rem;
+  font-weight: 500;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn__change-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2.3rem;
+  margin: 0 0.5em;
+  font-weight: 500;
+
+  border: none;
+  background: transparent;
+  color: var(--light-grey-clr);
+
+  &.inactive {
+    user-select: none;
+    cursor: default;
+    opacity: 0.5;
+
+    & > .btn__change-page--label:hover {
+      cursor: default;
+    }
+  }
+
+  &.active:hover {
+    cursor: pointer;
+    color: var(--primary-opacity-clr);
+  }
+
+  &--label {
+    font-size: 1.6rem;
+    margin: 0 0.1em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.offset {
+  width: 2.5em;
+  text-align: center;
+  font-size: 1.8rem;
+
+  &.inactive {
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+
+  &.active {
+    user-select: none;
+    color: var(--primary-opacity-clr);
+    cursor: default;
+  }
+}
