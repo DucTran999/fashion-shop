@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 import { Container, Row, Col } from "react-bootstrap";
-import Header from "../layouts/Header";
+import Header from "../../layouts/Header";
 
 import classNames from "classnames/bind";
 import style from "./ManageAccounts.module.scss";
@@ -20,10 +20,10 @@ function ManageAccounts() {
   // Direct refresh the users list
   const handleReload = async () => {
     try {
-      const response = await axiosPrivate.get("/api/v1/users/get-users");
-      setUsers(response.data.elements);
+      const res = await axiosPrivate.get("/api/v1/users/get-users");
+      setUsers(res.data.elements);
     } catch (error) {
-      console.log(error.message);
+      navigate("/login", { state: { from: location }, replace: true });
     }
   };
 

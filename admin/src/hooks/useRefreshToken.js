@@ -1,5 +1,5 @@
 import axios from "../api/init.axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/auth/authSlice";
 
 const getUserCredential = (res) => {

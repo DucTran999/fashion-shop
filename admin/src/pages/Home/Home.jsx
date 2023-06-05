@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Header from "../layouts/Header";
+import Header from "../../layouts/Header";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";

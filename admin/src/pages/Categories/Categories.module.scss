@@ -1,4 +1,4 @@
-@use "../styles/" as s;
+@use "../../styles/" as s;
 
 .row-cent {
   display: flex;
@@ -10,6 +10,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.announcement {
+  font-size: 2.5rem;
+  padding: 1em 0 0 0;
+  text-align: center;
+}
+
+.add-category-section {
+  margin: 1em;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.add-category-field {
+  outline: none;
+}
+
+.add-category-btn {
+  margin-left: 0.2em;
+  padding: 0 1em;
+}
+
+.list-category-header {
+  border-top: 2px solid var(--primary-clr);
+  padding-top: 0.5em;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .tbl-header {

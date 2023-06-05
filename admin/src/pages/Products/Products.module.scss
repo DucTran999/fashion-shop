@@ -1,0 +1,42 @@
+@use "../../styles/" as s;
+
+// form style
+.form-wrap {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.6rem;
+}
+
+.form-control {
+  outline: none;
+  margin: 0 0.5em;
+}
+
+.btn-submit {
+  padding: 0 0.5em;
+
+  color: var(--medium-black-clr);
+  background-color: (--light-grey-clr);
+}
+
+.sub-nav-btn {
+  margin: 1em;
+  font-size: 2rem;
+  font-weight: 500;
+  background-color: transparent;
+
+  border: none;
+
+  &.active {
+    color: var(--primary-clr);
+    border-bottom: 2px solid var(--primary-clr);
+  }
+}
+
+.row-border--btm {
+  border-bottom: 2px solid var(--primary-clr);
+  margin: 0.5em 0;
+}
