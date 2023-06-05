@@ -9,7 +9,7 @@ const apiRouter = (app) => {
       status: 200,
       message: "available api list",
       links: {
-        docs: "https://doc.com/api",
+        docs: "all api link",
       },
     });
   });

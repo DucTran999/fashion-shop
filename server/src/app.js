@@ -22,6 +22,9 @@ const createApp = () => {
   // cross-site origin request share
   app.use(cors(corsOptions));
 
+  // products image
+  app.use(express.static("public"));
+
   // helmet
   // app.use(helmet());
 
