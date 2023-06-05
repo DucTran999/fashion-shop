@@ -1,5 +1,5 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import classNames from "classnames/bind";
 import style from "./MissingPage.module.scss";
@@ -7,11 +7,13 @@ const cx = classNames.bind(style);
 
 function MissingPage() {
   const navigate = useNavigate();
-  const from = useLocation();
 
   const handleClick = () => {
-    navigate("/", { state: from, replace: true });
+    navigate("/", { replace: true });
   };
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className={cx("wrapper")}>
