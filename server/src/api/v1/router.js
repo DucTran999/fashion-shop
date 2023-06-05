@@ -1,11 +1,29 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import userRouter from "./users/user.route.js";
+import categoryRouter from "./categories/category.route.js";
+import sizeRouter from "./sizes/size.route.js";
+import colorRouter from "./colors/colors.route.js";
+import productRouter from "./products/product.route.js";
+import uploadRouter from "./serviceUpload/uploads.route.js";
+import variantRouter from "./variants/variant.route.js";
 
 dotenv.config();
 const route = express.Router();
 
 route.use("/users", userRouter);
+
+route.use("/categories", categoryRouter);
+
+route.use("/sizes", sizeRouter);
+
+route.use("/colors", colorRouter);
+
+route.use("/products", productRouter);
+
+route.use("/uploads", uploadRouter);
+
+route.use("/variants", variantRouter);
 
 route.use("/", (req, res, next) => {
   res.status(200);
@@ -14,7 +32,7 @@ route.use("/", (req, res, next) => {
     message: null,
     links: [
       {
-        docs: "link docs",
+        docs: "api v1",
       },
     ],
   });
