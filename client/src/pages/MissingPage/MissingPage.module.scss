@@ -1,7 +1,8 @@
 @use "../../styles";
 
 .wrapper {
-  margin: 1em;
+  background-color: var(--dark-black-clr);
+  padding: 1.5em 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,10 +13,13 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0.3em 0;
+
+  color: var(--primary-opacity-clr);
 }
 
 .message {
   font-size: 1.6rem;
+  color: var(--primary-opacity-clr);
 }
 
 .back-home-btn {

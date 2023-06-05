@@ -23,6 +23,13 @@ import {
   ArrowRightOutlined,
 } from "@ant-design/icons";
 
+import { BiMoney } from "react-icons/bi";
+
+import { FaBoxOpen } from "react-icons/fa";
+import { MdCurrencyExchange, MdLocalShipping } from "react-icons/md";
+import { AiFillCreditCard } from "react-icons/ai";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
+
 const ICONS = {
   /* Interact */
   backArrow: <LeftOutlined />,
@@ -44,6 +51,12 @@ const ICONS = {
   errorCircle: <CloseCircleOutlined />,
   loading: <LoadingOutlined />,
   rightArrow: <CaretRightOutlined />,
+  moneyBag: <BiMoney />,
+  shipping: <MdLocalShipping />,
+  exchange: <MdCurrencyExchange />,
+  paymentCard: <AiFillCreditCard />,
+  boxOpen: <FaBoxOpen />,
+  headphone: <TfiHeadphoneAlt />,
 
   /* Social */
   google: <GoogleOutlined />,

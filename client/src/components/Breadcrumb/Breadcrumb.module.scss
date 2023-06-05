@@ -1,0 +1,27 @@
+@use "../../styles/" as s;
+
+.breadcrumb-wrap {
+  display: flex;
+  margin: 1em 0 0.5em 0;
+  height: 2.5em;
+}
+
+.breadcrumb__slash {
+  color: var(--light-grey-clr);
+  padding: 0 0.8em;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.breadcrumb__item {
+  color: var(--light-grey-clr);
+  font-size: 1.8rem;
+  font-weight: 500;
+
+  &.link {
+    &:hover {
+      transition: 0.25s;
+      color: var(--primary-opacity-clr);
+    }
+  }
+}

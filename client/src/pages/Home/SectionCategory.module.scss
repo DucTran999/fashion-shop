@@ -37,6 +37,11 @@
   justify-content: center;
   align-items: center;
 
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
   .category__img {
     border-radius: 45px;
     width: 4.5em;

@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RequireAuth from "./routes/RequireAuth";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import ManageAccounts from "./pages/ManageAccounts";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Auth/Login";
+import Products from "./pages/Products/Products";
+import ManageAccounts from "./pages/Account/ManageAccounts";
 import Unauthorized from "./pages/Unauthorized";
 import PageNotFound from "./pages/PageNotFound";
+import Categories from "./pages/Categories/Categories";
+
 import PersistLogin from "./routes/PersistLogin";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,10 +24,12 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/categories" element={<Categories />} />
             <Route path="/accounts" element={<ManageAccounts />} />
           </Route>
         </Route>
-        <Route path="*" element={<PageNotFound />}></Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );

@@ -33,6 +33,9 @@ function Header() {
           <Link to="/products" className={cx("nav-link")}>
             Products
           </Link>
+          <Link to="/categories" className={cx("nav-link")}>
+            Categories
+          </Link>
           <Link to="/orders" className={cx("nav-link")}>
             Orders
           </Link>

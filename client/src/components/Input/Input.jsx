@@ -60,6 +60,7 @@ const Input = (props) => {
   return (
     <div className={cx("input-box")}>
       <input
+        id={labelTitle}
         className={cx("input-box__fill")}
         type={inputType}
         value={value}

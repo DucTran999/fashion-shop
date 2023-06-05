@@ -1,0 +1,14 @@
+@use "../../styles" as s;
+
+.title-style {
+  font-size: 1.4em;
+  font-weight: 500;
+  padding-bottom: 0.1em;
+
+  @include s.text-gradient;
+  @include s.border-bottom-linear-3;
+
+  @include s.breakpoint(md) {
+    font-size: 2em;
+  }
+}
