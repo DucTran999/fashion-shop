@@ -4,6 +4,8 @@ const API_URL = {
 
   // products
   products: "/api/v1/products",
+
+  users: "/api/v1/users",
 };
 
 export default API_URL;

@@ -29,7 +29,7 @@ const IMAGES = {
   mbSlider2: require("./slider/mb_slider-2.jpg"),
   mbSlider3: require("./slider/mb_slider-3.webp"),
 
-  defaultAvatar: require("./default/default-avatar.jpg"),
+  defaultAvatar: require("./default/default-avatar.webp"),
 
   // Categories
   category1: require("./category/image_categories-1.webp"),
