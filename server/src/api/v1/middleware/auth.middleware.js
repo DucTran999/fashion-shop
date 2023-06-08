@@ -40,8 +40,12 @@ const verifyToken = async (token, key) => {
 const verifyAccessToken = async (req, res, next) => {
   try {
     const accessToken = await extractAccessToken(req);
-    await verifyToken(accessToken, process.env.ACCESS_TOKEN_SECRET);
-    next();
+    const payload = await verifyToken(
+      accessToken,
+      process.env.ACCESS_TOKEN_SECRET
+    );
+
+    next(payload);
   } catch (err) {
     next(err);
   }

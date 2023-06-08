@@ -1,3 +1,7 @@
+import CryptoJS from "crypto-js";
+import * as dotenv from "dotenv";
+dotenv.config();
+
 /**
  * Pack variations into respective products
  * @param  {[List Object]} variations List product variations.
@@ -27,4 +31,54 @@ const convertHyphenStringToLowerCase = (str) => {
   return arr.join(" ");
 };
 
-export { packingProductVariant, convertHyphenStringToLowerCase };
+const hideEmail = (email) => {
+  let pivot = 0;
+  for (let i = email.length - 1; i > 0; --i) {
+    if (email[i] === "@") {
+      pivot = i - 1;
+      break;
+    }
+  }
+
+  return `${email.charAt(0)}********${email.charAt(pivot)}@gmail.com`;
+};
+
+const hidePhoneNum = (phone) => {
+  return `********${phone.at(-2)}${phone.at(-1)}`;
+};
+
+const encrypt = (plain) => {
+  return CryptoJS.AES.encrypt(plain, process.env.AES_KEY).toString();
+};
+
+const decrypt = (cipher) => {
+  let bytes = CryptoJS.AES.decrypt(cipher, process.env.AES_KEY);
+  let originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+  return originalText;
+};
+
+const encryptUserPayload = (user) => {
+  let phoneEncode = "",
+    emailEncode = "";
+  const { email, phone } = user;
+
+  emailEncode = hideEmail(email);
+  if (phone) {
+    phoneEncode = hidePhoneNum(phone);
+  }
+
+  return {
+    ...user,
+    email: emailEncode,
+    phone: phoneEncode,
+  };
+};
+
+export {
+  packingProductVariant,
+  convertHyphenStringToLowerCase,
+  encryptUserPayload,
+  encrypt,
+  decrypt,
+};
