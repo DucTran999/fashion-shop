@@ -5,6 +5,7 @@ import Category from "./SectionCategory";
 import Carousel from "../../components/Carousel/Carousel";
 import ProductCarousel from "../../components/Carousel/ProductCarousel";
 import PolicySection from "./PolicySection";
+import Padding from "../../components/Padding";
 
 //Style
 import classNames from "classnames/bind";
@@ -20,10 +21,6 @@ const Home = () => {
 
     // eslint-disable-next-line
   }, []);
-
-  const Padding = () => {
-    return <div className={cx("padding")} />;
-  };
 
   return (
     <main className={cx("theme")}>

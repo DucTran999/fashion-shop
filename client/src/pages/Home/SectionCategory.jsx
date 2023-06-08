@@ -63,4 +63,4 @@ function SectionCategory() {
   );
 }
 
-export default SectionCategory;
+export default React.memo(SectionCategory);
