@@ -31,6 +31,32 @@ const userLoginScheme = Joi.object({
     .required(),
 });
 
+const updateSchema = Joi.object({
+  user_id: Joi.required(),
+  first_name: Joi.string().trim().required(),
+  last_name: Joi.string().trim().required(),
+  email: Joi.string().trim().required(),
+  gender: Joi.string().trim().required(),
+  address: Joi.string().trim(),
+  phone: Joi.string().trim().max(11).allow("").pattern(new RegExp("^[0-9]+$")),
+  date_of_birth: Joi.string().trim().allow(null),
+});
+
+const changePassSchema = Joi.object({
+  old_password: Joi.string()
+    .trim()
+    .min(8)
+    .max(32)
+    .required()
+    .pattern(new RegExp("^\\S+$")),
+  new_password: Joi.string()
+    .trim()
+    .min(8)
+    .max(32)
+    .required()
+    .pattern(new RegExp("^\\S+$")),
+});
+
 const validateSignUpPayload = (req, res, next) => {
   const { error } = normalUserScheme.validate(req.body);
   if (error) {
@@ -47,4 +73,26 @@ const validateLoginPayload = (req, res, next) => {
   next();
 };
 
-export default { validateLoginPayload, validateSignUpPayload };
+const validateUpdatePayload = (req, res, next) => {
+  const { error } = updateSchema.validate(req.body);
+  if (error) {
+    next(createHttpError.BadRequest("Invalid Info!"));
+  }
+  next();
+};
+
+const validateChangePasswordPayload = (req, res, next) => {
+  const { error } = changePassSchema.validate(req.body);
+  if (error) {
+    next(createHttpError.BadRequest("Invalid password!"));
+  }
+
+  next();
+};
+
+export default {
+  validateLoginPayload,
+  validateSignUpPayload,
+  validateUpdatePayload,
+  validateChangePasswordPayload,
+};

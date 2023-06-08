@@ -44,10 +44,48 @@ class UserRepository {
     }
   };
 
+  findOneById = async (userId) => {
+    const query = `
+      SELECT user_id, first_name, last_name, email,
+             gender, address, phone, date_of_birth
+        FROM users 
+        WHERE user_id=$1;`;
+    try {
+      const res = await pool.query(query, [userId]);
+      return res.rows[0];
+    } catch (err) {
+      throw new createHttpError.InternalServerError();
+    }
+  };
+
+  findUserPassword = async (userId) => {
+    const query = `SELECT password FROM users WHERE user_id=$1;`;
+    try {
+      const { rows } = await pool.query(query, [userId]);
+      return rows[0];
+    } catch (err) {
+      throw new createHttpError.InternalServerError();
+    }
+  };
+
+  updateOne = async (userId, firstName, lastName, address, phone, gender) => {
+    const query = `
+      UPDATE users
+        SET first_name=$2,last_name=$3, address=$4, phone=$5, gender=$6
+        WHERE user_id=$1;`;
+    const values = [userId, firstName, lastName, address, phone, gender];
+
+    try {
+      await pool.query(query, values);
+    } catch (err) {
+      throw createHttpError.InternalServerError();
+    }
+  };
+
   save = async (user) => {
-    const query =
-      "INSERT INTO users (first_name, last_name, email, password) \
-       VALUES ($1, $2, $3, $4)";
+    const query = `INSERT INTO users 
+          (first_name, last_name, email, password)
+        VALUES ($1, $2, $3, $4);`;
     const values = [user.first_name, user.last_name, user.email, user.password];
 
     try {
@@ -59,9 +97,14 @@ class UserRepository {
 
   saveAdmin = async (user) => {
     const is_admin = true;
-    const query =
-      "insert into users (first_name, last_name, email, password, gender, date_of_birth, phone, is_admin) \
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+    const query = `
+      INSERT INTO users 
+        (
+          first_name, last_name, email,
+          password, gender, date_of_birth,
+          phone, is_admin
+        )
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
     const values = [
       user.first_name,
       user.last_name,
@@ -75,6 +118,15 @@ class UserRepository {
 
     try {
       await pool.query(query, values);
+    } catch (err) {
+      throw new createHttpError.InternalServerError();
+    }
+  };
+
+  saveNewPassword = async (userId, newPassword) => {
+    const query = "UPDATE users SET password=$1 WHERE user_id=$2;";
+    try {
+      await pool.query(query, [newPassword, userId]);
     } catch (err) {
       throw new createHttpError.InternalServerError();
     }
