@@ -1,0 +1,68 @@
+@use "../../../styles/" as s;
+
+.profile-wrap {
+  position: relative;
+  margin: 0;
+}
+
+.profile-layout {
+  display: flex;
+  flex-direction: column-reverse;
+
+  @include s.breakpoint(lg) {
+    flex-direction: row;
+  }
+}
+
+// avatar section style
+.avatar-wrap {
+  display: flex;
+  flex-direction: column;
+
+  .avatar-title {
+    font-size: 1.8;
+    font-weight: 500;
+    padding: 1em 0;
+  }
+
+  .avatar-img {
+    align-self: center;
+    border-radius: 45rem;
+    width: 40%;
+
+    @include s.breakpoint(lg) {
+      width: 80%;
+    }
+
+    @include s.breakpoint(xl) {
+      width: 70%;
+      max-width: 220px;
+    }
+  }
+}
+
+.form-profile {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 1em;
+}
+
+.input-label {
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 1em 0 0.5em 0;
+}
+
+.form-inp {
+  width: 100%;
+  padding: 0.3em 1em;
+  outline: none;
+  font-size: 1.4rem;
+
+  border-radius: 5px;
+  border: 1px solid var(--grey-clr);
+  color: var(--light-grey-clr);
+  background-color: var(--very-dark-black-clr);
+}
