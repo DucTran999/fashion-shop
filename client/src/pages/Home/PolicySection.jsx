@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ICONS from "../../assets/icons";
 
@@ -6,11 +6,21 @@ import classNames from "classnames/bind";
 import style from "./PolicySection.module.scss";
 const cx = classNames.bind(style);
 
+const Policy = ({ policy }) => {
+  return (
+    <div className={cx("policy-wrap")}>
+      <div className={cx("policy__icon")}>{policy.icon}</div>
+      <div className={cx("policy__title")}>{policy.title}</div>
+      <span className={cx("policy__content")}>{policy.content}</span>
+    </div>
+  );
+};
+
 const PolicySection = () => {
-  const policyData = [
+  const policyData = useRef([
     {
       icon: ICONS.shipping,
-      title: "Free shippping",
+      title: "Free shipping",
       content: `Apply for orders from 300,000 VND (Ha Noi area). Nationwide delivery.`,
     },
     {
@@ -28,23 +38,13 @@ const PolicySection = () => {
       title: "30-day Free exchange or return",
       content: `Quick and convenient return and exchange process. Customers are completely assured when shopping`,
     },
-  ];
-
-  const Policy = ({ policy }) => {
-    return (
-      <div className={cx("policy-wrap")}>
-        <div className={cx("policy__icon")}>{policy.icon}</div>
-        <div className={cx("policy__title")}>{policy.title}</div>
-        <span className={cx("policy__content")}>{policy.content}</span>
-      </div>
-    );
-  };
+  ]);
 
   return (
     <Container fluid={true} className={cx("container-policy")}>
       <Container>
         <Row>
-          {policyData.map((policy, idx) => {
+          {policyData.current.map((policy, idx) => {
             return (
               <Col xs="6" lg="3" key={idx}>
                 <Policy policy={policy} />
@@ -57,4 +57,4 @@ const PolicySection = () => {
   );
 };
 
-export default PolicySection;
+export default React.memo(PolicySection);

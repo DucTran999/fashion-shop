@@ -1,8 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { AuthLayout, PrimaryLayout } from "./layouts";
-import { Login, Register, Home, Category, Product, MissingPage } from "./pages";
+import {
+  Login,
+  Register,
+  Home,
+  Category,
+  Product,
+  Account,
+  MissingPage,
+} from "./pages";
 import PersistLogin from "./routes/PersistLogin";
+import RequireAuth from "./routes/RequireAuth";
 
 function App() {
   return (
@@ -16,8 +25,6 @@ function App() {
 
         {/* Persist login */}
         <Route element={<PersistLogin />}>
-          {/* <Route element={<RequireAuth />}>
-          </Route> */}
           <Route path="/" element={<PrimaryLayout />}>
             <Route index element={<Home />} />
 
@@ -34,6 +41,16 @@ function App() {
               path="/product"
               element={<Navigate to="/category/all-products" replace={true} />}
             />
+
+            {/* Protected route */}
+            <Route element={<RequireAuth />}>
+              {/* Account path */}
+              <Route path="/account/:slug" element={<Account />} />
+              <Route
+                path="/account"
+                element={<Navigate to="/account/profile" replace={true} />}
+              />
+            </Route>
 
             {/* Page not found 404 */}
             <Route path="*" element={<MissingPage />} />

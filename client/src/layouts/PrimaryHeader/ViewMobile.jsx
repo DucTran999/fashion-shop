@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
 import { logOutUser } from "../../features/auth/apiRequest";
@@ -19,13 +19,12 @@ const ViewMobile = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const [showSidebar, setShowSidebar] = useState(false);
 
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   /* handle user action */
   const handleLogOut = async () => {
-    await logOutUser(dispatch, navigate, location);
+    await logOutUser(dispatch, navigate);
   };
 
   const handleShowSidebar = () => {
@@ -79,10 +78,7 @@ const ViewMobile = () => {
           </div>
 
           <section className={cx("sidebar-service")}>
-            <nav
-              className={cx("service-list")}
-              onClick={() => setShowSidebar(false)}
-            >
+            <nav className={cx("service-list")} onClick={handleCloseSidebar}>
               <Link to="/search" className={cx("service-item")}>
                 Search
               </Link>
@@ -102,10 +98,7 @@ const ViewMobile = () => {
           </section>
 
           <section className={cx("sidebar-service")}>
-            <nav
-              className={cx("service-list")}
-              onClick={() => setShowSidebar(false)}
-            >
+            <nav className={cx("service-list")} onClick={handleCloseSidebar}>
               <Link to="/blogs" className={cx("service-item")}>
                 Notification
               </Link>
@@ -119,8 +112,8 @@ const ViewMobile = () => {
           </section>
 
           <section className={cx("sidebar-service", "last-service")}>
-            <nav className={cx("service-list")}>
-              <Link to="/user" className={cx("service-item")}>
+            <nav className={cx("service-list")} onClick={handleCloseSidebar}>
+              <Link to="/account/profile" className={cx("service-item")}>
                 Account Settings
               </Link>
               <span className={cx("service-item")} onClick={handleLogOut}>

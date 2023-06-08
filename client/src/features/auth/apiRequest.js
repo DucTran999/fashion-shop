@@ -13,7 +13,7 @@ import {
   logOutFailed,
 } from "./authSlice";
 
-const URL = {
+const API_URL = {
   LOGIN: "api/v1/users/sign-in",
   REGISTER: "api/v1/users/sign-up",
   LOGOUT: "/api/v1/users/sign-out",
@@ -33,7 +33,7 @@ const loginUser = async (user, dispatch, navigate, location) => {
   await delay(1000);
 
   try {
-    const res = await axios.post(URL.LOGIN, user, {
+    const res = await axios.post(API_URL.LOGIN, user, {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
       timeout: 5000,
@@ -60,7 +60,7 @@ const registerUser = async (user, dispatch, navigate) => {
   await delay(1000);
 
   try {
-    const res = await axios.post(URL.REGISTER, user);
+    const res = await axios.post(API_URL.REGISTER, user);
     dispatch(registerSuccess(res));
 
     // Auto return to login page after 5 seconds
@@ -80,18 +80,17 @@ const registerUser = async (user, dispatch, navigate) => {
   }
 };
 
-const logOutUser = async (dispatch, navigate, location) => {
+const logOutUser = async (dispatch, navigate) => {
   dispatch(logOutStart());
   try {
-    await axios.get(URL.LOGOUT, {
+    await axios.get(API_URL.LOGOUT, {
       headers: {
         "Content-type": "application/json",
       },
       withCredentials: true,
     });
-    console.log("OK");
     dispatch(logOutSuccess());
-    navigate("/login", { state: location, replace: true });
+    navigate("/login", { state: "logout", replace: true });
   } catch (error) {
     dispatch(logOutFailed());
   }

@@ -1,0 +1,37 @@
+@use "../../../styles/" as s;
+
+.input-label {
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 1em 0 0.5em 0;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-inp {
+  position: relative;
+  width: 100%;
+  padding: 0.3em 2em 0.3em 1em;
+  outline: none;
+  font-size: 1.4rem;
+
+  border-radius: 5px;
+  border: 1px solid var(--grey-clr);
+  color: var(--light-grey-clr);
+  background-color: var(--very-dark-black-clr);
+}
+
+.toggle {
+  position: absolute;
+  right: 0;
+  padding: 0.5em;
+  font-size: 1.4rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

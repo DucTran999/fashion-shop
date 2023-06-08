@@ -6,14 +6,20 @@ const navbarSlice = createSlice({
     primary: {
       active: "home",
     },
+    sidebar: {
+      active: "Public profile",
+    },
   },
   reducers: {
     changeOption: (state, action) => {
       state.primary.active = action.payload;
     },
+    sidebarChangeOption: (state, action) => {
+      state.sidebar.active = action.payload;
+    },
   },
 });
 
-export const { changeOption } = navbarSlice.actions;
+export const { changeOption, sidebarChangeOption } = navbarSlice.actions;
 
 export default navbarSlice.reducer;

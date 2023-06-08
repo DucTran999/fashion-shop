@@ -1,0 +1,9 @@
+@use "../../styles/" as s;
+
+.error-msg {
+  width: 100%;
+  color: var(--pastel-red-clr);
+  font-size: 2rem;
+  padding: 1em 0;
+  text-align: center;
+}

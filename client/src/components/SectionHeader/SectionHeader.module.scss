@@ -1,0 +1,9 @@
+@use "../../styles/" as s;
+
+.section-header {
+  font-size: 2.5rem;
+  font-weight: 500;
+  padding-bottom: 0.2em;
+  border-bottom: 2px solid var(--grey-clr);
+  color: var(--primary-opacity-clr);
+}

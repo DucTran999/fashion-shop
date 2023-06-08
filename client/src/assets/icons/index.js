@@ -24,10 +24,11 @@ import {
 } from "@ant-design/icons";
 
 import { BiMoney } from "react-icons/bi";
-
+import { BsFillBellFill } from "react-icons/bs";
+import { RiBillFill } from "react-icons/ri";
 import { FaBoxOpen } from "react-icons/fa";
 import { MdCurrencyExchange, MdLocalShipping } from "react-icons/md";
-import { AiFillCreditCard } from "react-icons/ai";
+import { AiFillCreditCard, AiFillSetting } from "react-icons/ai";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 
 const ICONS = {
@@ -57,6 +58,9 @@ const ICONS = {
   paymentCard: <AiFillCreditCard />,
   boxOpen: <FaBoxOpen />,
   headphone: <TfiHeadphoneAlt />,
+  settings: <AiFillSetting />,
+  bell: <BsFillBellFill />,
+  bill: <RiBillFill />,
 
   /* Social */
   google: <GoogleOutlined />,

@@ -27,6 +27,7 @@ function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
   const refresh = useRefreshToken();
   const isCalled = useRef(false);
 
@@ -83,11 +84,13 @@ function LoginForm() {
   useEffect(() => {
     const isLogged = async () => {
       isCalled.current = true;
-      const newAccessToken = await refresh();
+      if (!location.state === "logout") {
+        const newAccessToken = await refresh();
 
-      // If refresh success redirect to home page
-      if (newAccessToken) {
-        navigate("/", { state: location, replace: true });
+        // If refresh success redirect to home page
+        if (newAccessToken) {
+          navigate("/", { replace: true });
+        }
       }
     };
 

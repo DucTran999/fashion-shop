@@ -10,110 +10,135 @@ import IMAGES from "../../assets/images";
 // Component
 import ShopLogo from "../../components/Logo/ShopLogo";
 import PrimaryNav from "./PrimaryNav";
+import { updateSelection } from "../../features/activeNav/navAction";
 
 //Style
 import classNames from "classnames/bind";
 import styles from "./ViewDesktop.module.scss";
 const cx = classNames.bind(styles);
 
-const ViewDesktop = () => {
+/* Sub nav component */
+const SubNav = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
 
-  const location = useLocation();
+  return (
+    <ul className={cx("sub-nav")}>
+      <li className={cx("sub-nav__item")}>
+        <Link to="/search" className={cx("sub-nav__link")}>
+          {ICONS.search}
+        </Link>
+      </li>
+      <li className={cx("sub-nav__item", "user")}>
+        {user ? <UserBarIsLogged /> : <UserBarIsNotLogged />}
+      </li>
+      <li className={cx("sub-nav__item")}>
+        <Link to="/wishlist" className={cx("sub-nav__link")}>
+          {ICONS.favourite}
+        </Link>
+      </li>
+      <li className={cx("sub-nav__item")}>
+        <Link to="/cart" className={cx("sub-nav__link")}>
+          {ICONS.cart}
+        </Link>
+        <span className={cx("cart__num-products")}>10</span>
+      </li>
+    </ul>
+  );
+};
+
+const UserBarIsLogged = () => {
+  const loggedOptions = [
+    {
+      link: "/account",
+      title: "Account Settings",
+    },
+    {
+      link: "/account/notification",
+      title: "Notifications",
+    },
+    {
+      link: "/account/purchases",
+      title: "My Purchases",
+    },
+  ];
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   /* handle user action */
   const handleLogOut = async () => {
-    await logOutUser(dispatch, navigate, location);
+    await logOutUser(dispatch, navigate);
   };
 
-  /* Sub nav component */
-  const SubNav = () => {
-    return (
-      <ul className={cx("sub-nav")}>
-        <li className={cx("sub-nav__item")}>
-          <Link to="/search" className={cx("sub-nav__link")}>
-            {ICONS.search}
-          </Link>
-        </li>
-        <li className={cx("sub-nav__item", "user")}>
-          {user ? <UserBarIsLogged /> : <UserBarIsNotLogged />}
-        </li>
-        <li className={cx("sub-nav__item")}>
-          <Link to="/wishlist" className={cx("sub-nav__link")}>
-            {ICONS.favourite}
-          </Link>
-        </li>
-        <li className={cx("sub-nav__item")}>
-          <Link to="/cart" className={cx("sub-nav__link")}>
-            {ICONS.cart}
-          </Link>
-          <span className={cx("cart__num-products")}>10</span>
+  const handleNavigateOnClick = (endpoint) => {
+    if (location.pathname.includes("account")) {
+      navigate(endpoint, { state: location, replace: true });
+    } else {
+      updateSelection("", dispatch);
+      navigate(endpoint, { replace: false });
+    }
+  };
+
+  return (
+    <>
+      <div
+        className={cx("sub-nav__link")}
+        onClick={() => handleNavigateOnClick("/account")}
+      >
+        <img
+          src={IMAGES.defaultAvatar}
+          className={cx("user-avatar")}
+          alt="user avatar"
+        />
+      </div>
+      <ul className={cx("user-options")}>
+        {loggedOptions.map((option, idx) => {
+          return (
+            <li key={idx} className={cx("user-options__option")}>
+              <div
+                className={cx("user-options__link")}
+                onClick={() => handleNavigateOnClick(option.link)}
+              >
+                {option.title}
+              </div>
+            </li>
+          );
+        })}
+        <div className={cx("user-options__separate")}></div>
+        <li className={cx("user-options__option")}>
+          <span className={cx("user-options__link")} onClick={handleLogOut}>
+            Log out
+          </span>
         </li>
       </ul>
-    );
-  };
+    </>
+  );
+};
 
-  const UserBarIsLogged = () => {
-    return (
-      <>
-        <Link to="/" className={cx("sub-nav__link")}>
-          <img
-            src={IMAGES.defaultAvatar}
-            className={cx("user-avatar")}
-            alt="user avatar"
-          />
-        </Link>
-        <ul className={cx("user-options")}>
-          <li className={cx("user-options__option")}>
-            <Link to="/login" className={cx("user-options__link")}>
-              Account Settings
-            </Link>
-          </li>
-          <li className={cx("user-options__option")}>
-            <Link to="/register" className={cx("user-options__link")}>
-              Notification
-            </Link>
-          </li>
-          <li className={cx("user-options__option")}>
-            <Link to="/register" className={cx("user-options__link")}>
-              My Purchases
-            </Link>
-            <div className={cx("user-options__separate")}></div>
-          </li>
-          <li className={cx("user-options__option")}>
-            <span className={cx("user-options__link")} onClick={handleLogOut}>
-              Log out
-            </span>
-          </li>
-        </ul>
-      </>
-    );
-  };
+const UserBarIsNotLogged = () => {
+  return (
+    <>
+      <Link to="/login" className={cx("sub-nav__link")}>
+        {ICONS.user}
+      </Link>
+      <ul className={cx("user-options")}>
+        <li className={cx("user-options__option")}>
+          <Link to="/login" className={cx("user-options__link")}>
+            Login
+          </Link>
+        </li>
+        <li className={cx("user-options__option")}>
+          <Link to="/register" className={cx("user-options__link")}>
+            Register
+          </Link>
+        </li>
+      </ul>
+    </>
+  );
+};
 
-  const UserBarIsNotLogged = () => {
-    return (
-      <>
-        <Link to="/login" className={cx("sub-nav__link")}>
-          {ICONS.user}
-        </Link>
-        <ul className={cx("user-options")}>
-          <li className={cx("user-options__option")}>
-            <Link to="/login" className={cx("user-options__link")}>
-              Login
-            </Link>
-          </li>
-          <li className={cx("user-options__option")}>
-            <Link to="/register" className={cx("user-options__link")}>
-              Register
-            </Link>
-          </li>
-        </ul>
-      </>
-    );
-  };
-
+const ViewDesktop = () => {
   return (
     <Container>
       <Row className={cx("row-cent")}>

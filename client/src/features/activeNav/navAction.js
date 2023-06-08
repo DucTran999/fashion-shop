@@ -1,7 +1,11 @@
-import { changeOption } from "./navSlice";
+import { changeOption, sidebarChangeOption } from "./navSlice";
 
 const updateSelection = async (selection, dispatch) => {
   dispatch(changeOption(selection));
 };
 
-export { updateSelection };
+const updateSidebarSelection = async (selection, dispatch) => {
+  dispatch(sidebarChangeOption(selection));
+};
+
+export { updateSelection, updateSidebarSelection };
