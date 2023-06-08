@@ -104,7 +104,9 @@
 }
 
 .user-avatar {
+  border-radius: 45px;
   width: 2.5rem;
+  border: 2px solid var(--darker-black-clr);
 }
 
 // Sub nav - cart
