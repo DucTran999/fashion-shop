@@ -1,27 +1,33 @@
 import { Outlet } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 import useRefreshToken from "../hooks/useRefreshToken";
 import PageLoadingSpinner from "../components/LoadingSpinner/PageLoadingSpinner";
+import LOCAL_STORAGE_KEY from "../api/init.localStorage";
 
 const PersistLogin = () => {
+  const isMounted = useRef(false);
   const refresh = useRefreshToken();
+
   const isLoading = useSelector((state) => state.auth.login.isFetching);
   const user = useSelector((state) => state.auth.login.currentUser);
-  const isCalled = useRef(false);
 
   useEffect(() => {
     const verifyRefreshToken = async () => {
       await refresh();
     };
 
-    if (!isCalled.current) {
-      isCalled.current = true;
-      !user?.accessToken && verifyRefreshToken();
+    if (!isMounted.current) {
+      isMounted.current = true;
+      if (
+        !user?.accessToken &&
+        localStorage.getItem(LOCAL_STORAGE_KEY.isLogged) === "true"
+      )
+        verifyRefreshToken();
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   return <>{isLoading ? <PageLoadingSpinner /> : <Outlet />}</>;
