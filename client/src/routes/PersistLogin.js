@@ -6,25 +6,19 @@ import useRefreshToken from "../hooks/useRefreshToken";
 import PageLoadingSpinner from "../components/LoadingSpinner/PageLoadingSpinner";
 
 const PersistLogin = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
+  const isLoading = useSelector((state) => state.auth.login.isFetching);
   const user = useSelector((state) => state.auth.login.currentUser);
   const isCalled = useRef(false);
 
   useEffect(() => {
     const verifyRefreshToken = async () => {
-      try {
-        await refresh();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
+      await refresh();
     };
 
     if (!isCalled.current) {
       isCalled.current = true;
-      !user?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+      !user?.accessToken && verifyRefreshToken();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

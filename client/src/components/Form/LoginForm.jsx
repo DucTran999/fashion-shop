@@ -21,6 +21,41 @@ import classNames from "classnames/bind";
 import styles from "./LoginForm.module.scss";
 const cx = classNames.bind(styles);
 
+const Separator = ({ content }) => {
+  return (
+    <div className={content ? cx("separator") : cx("separator", "no-content")}>
+      {content}
+    </div>
+  );
+};
+
+const SocialAuth = () => {
+  return (
+    <Fragment>
+      <Separator content="OR" />
+      <div className={cx("social-auth-list")}>
+        <Button
+          linkTo="/Facebook"
+          styles={"box-style-cm mg-tb-1 active"}
+          titleStyles={"sm-icon-title"}
+          type={"linkOut"}
+          icon={"facebook"}
+          title={"Login with Facebook"}
+        />
+        <Button
+          linkTo="/Google"
+          styles={"box-style-cm mg-tb-1 active"}
+          titleStyles={"sm-icon-title"}
+          type={"linkOut"}
+          icon={"google"}
+          title={"Login with Google"}
+        />
+      </div>
+      <Separator />
+    </Fragment>
+  );
+};
+
 function LoginForm() {
   document.title = "Login to start shopping!";
 
@@ -84,7 +119,7 @@ function LoginForm() {
   useEffect(() => {
     const isLogged = async () => {
       isCalled.current = true;
-      if (!location.state === "logout") {
+      if (location?.state !== "logout") {
         const newAccessToken = await refresh();
 
         // If refresh success redirect to home page
@@ -103,8 +138,10 @@ function LoginForm() {
 
   useEffect(() => {
     if (loginLoading) {
+      setShowModal(true);
       setAlert("loading");
     } else if (loginError) {
+      setShowModal(true);
       setAlert("error");
     }
   }, [loginLoading, loginError]);
@@ -137,43 +174,6 @@ function LoginForm() {
   /* Auth Form components */
   const FormHeader = () => {
     return <div className={cx("header")}>Welcome Back</div>;
-  };
-
-  const Separator = ({ content }) => {
-    return (
-      <div
-        className={content ? cx("separator") : cx("separator", "no-content")}
-      >
-        {content}
-      </div>
-    );
-  };
-
-  const SocialAuth = () => {
-    return (
-      <Fragment>
-        <Separator content="OR" />
-        <div className={cx("social-auth-list")}>
-          <Button
-            linkTo="/Facebook"
-            styles={"box-style-cm mg-tb-1 active"}
-            titleStyles={"sm-icon-title"}
-            type={"linkOut"}
-            icon={"facebook"}
-            title={"Login with Facebook"}
-          />
-          <Button
-            linkTo="/Google"
-            styles={"box-style-cm mg-tb-1 active"}
-            titleStyles={"sm-icon-title"}
-            type={"linkOut"}
-            icon={"google"}
-            title={"Login with Google"}
-          />
-        </div>
-        <Separator />
-      </Fragment>
-    );
   };
 
   const FormSwitch = () => {

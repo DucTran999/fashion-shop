@@ -1,6 +1,10 @@
 import axios from "../api/init.axios";
 import { useDispatch } from "react-redux";
-import { loginFailed, loginSuccess } from "../features/auth/authSlice";
+import {
+  loginStart,
+  loginFailed,
+  loginSuccess,
+} from "../features/auth/authSlice";
 
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];
@@ -15,6 +19,8 @@ const useRefreshToken = () => {
 
   const refresh = async () => {
     // request to get new token
+    dispatch(loginStart());
+
     try {
       const response = await axios.get("/api/v1/users/refresh-token", {
         withCredentials: true,

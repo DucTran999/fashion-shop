@@ -34,7 +34,9 @@ const loginUser = async (user, dispatch, navigate, location) => {
 
   try {
     const res = await axios.post(API_URL.LOGIN, user, {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       withCredentials: true,
       timeout: 5000,
     });
@@ -84,9 +86,6 @@ const logOutUser = async (dispatch, navigate) => {
   dispatch(logOutStart());
   try {
     await axios.get(API_URL.LOGOUT, {
-      headers: {
-        "Content-type": "application/json",
-      },
       withCredentials: true,
     });
     dispatch(logOutSuccess());
