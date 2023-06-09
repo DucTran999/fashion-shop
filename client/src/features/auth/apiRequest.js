@@ -13,6 +13,8 @@ import {
   logOutFailed,
 } from "./authSlice";
 
+import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
+
 const API_URL = {
   LOGIN: "api/v1/users/sign-in",
   REGISTER: "api/v1/users/sign-up",
@@ -42,6 +44,7 @@ const loginUser = async (user, dispatch, navigate, location) => {
     });
     const userInfo = getUserCredential(res);
     dispatch(loginSuccess(userInfo));
+    localStorage.setItem("@atlana/logged", true);
 
     navigate("/", { state: location, replace: true });
   } catch (err) {
@@ -89,7 +92,9 @@ const logOutUser = async (dispatch, navigate) => {
       withCredentials: true,
     });
     dispatch(logOutSuccess());
-    navigate("/login", { state: "logout", replace: true });
+    localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
+
+    navigate("/login", { replace: true });
   } catch (error) {
     dispatch(logOutFailed());
   }

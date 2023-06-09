@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useRefreshToken from "../../hooks/useRefreshToken";
 
+import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
+
 // Component
 import useForm from "../../hooks/useForm";
 import Input from "../Input/Input";
@@ -64,7 +66,7 @@ function LoginForm() {
   const location = useLocation();
 
   const refresh = useRefreshToken();
-  const isCalled = useRef(false);
+  const isMounted = useRef(false);
 
   const [showModal, setShowModal] = useState(false);
   const [alert, setAlert] = useState("loading");
@@ -112,14 +114,8 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    document.body.style.overflowY = "scroll";
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const isLogged = async () => {
-      isCalled.current = true;
-      if (location?.state !== "logout") {
+    const refreshTokenIfLogged = async () => {
+      if (localStorage.getItem(LOCAL_STORAGE_KEY.isLogged) === "true") {
         const newAccessToken = await refresh();
 
         // If refresh success redirect to home page
@@ -129,9 +125,13 @@ function LoginForm() {
       }
     };
 
-    if (!isCalled.current) {
-      isLogged();
+    if (!isMounted.current) {
+      isMounted.current = true;
+      refreshTokenIfLogged();
     }
+
+    document.body.style.overflowY = "scroll";
+    window.scrollTo(120, 0);
 
     // eslint-disable-next-line
   }, []);

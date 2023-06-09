@@ -5,6 +5,7 @@ import {
   loginFailed,
   loginSuccess,
 } from "../features/auth/authSlice";
+import LOCAL_STORAGE_KEY from "../api/init.localStorage";
 
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];
@@ -20,7 +21,6 @@ const useRefreshToken = () => {
   const refresh = async () => {
     // request to get new token
     dispatch(loginStart());
-
     try {
       const response = await axios.get("/api/v1/users/refresh-token", {
         withCredentials: true,
@@ -32,10 +32,12 @@ const useRefreshToken = () => {
 
       // set new token for user
       dispatch(loginSuccess(userRefresh));
+      localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, true);
 
       return newAccessToken;
     } catch (err) {
       dispatch(loginFailed("Session expired!"));
+      localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
     }
   };
 
