@@ -1,11 +1,11 @@
 import axios from "../api/init.axios";
 import { useDispatch } from "react-redux";
+import LOCAL_STORAGE_KEY from "../api/init.localStorage";
 import {
   loginStart,
   loginFailed,
   loginSuccess,
 } from "../features/auth/authSlice";
-import LOCAL_STORAGE_KEY from "../api/init.localStorage";
 
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];
@@ -36,8 +36,8 @@ const useRefreshToken = () => {
 
       return newAccessToken;
     } catch (err) {
-      dispatch(loginFailed("Session expired!"));
       localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
+      dispatch(loginFailed("Session expired!"));
     }
   };
 

@@ -44,9 +44,9 @@ const loginUser = async (user, dispatch, navigate, location) => {
     });
     const userInfo = getUserCredential(res);
     dispatch(loginSuccess(userInfo));
-    localStorage.setItem("@atlana/logged", true);
+    localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, true);
 
-    navigate("/", { state: location, replace: true });
+    navigate(location, { replace: true });
   } catch (err) {
     if (!err?.response) {
       dispatch(loginFailed("Server is maintaining"));

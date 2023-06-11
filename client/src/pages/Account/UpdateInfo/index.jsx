@@ -86,6 +86,7 @@ const FormChangeInfo = ({ userInfo }) => {
       />
       <Dropdown
         title="Gender"
+        name="dropdown-gender"
         onOptionChange={handleOnOptionChange}
         optionSelected={user.gender}
       />
@@ -142,14 +143,10 @@ const UpdateInfo = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    if (!isMounted.current && user && !userInfo) {
+    if (!isMounted.current) {
       isMounted.current = true;
-      getUserReq(user.user_id, axiosPrivate, dispatch);
+      if (user && !userInfo) getUserReq(user.user_id, axiosPrivate, dispatch);
     }
-
-    return () => {
-      isMounted.current = false;
-    };
 
     // eslint-disable-next-line
   }, []);

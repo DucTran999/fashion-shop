@@ -79,14 +79,11 @@ const PublicProfile = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    if (!isMounted.current && user && !userInfo) {
+    if (!isMounted.current) {
       isMounted.current = true;
-      getUserReq(user.user_id, axiosPrivate, dispatch);
-    }
 
-    return () => {
-      isMounted.current = false;
-    };
+      if (user && !userInfo) getUserReq(user.user_id, axiosPrivate, dispatch);
+    }
 
     // eslint-disable-next-line
   }, []);

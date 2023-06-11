@@ -8,6 +8,10 @@
 .info-section-wrap {
   display: flex;
   flex-direction: column-reverse;
+
+  @include s.breakpoint(lg) {
+    flex-direction: row;
+  }
 }
 
 // avatar section style

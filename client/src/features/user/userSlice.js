@@ -33,6 +33,7 @@ const userSlice = createSlice({
     getUserFailed: (state, action) => {
       state.get.isLoading = false;
       state.get.error = true;
+      state.get.info = null;
       state.get.errorCause = action.payload;
     },
 
