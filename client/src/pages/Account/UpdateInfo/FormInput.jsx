@@ -12,6 +12,7 @@ const Input = ({ label, field, notRequire, inputVal, onInputChange }) => {
       {notRequire ? (
         <input
           type="text"
+          name={field}
           className={cx("form-inp")}
           onChange={(e) => onInputChange(field, e.target.value)}
           value={inputVal}
@@ -19,6 +20,7 @@ const Input = ({ label, field, notRequire, inputVal, onInputChange }) => {
       ) : (
         <input
           type="text"
+          name={field}
           className={cx("form-inp")}
           onChange={(e) => onInputChange(field, e.target.value)}
           value={inputVal}

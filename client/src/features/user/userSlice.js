@@ -7,7 +7,6 @@ const userSlice = createSlice({
       isLoading: false,
       info: null,
       errorCause: null,
-      error: false,
     },
     update: {
       isLoading: false,
@@ -28,11 +27,11 @@ const userSlice = createSlice({
     getUserSuccess: (state, action) => {
       state.get.isLoading = false;
       state.get.info = action.payload;
-      state.get.error = false;
+      state.get.errorCause = null;
     },
     getUserFailed: (state, action) => {
       state.get.isLoading = false;
-      state.get.error = true;
+      state.get.info = null;
       state.get.errorCause = action.payload;
     },
 

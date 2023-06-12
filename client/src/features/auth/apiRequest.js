@@ -13,6 +13,8 @@ import {
   logOutFailed,
 } from "./authSlice";
 
+import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
+
 const API_URL = {
   LOGIN: "api/v1/users/sign-in",
   REGISTER: "api/v1/users/sign-up",
@@ -34,14 +36,17 @@ const loginUser = async (user, dispatch, navigate, location) => {
 
   try {
     const res = await axios.post(API_URL.LOGIN, user, {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       withCredentials: true,
       timeout: 5000,
     });
     const userInfo = getUserCredential(res);
     dispatch(loginSuccess(userInfo));
+    localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, true);
 
-    navigate("/", { state: location, replace: true });
+    navigate(location, { replace: true });
   } catch (err) {
     if (!err?.response) {
       dispatch(loginFailed("Server is maintaining"));
@@ -84,13 +89,12 @@ const logOutUser = async (dispatch, navigate) => {
   dispatch(logOutStart());
   try {
     await axios.get(API_URL.LOGOUT, {
-      headers: {
-        "Content-type": "application/json",
-      },
       withCredentials: true,
     });
     dispatch(logOutSuccess());
-    navigate("/login", { state: "logout", replace: true });
+    localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
+
+    navigate("/login", { replace: true });
   } catch (error) {
     dispatch(logOutFailed());
   }

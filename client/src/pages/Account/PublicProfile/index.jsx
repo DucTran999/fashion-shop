@@ -72,21 +72,17 @@ const PublicProfile = () => {
 
   const userInfo = useSelector((state) => state.user.get.info);
   const isLoading = useSelector((state) => state.user.get.isLoading);
-  const isError = useSelector((state) => state.user.get.error);
   const errorCause = useSelector((state) => state.user.get.errorCause);
 
   const dispatch = useDispatch();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    if (!isMounted.current && user && !userInfo) {
+    if (!isMounted.current) {
       isMounted.current = true;
-      getUserReq(user.user_id, axiosPrivate, dispatch);
-    }
 
-    return () => {
-      isMounted.current = false;
-    };
+      if (user && !userInfo) getUserReq(user.user_id, axiosPrivate, dispatch);
+    }
 
     // eslint-disable-next-line
   }, []);
@@ -98,7 +94,7 @@ const PublicProfile = () => {
       </Row>
       {isLoading ? (
         <PageSpinner />
-      ) : isError ? (
+      ) : errorCause ? (
         <ErrorBlock msg={errorCause} />
       ) : (
         userInfo && <ProfileSection userInfo={userInfo} />

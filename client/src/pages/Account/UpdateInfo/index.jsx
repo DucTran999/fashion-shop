@@ -12,7 +12,6 @@ import { resetUpdateState } from "../../../features/user/userSlice";
 // Component Injected
 import ErrorBlock from "../../../components/ErrorBlock";
 import SectionHeader from "../../../components/SectionHeader";
-import PageSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import Padding from "../../../components/Padding";
 import Dropdown from "../../../components/Dropdown";
 import FormInput from "./FormInput";
@@ -86,6 +85,7 @@ const FormChangeInfo = ({ userInfo }) => {
       />
       <Dropdown
         title="Gender"
+        name="dropdown-gender"
         onOptionChange={handleOnOptionChange}
         optionSelected={user.gender}
       />
@@ -134,22 +134,16 @@ const UpdateInfo = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
 
   const userInfo = useSelector((state) => state.user.get.info);
-  const isLoading = useSelector((state) => state.user.get.isLoading);
-  const isError = useSelector((state) => state.user.get.error);
   const errorCause = useSelector((state) => state.user.get.errorCause);
 
   const dispatch = useDispatch();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    if (!isMounted.current && user && !userInfo) {
+    if (!isMounted.current) {
       isMounted.current = true;
-      getUserReq(user.user_id, axiosPrivate, dispatch);
+      if (user && !userInfo) getUserReq(user.user_id, axiosPrivate, dispatch);
     }
-
-    return () => {
-      isMounted.current = false;
-    };
 
     // eslint-disable-next-line
   }, []);
@@ -159,9 +153,7 @@ const UpdateInfo = () => {
       <Row>
         <SectionHeader title="Update Information" />
       </Row>
-      {isLoading ? (
-        <PageSpinner />
-      ) : isError ? (
+      {errorCause ? (
         <ErrorBlock msg={errorCause} />
       ) : (
         userInfo && <InfoSection userInfo={userInfo} />

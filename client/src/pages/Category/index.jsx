@@ -26,6 +26,7 @@ function Category() {
   const ref = useRef(null);
 
   const { slug } = useParams();
+  const prevCategory = useRef(slug);
 
   const [totalPages, setTotalPages] = useState(0);
   const [offset, setOffset] = useState(1);
@@ -73,7 +74,7 @@ function Category() {
   const ProductSection = () => {
     return (
       <>
-        <SectionSeparator title="All Products" />
+        <SectionSeparator title={formatHyphenToCapitalize(slug)} />
         <Container ref={ref}>
           {loading ? <LoadingSpinner /> : <ListProducts />}
         </Container>
@@ -84,8 +85,14 @@ function Category() {
   // Fetch data
   const fetchAllProducts = useCallback(
     async (pageNum) => {
-      setLoading(true);
+      // Check change category reset page.
+      if (slug !== prevCategory.current) {
+        pageNum = 1;
+        prevCategory.current = slug;
+      }
 
+      // Start fetching data
+      setLoading(true);
       try {
         const res = await axios.get(`${API_URL.products}/brief-variants`, {
           params: { category: slug, page: pageNum },
@@ -101,7 +108,7 @@ function Category() {
       } catch (error) {
         setLoading(false);
         if (!error?.response) {
-          console.log("Lost connection");
+          setIsError(true);
         } else if (error.response.status === 404) {
           setIsError(true);
         }

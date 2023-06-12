@@ -1,0 +1,59 @@
+@use "../../styles/" as s;
+
+.theme {
+  background: var(--medium-black-clr);
+  color: var(--light-grey-clr);
+
+  @include s.breakpoint(lg) {
+    height: 80vh;
+  }
+}
+
+.cart-empty-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+.back-category-btn {
+  margin: 1em 0 0 0;
+  padding: 0.5em;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  width: 200px;
+  font-size: 1.6rem;
+  background: var(--dark-gradient-3-clr);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.product-list-wrap {
+  height: 60vh;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0.5em;
+  border-radius: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-opacity-clr);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-clr);
+}
