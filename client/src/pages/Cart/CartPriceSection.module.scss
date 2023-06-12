@@ -1,0 +1,50 @@
+@use "../../styles/" as s;
+
+.row-mg {
+  margin: 0.3em 0;
+
+  &.last-child {
+    margin-top: 1em;
+    padding-top: 1em;
+    color: var(--gold-clr);
+    border-top: 2px solid var(--light-grey-clr);
+  }
+}
+
+.col-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-price-wrap {
+  background: var(--darker-black-clr);
+  padding: 1.5em 1em;
+  border-radius: 10px;
+}
+
+.cart-price__header {
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding-bottom: 1.5em;
+}
+
+.checkout-btn {
+  margin: 1em 0 0 0;
+  padding: 0.5em;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+
+  &.active {
+    &:hover {
+      transition: 0.25s ease-in-out;
+      color: white;
+      background: var(--dark-gradient-3-clr);
+    }
+  }
+
+  &.inactive {
+    pointer-events: none;
+    cursor: default;
+  }
+}

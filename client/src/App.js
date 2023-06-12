@@ -9,6 +9,7 @@ import {
   Category,
   Product,
   Account,
+  Cart,
   MissingPage,
 } from "./pages";
 import PersistLogin from "./routes/PersistLogin";
@@ -51,6 +52,9 @@ function App() {
                 path="/account"
                 element={<Navigate to="/account/profile" replace={true} />}
               />
+
+              {/* Cart path */}
+              <Route path="/cart" element={<Cart />} />
             </Route>
 
             {/* Page not found 404 */}

@@ -33,6 +33,7 @@
     &.active {
       cursor: default;
       user-select: none;
+      pointer-events: none;
       color: var(--primary-clr);
     }
 

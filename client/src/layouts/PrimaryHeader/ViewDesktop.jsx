@@ -20,6 +20,8 @@ const cx = classNames.bind(styles);
 /* Sub nav component */
 const SubNav = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
+  const cart = useSelector((state) => state.cart.get?.info);
+  const navigate = useNavigate();
 
   return (
     <ul className={cx("sub-nav")}>
@@ -37,10 +39,19 @@ const SubNav = () => {
         </Link>
       </li>
       <li className={cx("sub-nav__item")}>
-        <Link to="/cart" className={cx("sub-nav__link")}>
+        <div
+          className={cx("sub-nav__link")}
+          onClick={() => navigate("/cart", { replace: true })}
+        >
           {ICONS.cart}
-        </Link>
-        <span className={cx("cart__num-products")}>10</span>
+        </div>
+        {cart ? (
+          <span className={cx("cart__num-products")}>
+            {cart.products.length}
+          </span>
+        ) : (
+          <span className={cx("cart__num-products")}>0</span>
+        )}
       </li>
     </ul>
   );

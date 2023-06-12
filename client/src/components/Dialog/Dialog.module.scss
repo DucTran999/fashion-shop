@@ -1,0 +1,51 @@
+@use "../../styles/" as s;
+
+.dialog-wrap {
+  width: 20em;
+  background: var(--darker-black-clr);
+  text-align: center;
+  border-radius: 10px;
+  padding: 2em 1em;
+
+  &.active {
+    animation: fadeIn 0.5s;
+  }
+
+  &.inactive {
+    animation: fadeOut 0.5s;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+
+  &.success {
+    color: var(--emerald-green-clr);
+  }
+  &.error {
+    color: var(--orange-red-clr);
+  }
+  &.info {
+    color: var(--blue-clr);
+  }
+}
+
+.message {
+  font-size: 1em;
+  padding-top: 0.8em;
+  font-weight: 500;
+
+  &.success {
+    color: var(--emerald-green-clr);
+  }
+
+  &.error {
+    color: var(--orange-red-clr);
+  }
+  &.info {
+    color: var(--blue-clr);
+  }
+}

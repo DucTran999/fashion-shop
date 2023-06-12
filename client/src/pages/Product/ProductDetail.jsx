@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Container, Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import ICONS from "../../assets/icons";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import {
+  addProductToCartReq,
+  getCartReq,
+} from "../../features/cart/cartRequest";
 
 import ProductInfo from "./ProductInfo";
 import ProductVariantBar from "./ProductVariantBar";
 import PolicySection from "./PolicySection";
+import ModalContainer from "../../components/Modal/ModalContainer";
+import Dialog from "../../components/Dialog";
 
 // Style
 import style from "./ProductDetail.module.scss";
@@ -13,16 +22,69 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(style);
 
 const UtilitySection = ({ currentVariant, quantity }) => {
-  const handleOnBuySubmit = () => {
-    console.log(currentVariant.sku, quantity);
+  const [showModal, setShowModal] = useState(false);
+  const user = useSelector((state) => state.auth.login?.currentUser);
+  const success = useSelector((state) => state.cart.update.success);
+  const errorCause = useSelector((state) => state.cart.update?.errorCause);
+
+  const axiosPrivate = useAxiosPrivate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const addToCartProcess = async () => {
+    const payload = {
+      cart_id: String(user.user_id),
+      variant_id: String(currentVariant.id),
+      qty: String(quantity),
+    };
+    await addProductToCartReq(user.user_id, payload, axiosPrivate, dispatch);
+    await getCartReq(user.user_id, axiosPrivate, dispatch);
   };
 
-  const handleAddToCartOnClick = () => {
-    console.log(currentVariant.sku, quantity);
+  const handleAddToCartOnClick = async () => {
+    if (user) {
+      await addToCartProcess();
+      setShowModal(true);
+    } else {
+      navigate("/login", { replace: false });
+    }
+  };
+
+  const handleBuyOnClick = async () => {
+    if (user) {
+      await addToCartProcess();
+      errorCause ? setShowModal(true) : navigate("/cart", { replace: false });
+    } else {
+      navigate("/login", { replace: false });
+    }
   };
 
   return (
     <Row>
+      {showModal && (
+        <ModalContainer
+          modalStyle="transparent"
+          onClose={() => {
+            setShowModal(false);
+          }}
+        >
+          {errorCause ? (
+            <Dialog
+              typeDialog="info"
+              message={errorCause}
+              onClose={() => setShowModal(false)}
+            />
+          ) : (
+            success && (
+              <Dialog
+                typeDialog="success"
+                message="Product add successfully"
+                onClose={() => setShowModal(false)}
+              />
+            )
+          )}
+        </ModalContainer>
+      )}
       {currentVariant.in_stock > 0 && (
         <Col className={cx("col-cent")}>
           <span
@@ -36,7 +98,7 @@ const UtilitySection = ({ currentVariant, quantity }) => {
       )}
       {currentVariant.in_stock ? (
         <Col className={cx("col-cent")}>
-          <span className={cx("btn-user-action")} onClick={handleOnBuySubmit}>
+          <span className={cx("btn-user-action")} onClick={handleBuyOnClick}>
             <span className={cx("btn-user-action__icon")}>
               {ICONS.moneyBag}
             </span>
