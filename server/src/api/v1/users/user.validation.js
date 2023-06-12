@@ -32,12 +32,12 @@ const userLoginScheme = Joi.object({
 });
 
 const updateSchema = Joi.object({
-  user_id: Joi.required(),
+  user_id: Joi.string().required(),
   first_name: Joi.string().trim().required(),
   last_name: Joi.string().trim().required(),
   email: Joi.string().trim().required(),
   gender: Joi.string().trim().required(),
-  address: Joi.string().trim(),
+  address: Joi.string().trim().allow(""),
   phone: Joi.string().trim().max(11).allow("").pattern(new RegExp("^[0-9]+$")),
   date_of_birth: Joi.string().trim().allow(null),
 });
@@ -76,6 +76,7 @@ const validateLoginPayload = (req, res, next) => {
 const validateUpdatePayload = (req, res, next) => {
   const { error } = updateSchema.validate(req.body);
   if (error) {
+    console.log(error);
     next(createHttpError.BadRequest("Invalid Info!"));
   }
   next();

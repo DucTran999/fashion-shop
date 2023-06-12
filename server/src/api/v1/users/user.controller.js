@@ -19,6 +19,8 @@ class UserController {
       res
         .status(200)
         .cookie("refresh_token", refreshToken, {
+          sameSite: "strict",
+          domain: process.env.DOMAIN_NAME,
           httpOnly: true,
           path: "/",
         })
@@ -39,7 +41,10 @@ class UserController {
 
       res
         .status(200)
-        .clearCookie("refresh_token")
+        .clearCookie("refresh_token", {
+          domain: process.env.DOMAIN_NAME,
+          path: "/",
+        })
         .json({ status: "success", message: "Logout Successful" });
     } catch (err) {
       next(err);
@@ -59,6 +64,8 @@ class UserController {
       res
         .status(200)
         .cookie("refresh_token", refreshToken, {
+          sameSite: "strict",
+          domain: process.env.DOMAIN_NAME,
           httpOnly: true,
           path: "/",
         })

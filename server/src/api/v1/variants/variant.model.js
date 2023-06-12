@@ -30,6 +30,17 @@ class VariantModel {
     }
   };
 
+  findById = async (id) => {
+    const query = `SELECT in_stock FROM variants WHERE id = $1;`;
+
+    try {
+      const { rows } = await pool.query(query, [id]);
+      return rows;
+    } catch (error) {
+      throw createHttpError.InternalServerError();
+    }
+  };
+
   save = async ({
     product_id,
     color_id,
