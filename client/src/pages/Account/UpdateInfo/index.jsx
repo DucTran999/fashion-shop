@@ -12,7 +12,6 @@ import { resetUpdateState } from "../../../features/user/userSlice";
 // Component Injected
 import ErrorBlock from "../../../components/ErrorBlock";
 import SectionHeader from "../../../components/SectionHeader";
-import PageSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import Padding from "../../../components/Padding";
 import Dropdown from "../../../components/Dropdown";
 import FormInput from "./FormInput";
@@ -135,8 +134,6 @@ const UpdateInfo = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
 
   const userInfo = useSelector((state) => state.user.get.info);
-  const isLoading = useSelector((state) => state.user.get.isLoading);
-  const isError = useSelector((state) => state.user.get.error);
   const errorCause = useSelector((state) => state.user.get.errorCause);
 
   const dispatch = useDispatch();
@@ -156,9 +153,7 @@ const UpdateInfo = () => {
       <Row>
         <SectionHeader title="Update Information" />
       </Row>
-      {isLoading ? (
-        <PageSpinner />
-      ) : isError ? (
+      {errorCause ? (
         <ErrorBlock msg={errorCause} />
       ) : (
         userInfo && <InfoSection userInfo={userInfo} />

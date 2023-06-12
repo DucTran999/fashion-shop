@@ -72,7 +72,6 @@ const PublicProfile = () => {
 
   const userInfo = useSelector((state) => state.user.get.info);
   const isLoading = useSelector((state) => state.user.get.isLoading);
-  const isError = useSelector((state) => state.user.get.error);
   const errorCause = useSelector((state) => state.user.get.errorCause);
 
   const dispatch = useDispatch();
@@ -95,7 +94,7 @@ const PublicProfile = () => {
       </Row>
       {isLoading ? (
         <PageSpinner />
-      ) : isError ? (
+      ) : errorCause ? (
         <ErrorBlock msg={errorCause} />
       ) : (
         userInfo && <ProfileSection userInfo={userInfo} />
