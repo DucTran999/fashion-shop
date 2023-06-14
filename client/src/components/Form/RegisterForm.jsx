@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useForm from "../../hooks/useForm";
 
 // Component
 import ModalContainer from "../Modal/ModalContainer";
 import Popup from "../Modal/PopupContainer";
-import Input from "../Input/Input";
+import Input from "../Input/";
 import Button from "../Button/Button";
 import {
   LoadingAlert,
@@ -28,7 +28,6 @@ function RegisterForm() {
   document.title = "Be part of our family!";
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [showModal, setShowModal] = useState(false);
   const [alert, setAlert] = useState("loading");
@@ -62,7 +61,7 @@ function RegisterForm() {
   };
 
   const handleSwitchForm = () => {
-    navigate("/login", { state: location, replace: true });
+    navigate("/login", { replace: true });
   };
 
   const handleSubmit = async (event) => {
@@ -114,7 +113,9 @@ function RegisterForm() {
           {alert === "loading" && <LoadingAlert />}
           {alert === "success" && (
             <SuccessAlertNavigate
-              linkTo="/login"
+              onClickEvent={() => {
+                navigate("/login", { replace: true });
+              }}
               message="Thank you"
               btnTitle="Return to Login Page"
             />
@@ -146,10 +147,7 @@ function RegisterForm() {
     <Fragment>
       {showModal && <RegisterPopup />}
       <FormHeader />
-      <form
-        className={cx("form-body")}
-        onSubmit={(event) => handleSubmit(event)}
-      >
+      <form className={cx("form-body")} onSubmit={handleSubmit}>
         <Input
           fieldName="firstName"
           labelTitle="First name"

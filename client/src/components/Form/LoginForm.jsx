@@ -7,7 +7,7 @@ import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
 
 // Component
 import useForm from "../../hooks/useForm";
-import Input from "../Input/Input";
+import Input from "../Input/";
 import Button from "../Button/Button";
 import ModalContainer from "../Modal/ModalContainer";
 import Popup from "../Modal/PopupContainer";
@@ -64,6 +64,7 @@ function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const refresh = useRefreshToken();
   const isMounted = useRef(false);
@@ -85,9 +86,8 @@ function LoginForm() {
   const formData = formState.inputs;
   const formStatus = formState.statuses;
 
-  const loginLoading = useSelector((state) => state.auth.login.isFetching);
-  const loginError = useSelector((state) => state.auth.login.error);
-  const errorCause = useSelector((state) => state.auth.login.errorCause);
+  const loginLoading = useSelector((state) => state.auth.login?.isFetching);
+  const errorCause = useSelector((state) => state.auth.login?.errorCause);
 
   const [buttonState, setButtonState] = useState("inactive");
 
@@ -101,11 +101,7 @@ function LoginForm() {
       email: formData.email,
       password: formData.password,
     };
-    await loginUser(user, dispatch, navigate, location);
-  };
-
-  const handleSwitchForm = () => {
-    navigate("/register", { state: location, replace: true });
+    await loginUser(user, dispatch, navigate, from);
   };
 
   const handleCloseModal = () => {
@@ -120,7 +116,7 @@ function LoginForm() {
 
         // If refresh success redirect to home page
         if (newAccessToken) {
-          navigate("/", { replace: true });
+          navigate(from, { replace: true });
         }
       }
     };
@@ -140,11 +136,11 @@ function LoginForm() {
     if (loginLoading) {
       setShowModal(true);
       setAlert("loading");
-    } else if (loginError) {
+    } else if (errorCause) {
       setShowModal(true);
       setAlert("error");
     }
-  }, [loginLoading, loginError]);
+  }, [loginLoading, errorCause]);
 
   useEffect(() => {
     buttonSwitchState(formStatus);
@@ -180,7 +176,10 @@ function LoginForm() {
     return (
       <div className={cx("switch-mode")}>
         Do not have an account?
-        <span className={cx("switch-mode__btn")} onClick={handleSwitchForm}>
+        <span
+          className={cx("switch-mode__btn")}
+          onClick={() => navigate("/register", { replace: true })}
+        >
           Sign up now!
         </span>
       </div>
