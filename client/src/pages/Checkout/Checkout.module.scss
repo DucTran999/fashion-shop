@@ -1,0 +1,16 @@
+@use "../../styles/" as s;
+
+.theme {
+  background: var(--medium-black-clr);
+  color: var(--light-grey-clr);
+  height: auto;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column-reverse;
+
+  @include s.breakpoint(lg) {
+    flex-direction: row;
+  }
+}
