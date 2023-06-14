@@ -5,7 +5,8 @@
     height: auto;
     &--loading,
     &--success,
-    &--fail {
+    &--fail,
+    &--info {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -42,6 +43,10 @@
     &--fail {
       color: var(--raspberry-clr);
     }
+
+    &--info {
+      color: var(--blue-clr);
+    }
   }
 
   &__btn {
@@ -53,6 +58,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     border-radius: 5px;
     &.active {
