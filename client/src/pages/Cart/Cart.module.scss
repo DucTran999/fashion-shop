@@ -5,7 +5,7 @@
   color: var(--light-grey-clr);
 
   @include s.breakpoint(lg) {
-    height: 80vh;
+    height: 35em;
   }
 }
 
@@ -34,7 +34,7 @@
 }
 
 .product-list-wrap {
-  height: 60vh;
+  height: 25em;
   overflow: auto;
 }
 
