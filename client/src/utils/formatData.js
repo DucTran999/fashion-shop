@@ -37,6 +37,12 @@ const formatHyphenToLowerCase = (original) => {
   return arr.join(" ");
 };
 
+const formatHyphenToUpperCase = (original) => {
+  const arr = original.toUpperCase().trim().split("-");
+
+  return arr.join("");
+};
+
 const formatVietnameseToNonAccent = (original) => {
   // Lowercase
   let formatted = original.toLowerCase();
@@ -57,11 +63,26 @@ const formatVietnameseToNonAccent = (original) => {
   return formatted;
 };
 
+const convertStateToStateCode = (plainText) => {
+  if (plainText.toLowerCase() === "orders pending") return "1";
+  if (plainText.toLowerCase() === "on delivery") return "2";
+  if (plainText.toLowerCase() === "on cancelling") return "5";
+  if (plainText.toLowerCase() === "completed") return "4";
+  if (plainText.toLowerCase() === "cancelled") return "3";
+};
+
+const getDateFromTimestamp = (timestamp) => {
+  return new Date(timestamp.replace(" ", "T"));
+};
+
 export {
   formatMoney,
   formatColorCode,
   formatCapitalize,
   formatHyphenToCapitalize,
   formatHyphenToLowerCase,
+  formatHyphenToUpperCase,
   formatVietnameseToNonAccent,
+  convertStateToStateCode,
+  getDateFromTimestamp,
 };

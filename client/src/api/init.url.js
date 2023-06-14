@@ -6,6 +6,8 @@ const API_URL = {
   users: "/api/v1/users",
 
   carts: "/api/v1/carts",
+
+  orders: "/api/v1/orders",
 };
 
 export default API_URL;

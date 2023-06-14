@@ -22,4 +22,8 @@ const isLengthValid = (input) => {
   return input.length >= 8 && input.length <= 32;
 };
 
-export { isName, isEmail, isLengthValid };
+const isNotEmpty = (input) => {
+  return input.trim().length > 0;
+};
+
+export { isName, isEmail, isNotEmpty, isLengthValid };
