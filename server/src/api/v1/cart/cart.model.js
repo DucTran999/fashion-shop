@@ -54,6 +54,20 @@ class CartModel {
     }
   };
 
+  countProductInCart = async (id) => {
+    const query = `
+      SELECT COUNT(variant_id)
+        FROM cart_variant 
+        WHERE cart_id = $1 AND qty > 0;`;
+
+    try {
+      const { rows } = await pool.query(query, [id]);
+      return rows[0].count;
+    } catch (error) {
+      throw createHttpError.InternalServerError();
+    }
+  };
+
   saveOne = async (cart_id, variant_id, qty) => {
     const query = `
       INSERT INTO cart_variant 
@@ -80,7 +94,17 @@ class CartModel {
     try {
       await pool.query(query, [cart_id, variant_id, qty]);
     } catch (error) {
-      console.log(error);
+      throw createHttpError.InternalServerError();
+    }
+  };
+
+  clearCart = async (cart_id) => {
+    const query = `
+      UPDATE cart_variant SET qty = 0 WHERE cart_id=$1;
+      `;
+    try {
+      await pool.query(query, [cart_id]);
+    } catch (error) {
       throw createHttpError.InternalServerError();
     }
   };

@@ -31,6 +31,11 @@ class CartService {
     const variantDB = await variantModel.findById(variant_id);
     if (!variantDB.length) throw createHttpError.BadRequest();
 
+    // Check number of products not over cart limits
+    const numberOfProduct = await cartModel.countProductInCart(cart_id);
+    if (numberOfProduct > 9)
+      throw createHttpError.Conflict("Maximum 10 products per cart");
+
     // Check new qty not over product in stock
     if (+qty > +variantDB[0].in_stock) {
       throw createHttpError.Conflict(
