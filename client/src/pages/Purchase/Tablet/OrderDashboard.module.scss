@@ -1,0 +1,36 @@
+@use "../../../styles/" as s;
+
+.col-cent {
+  display: flex;
+  justify-content: center;
+}
+
+.order-list-wrap {
+  position: relative;
+  width: 100%;
+  font-size: 1.4rem;
+}
+
+.order-list {
+  max-height: 22em;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.order-record-wrap {
+  border-bottom: 1px solid var(--grey-clr);
+  padding: 0.5em 0;
+  margin: 0;
+
+  &.header {
+    font-weight: 500;
+    color: var(--primary-opacity-clr);
+  }
+}
+
+.submit-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--primary-opacity-clr);
+}

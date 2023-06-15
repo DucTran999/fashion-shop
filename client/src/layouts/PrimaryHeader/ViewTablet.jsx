@@ -45,9 +45,12 @@ const MenuDropDownServiceHasLogin = () => {
         <Link to="/cart" className={cx("menu__dropdown--tablet__element")}>
           Cart
         </Link>
-        <Link to="/purchases" className={cx("menu__dropdown--tablet__element")}>
+        <div
+          onClick={() => navigate("/account/purchases", { replace: true })}
+          className={cx("menu__dropdown--tablet__element")}
+        >
           My Purchases
-        </Link>
+        </div>
         <Link to="/wishlist" className={cx("menu__dropdown--tablet__element")}>
           Wishlist
         </Link>

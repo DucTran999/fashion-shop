@@ -1,0 +1,40 @@
+@use "../../../styles/" as s;
+
+.row-cent {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  padding: 1em 0;
+}
+
+.col-cent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.over-flow-drag {
+  overflow: auto;
+  flex-wrap: nowrap;
+  scroll-behavior: smooth;
+  border-bottom: 2px solid var(--primary-opacity-clr);
+}
+
+.over-flow-drag::-webkit-scrollbar {
+  display: none;
+}
+
+.over-flow-drag {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.nav-option {
+  font-weight: 500;
+  font-size: 1.3rem;
+
+  &.active {
+    color: var(--primary-opacity-clr);
+    pointer-events: none;
+  }
+}

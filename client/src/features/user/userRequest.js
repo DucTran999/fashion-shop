@@ -47,6 +47,8 @@ const updateUserReq = async (userId, newInfo, axiosPrivate, dispatch) => {
   } catch (err) {
     if (!err?.response) {
       dispatch(updateUserFailed("Server is busy"));
+    } else if (err.response?.status === 400) {
+      dispatch(updateUserFailed("Invalid Info"));
     } else if (err.response?.status === 401) {
       dispatch(updateUserFailed("Unauthorized"));
     } else if (err.response?.status === 404) {
