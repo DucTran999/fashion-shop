@@ -75,9 +75,19 @@ const encryptUserPayload = (user) => {
   };
 };
 
+const extractVariantId = (objects) => {
+  const values = [];
+  for (let i = 0; i < objects.length; ++i) {
+    values.push(objects[i].variant_id);
+  }
+
+  return values;
+};
+
 export {
   packingProductVariant,
   convertHyphenStringToLowerCase,
+  extractVariantId,
   encryptUserPayload,
   encrypt,
   decrypt,

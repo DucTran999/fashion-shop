@@ -41,6 +41,36 @@ class VariantModel {
     }
   };
 
+  findLatestQtyInStock = async (listVariantId) => {
+    const query = `
+      SELECT id, in_stock 
+        FROM variants 
+        WHERE id = ANY($1::int[]);`;
+
+    try {
+      const { rows } = await pool.query(query, [listVariantId]);
+      return rows;
+    } catch (error) {
+      throw createHttpError.InternalServerError();
+    }
+  };
+
+  updateNewQty = async (variantId, qty) => {
+    const query = `
+      UPDATE variants
+        SET in_stock = $2
+        WHERE id = $1; 
+    `;
+
+    try {
+      const { rows } = await pool.query(query, [variantId, qty]);
+      return rows;
+    } catch (error) {
+      console.log(error);
+      throw createHttpError.InternalServerError();
+    }
+  };
+
   save = async ({
     product_id,
     color_id,

@@ -8,6 +8,7 @@ import productRouter from "./products/product.route.js";
 import uploadRouter from "./serviceUpload/uploads.route.js";
 import variantRouter from "./variants/variant.route.js";
 import cartRouter from "./cart/cart.route.js";
+import ordersRouter from "./orders/orders.route.js";
 
 dotenv.config();
 const route = express.Router();
@@ -27,6 +28,8 @@ route.use("/uploads", uploadRouter);
 route.use("/variants", variantRouter);
 
 route.use("/carts", cartRouter);
+
+route.use("/orders", ordersRouter);
 
 route.use("/", (req, res, next) => {
   res.status(200);

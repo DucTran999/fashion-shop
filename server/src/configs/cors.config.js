@@ -1,7 +1,11 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const whitelist = [process.env.REACT_CLIENT, process.env.REACT_CLIENT_URI];
+const whitelist = [
+  process.env.REACT_CLIENT,
+  process.env.REACT_CLIENT_URI,
+  process.env.REACT_ADMIN_URI,
+];
 
 const corsOptions = {
   origin: (origin, callback) => {

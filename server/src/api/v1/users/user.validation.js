@@ -38,7 +38,12 @@ const updateSchema = Joi.object({
   email: Joi.string().trim().required(),
   gender: Joi.string().trim().required(),
   address: Joi.string().trim().allow(""),
-  phone: Joi.string().trim().max(11).allow("").pattern(new RegExp("^[0-9]+$")),
+  phone: Joi.string()
+    .trim()
+    .min(10)
+    .max(11)
+    .allow("")
+    .pattern(new RegExp("^[0-9]+$")),
   date_of_birth: Joi.string().trim().allow(null),
 });
 
@@ -76,7 +81,6 @@ const validateLoginPayload = (req, res, next) => {
 const validateUpdatePayload = (req, res, next) => {
   const { error } = updateSchema.validate(req.body);
   if (error) {
-    console.log(error);
     next(createHttpError.BadRequest("Invalid Info!"));
   }
   next();

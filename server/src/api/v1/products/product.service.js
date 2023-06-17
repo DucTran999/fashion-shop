@@ -1,7 +1,7 @@
 import createHttpError from "http-errors";
 import productModel from "./product.model.js";
 
-import MAGIC_NUMBER from "../../utils/magicNumber.js";
+import { MAGIC_NUMBER } from "../../utils/constVariable.js";
 import categoryModel from "../categories/category.model.js";
 import {
   convertHyphenStringToLowerCase,
