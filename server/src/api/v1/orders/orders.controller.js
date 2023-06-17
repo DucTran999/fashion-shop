@@ -1,9 +1,9 @@
 import ordersService from "./orders.service.js";
 
 class OrderController {
-  getAll = async (req, res, next) => {
+  getAllOrdersWithState = async (req, res, next) => {
     try {
-      const orders = await ordersService.getAllOrder();
+      const orders = await ordersService.getAllOrders(req);
 
       res
         .status(200)
@@ -30,6 +30,37 @@ class OrderController {
     try {
       if (payload instanceof Error) throw payload;
       await ordersService.placeNewOrder(req, payload);
+
+      res.status(200).json({ status: "success", message: null });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  confirmOrder = async (req, res, next) => {
+    try {
+      await ordersService.confirmOrder(req);
+
+      res.status(200).json({ status: "success", message: null });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // use for set state to completed and cancelled order
+  adminUpdateOrderState = async (req, res, next) => {
+    try {
+      await ordersService.handleRejectAndCompleteOrder(req);
+
+      res.status(200).json({ status: "success", message: null });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  cancelOrderDeliveryFailed = async (req, res, next) => {
+    try {
+      await ordersService.handleCancelOrderShippingFailed(req);
 
       res.status(200).json({ status: "success", message: null });
     } catch (err) {

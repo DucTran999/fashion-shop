@@ -2,13 +2,17 @@ import createHttpError from "http-errors";
 import pool from "../helpers/init.postgres.pool.js";
 
 class OrderModel {
-  findAll = async () => {
+  findAll = async (state_id) => {
     const query = `
-        SELECT id, user_id, items, state_id, created_at, updated_at
-            FROM  orders;
+        SELECT o.id, o.user_id, u.email, o.items, 
+               o.state_id, o.created_at, o.updated_at
+          FROM  orders as o 
+            JOIN users as u
+            ON o.user_id = u.user_id
+          WHERE state_id=$1;
         `;
     try {
-      const { rows } = await pool.query(query);
+      const { rows } = await pool.query(query, [state_id]);
       return rows;
     } catch (error) {
       throw createHttpError.InternalServerError();
@@ -64,6 +68,7 @@ class OrderModel {
     try {
       await pool.query(query, [user_id, order_id, state_id]);
     } catch (error) {
+      console.log(error);
       throw createHttpError.InternalServerError();
     }
   };

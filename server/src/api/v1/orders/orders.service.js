@@ -1,13 +1,68 @@
 import createHttpError from "http-errors";
 import orderModel from "./orders.model.js";
+import variantModel from "../variants/variant.model.js";
 import cartModel from "../cart/cart.model.js";
 import stateModel from "../states/state.model.js";
-
 import paymentMethodModel from "../paymentMethod/paymentMethod.model.js";
 
+import { ORDER_STATE_ID } from "../../utils/constVariable.js";
+import { extractVariantId } from "../../utils/normalizeData.js";
+
 class OrderService {
-  getAllOrder = async () => {
-    return await orderModel.findAll();
+  getAllOrders = async (req) => {
+    const state_id = req.query?.state_id;
+    if (!state_id) throw createHttpError.BadRequest();
+
+    const orders = await orderModel.findAll(state_id);
+    if (!orders.length) return orders;
+
+    // Classify orders pending: overstock or not
+    if (state_id === ORDER_STATE_ID.pending) {
+      const ordersClassified = [];
+
+      for (let i = 0; i < orders.length; ++i) {
+        let total = 0;
+        let hasOverstock = false;
+        let itemsChecked = [];
+        const items = orders[i].items;
+
+        // Get list variant id
+        const variantIds = extractVariantId(items);
+
+        // Get latest qty for list items
+        const latestQty = await variantModel.findLatestQtyInStock(variantIds);
+
+        // Check overstock
+        for (let i = 0; i < items.length; i++) {
+          const isOverstock = items[i].qty > latestQty[i].in_stock;
+          if (isOverstock) hasOverstock = true;
+          total += items[i].sub_price;
+          itemsChecked.push({ ...items[i], overstock: isOverstock });
+        }
+
+        ordersClassified.push({
+          ...orders[i],
+          items: itemsChecked,
+          total_price: total,
+          has_overstock: hasOverstock,
+        });
+      }
+      return ordersClassified;
+    }
+
+    // Other type no need check overstock
+    let ordersHasTotalPrice = [];
+    for (let i = 0; i < orders.length; ++i) {
+      let totalPrice = 0;
+      const items = orders[i].items;
+      items.forEach((item) => {
+        totalPrice += item.sub_price;
+      });
+
+      ordersHasTotalPrice.push({ ...orders[i], total_price: totalPrice });
+    }
+
+    return ordersHasTotalPrice;
   };
 
   getAllUserOrderWithState = async (req, payload) => {
@@ -63,6 +118,65 @@ class OrderService {
     );
 
     await cartModel.clearCart(user_id);
+  };
+
+  confirmOrder = async (req) => {
+    const orderId = req.params.id;
+    if (!orderId) throw createHttpError.BadRequest();
+    const order = req.body;
+    if (!order) throw createHttpError.BadRequest();
+
+    // Decrease stock
+    const items = order.items;
+    const variantIds = extractVariantId(items);
+    const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
+
+    for (let i = 0; i < items.length; ++i) {
+      let newQty = qtyInStock[i].in_stock - items[i].qty;
+      await variantModel.updateNewQty(qtyInStock[i].id, newQty);
+    }
+
+    // Update to delivery state
+    orderModel.updateOrderState(
+      order.user_id,
+      orderId,
+      ORDER_STATE_ID.shipping
+    );
+  };
+
+  handleRejectAndCompleteOrder = async (req) => {
+    const orderId = req.params.id;
+    if (!orderId) throw createHttpError.BadRequest();
+    const body = req.body;
+    if (!body) throw createHttpError.BadRequest();
+    const { user_id, state_id } = req.body;
+
+    //Update to delivery state
+    orderModel.updateOrderState(user_id, orderId, state_id);
+  };
+
+  handleCancelOrderShippingFailed = async (req) => {
+    const orderId = req.params?.id;
+    if (!orderId) throw createHttpError.BadRequest();
+    const order = req.body;
+    if (!order) throw createHttpError.BadRequest();
+
+    // revert qty in stock
+    const items = order.items;
+    const variantIds = extractVariantId(items);
+    const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
+
+    for (let i = 0; i < items.length; ++i) {
+      let newQty = qtyInStock[i].in_stock + items[i].qty;
+      await variantModel.updateNewQty(qtyInStock[i].id, newQty);
+    }
+
+    // Update to cancelled state
+    orderModel.updateOrderState(
+      order.user_id,
+      orderId,
+      ORDER_STATE_ID.cancelled
+    );
   };
 
   updateOrderState = async (req, payload, state_id) => {
