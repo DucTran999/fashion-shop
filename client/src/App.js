@@ -10,7 +10,9 @@ import {
   Product,
   Account,
   Cart,
+  Checkout,
   MissingPage,
+  Purchase,
 } from "./pages";
 import PersistLogin from "./routes/PersistLogin";
 import RequireAuth from "./routes/RequireAuth";
@@ -55,6 +57,12 @@ function App() {
 
               {/* Cart path */}
               <Route path="/cart" element={<Cart />} />
+
+              {/* Checkout path */}
+              <Route path="/checkout" element={<Checkout />} />
+
+              {/* purchase path */}
+              <Route path="/account/purchases" element={<Purchase />} />
             </Route>
 
             {/* Page not found 404 */}

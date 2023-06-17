@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 
 // Style
 import classNames from "classnames/bind";
@@ -24,25 +23,39 @@ const ErrorAlert = ({ message, onClose }) => {
         {ICONS.errorCircle}
         <div style={{ marginLeft: 10 }}>{message}</div>
       </div>
-      <span className={cx("popup-box__btn", "inactive")} onClick={onClose}>
+      <span className={cx("popup-box__btn", "active")} onClick={onClose}>
         <div className={cx("popup-box__btn--title")}>Close</div>
       </span>
     </Fragment>
   );
 };
 
-const SuccessAlertNavigate = ({ message, linkTo, btnTitle }) => {
+const SuccessAlertNavigate = ({ message, btnTitle, onClickEvent }) => {
   return (
     <Fragment>
       <div className={cx("popup-box__message--success")}>
         {ICONS.checkCircle}
         <div style={{ marginLeft: 10 }}>{message}</div>
       </div>
-      <Link to={linkTo} className={cx("popup-box__btn", "active")}>
+      <div className={cx("popup-box__btn", "active")} onClick={onClickEvent}>
         <div className={cx("popup-box__btn--title")}>{btnTitle}</div>
-      </Link>
+      </div>
     </Fragment>
   );
 };
 
-export { LoadingAlert, ErrorAlert, SuccessAlertNavigate };
+const InfoAlertNavigate = ({ message, btnTitle, onClickEvent }) => {
+  return (
+    <Fragment>
+      <div className={cx("popup-box__message--info")}>
+        {ICONS.infoIcon}
+        <div style={{ marginLeft: 10 }}>{message}</div>
+      </div>
+      <div className={cx("popup-box__btn", "inactive")} onClick={onClickEvent}>
+        <div className={cx("popup-box__btn--title")}>{btnTitle}</div>
+      </div>
+    </Fragment>
+  );
+};
+
+export { LoadingAlert, ErrorAlert, SuccessAlertNavigate, InfoAlertNavigate };

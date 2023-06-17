@@ -1,0 +1,44 @@
+@use "../../styles/" as s;
+
+.cart-summary-section {
+  background: var(--darker-black-clr);
+  position: relative;
+  padding: 1em;
+}
+
+.list-items {
+  max-height: 22em;
+  overflow: auto;
+}
+
+.item-wrap {
+  position: relative;
+  padding: 1em 0;
+  background: transparent;
+  border-bottom: 2px solid var(--light-grey-clr);
+}
+
+.img-side {
+  width: 80%;
+  border-radius: 10px;
+}
+
+.item__name {
+  font-weight: 500;
+  font-size: 1.4em;
+  color: var(--primary-opacity-clr);
+}
+
+.item__variant {
+  font-size: 1em;
+  padding: 0.1em 0;
+  margin-right: 1em;
+}
+
+.total-section {
+  margin-top: 1.5em;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: var(--gold-clr);
+}

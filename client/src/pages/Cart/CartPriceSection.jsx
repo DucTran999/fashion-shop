@@ -6,9 +6,15 @@ import { formatMoney } from "../../utils/formatData";
 
 import classNames from "classnames/bind";
 import style from "./CartPriceSection.module.scss";
+import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(style);
 
 const CartPriceSection = ({ total_price }) => {
+  const navigate = useNavigate();
+  const handleCheckout = () => {
+    navigate("/checkout", { replace: false });
+  };
+
   return (
     <Container>
       <Padding />
@@ -39,6 +45,7 @@ const CartPriceSection = ({ total_price }) => {
         </Row>
         <Row className={cx("row-mg")}>
           <button
+            onClick={handleCheckout}
             className={cx(
               "checkout-btn",
               +total_price === 0 ? "inactive" : "active"

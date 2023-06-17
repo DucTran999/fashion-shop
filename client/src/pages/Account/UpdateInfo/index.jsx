@@ -32,6 +32,9 @@ const FormChangeInfo = ({ userInfo }) => {
   const dispatch = useDispatch();
   const axiosPrivate = useAxiosPrivate();
 
+  const userPhone = useRef(user.phone);
+  const userEmail = useRef(user.email);
+
   const handleOnInputChange = (field, value) => {
     setUser({ ...user, [field]: value });
   };
@@ -57,6 +60,9 @@ const FormChangeInfo = ({ userInfo }) => {
 
   return (
     <form onSubmit={handleOnSubmit} className={cx("form-profile")}>
+      {(!userEmail.current || !userPhone.current) && (
+        <div className={cx("form-alert")}>Please update phone, email</div>
+      )}
       <FormInput
         label="First Name (Cannot empty or over 32 letters)"
         inputVal={user.first_name}
@@ -70,7 +76,7 @@ const FormChangeInfo = ({ userInfo }) => {
         onInputChange={handleOnInputChange}
       />
       <FormInput
-        label="Phone (E.g: 0123 456 789)"
+        label="Phone (E.g: 0123456789)"
         inputVal={user.phone || ""}
         field="phone"
         onInputChange={handleOnInputChange}

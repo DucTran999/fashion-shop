@@ -1,0 +1,17 @@
+@use "../../styles/" as u;
+
+.input-box {
+  position: relative;
+  margin: 0 0 1em 0;
+}
+
+.input-label {
+  font-size: 0.8em;
+}
+
+.input-value {
+  font-size: 0.9em;
+  color: var(--primary-opacity-clr);
+  padding: 0.2em 0;
+  border-bottom: 2px solid var(--light-grey-clr);
+}

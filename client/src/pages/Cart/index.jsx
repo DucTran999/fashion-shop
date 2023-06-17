@@ -69,6 +69,7 @@ const ListProducts = ({ products }) => {
 };
 
 const Cart = () => {
+  document.title = "Cart";
   const isMounted = useRef(false);
   const user = useSelector((state) => state.auth.login.currentUser);
 

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
-import { logOutUser } from "../../features/auth/apiRequest";
 
 import ICONS from "../../assets/icons";
+import { COMMON_PATH } from "../../utils/constVariable";
+import { logOutUser } from "../../features/auth/apiRequest";
+import { updateSidebarSelection } from "../../features/activeNav/navAction";
 
 // Component
 import ShopLogo from "../../components/Logo/ShopLogo";
@@ -27,6 +29,11 @@ const ViewMobile = () => {
     await logOutUser(dispatch, navigate);
   };
 
+  const handleNavigateOnChangeOption = (optionTitle, path) => {
+    updateSidebarSelection(optionTitle, dispatch);
+    navigate(path, { replace: true });
+  };
+
   const handleShowSidebar = () => {
     document.body.style.overflow = "hidden";
     setShowSidebar(true);
@@ -40,9 +47,12 @@ const ViewMobile = () => {
   /* Sub nav component */
   const BackHomeButton = () => {
     return (
-      <Link to="/" className={cx("btn-back-home")}>
+      <div
+        className={cx("btn-back-home")}
+        onClick={() => handleNavigateOnChangeOption("home", COMMON_PATH.home)}
+      >
         {ICONS.backArrow}
-      </Link>
+      </div>
     );
   };
 
@@ -82,9 +92,14 @@ const ViewMobile = () => {
               <Link to="/search" className={cx("service-item")}>
                 Search
               </Link>
-              <Link to="/category/all-products" className={cx("service-item")}>
+              <div
+                className={cx("service-item")}
+                onClick={() =>
+                  handleNavigateOnChangeOption("category", COMMON_PATH.category)
+                }
+              >
                 Category
-              </Link>
+              </div>
               <Link to="/lookbook" className={cx("service-item")}>
                 Lookbook
               </Link>
@@ -102,20 +117,38 @@ const ViewMobile = () => {
               <Link to="/blogs" className={cx("service-item")}>
                 Notification
               </Link>
-              <Link to="/blogs" className={cx("service-item")}>
+              <div
+                onClick={() =>
+                  handleNavigateOnChangeOption(
+                    "Orders pending",
+                    COMMON_PATH.purchase
+                  )
+                }
+                className={cx("service-item")}
+              >
                 My Purchases
-              </Link>
-              <Link to="/cart" className={cx("service-item")}>
+              </div>
+              <div
+                className={cx("service-item")}
+                onClick={() =>
+                  handleNavigateOnChangeOption("cart", COMMON_PATH.cart)
+                }
+              >
                 Cart
-              </Link>
+              </div>
             </nav>
           </section>
 
           <section className={cx("sidebar-service", "last-service")}>
             <nav className={cx("service-list")} onClick={handleCloseSidebar}>
-              <Link to="/account/profile" className={cx("service-item")}>
+              <div
+                className={cx("service-item")}
+                onClick={() =>
+                  handleNavigateOnChangeOption("account", COMMON_PATH.account)
+                }
+              >
                 Account Settings
-              </Link>
+              </div>
               <span className={cx("service-item")} onClick={handleLogOut}>
                 Log out
               </span>

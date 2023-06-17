@@ -1,0 +1,16 @@
+@use "../../styles/" as s;
+
+.btn-refresh {
+  border: none;
+  margin-left: 1em;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  background-color: var(--primary-clr);
+  color: var(--light-grey-clr);
+
+  padding: 0.5em 1em;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

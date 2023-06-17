@@ -1,0 +1,28 @@
+@use "../../styles/" as s;
+
+.search-bar {
+  color: var(--text-clr);
+  padding: 1em 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn {
+  border: none;
+  margin-left: 1em;
+  border-radius: 5px;
+  background-color: var(--primary-clr);
+  color: var(--light-grey-clr);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+}

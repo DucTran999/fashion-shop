@@ -1,0 +1,17 @@
+@use "../../styles/" as s;
+
+.form-wrap {
+  padding: 1em;
+  height: auto;
+}
+
+.payment-section {
+  margin-top: 0.8em;
+  font-size: 0.9em;
+  margin-right: 0.5em;
+}
+
+.payment-method {
+  color: var(--primary-opacity-clr);
+  font-size: 0.9em;
+}

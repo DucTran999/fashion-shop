@@ -7,6 +7,7 @@ import ManageAccounts from "./pages/Account/ManageAccounts";
 import Unauthorized from "./pages/Unauthorized";
 import PageNotFound from "./pages/PageNotFound";
 import Categories from "./pages/Categories/Categories";
+import ManageOrders from "./pages/Orders";
 
 import PersistLogin from "./routes/PersistLogin";
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/accounts" element={<ManageAccounts />} />
+            <Route path="/orders" element={<ManageOrders />} />
           </Route>
         </Route>
         <Route path="*" element={<PageNotFound />} />

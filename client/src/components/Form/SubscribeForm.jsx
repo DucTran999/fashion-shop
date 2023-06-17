@@ -37,6 +37,7 @@ function SubscribeForm() {
       <form onSubmit={handleOnSubmit} className={cx("subscribe-form__form")}>
         <input
           type="text"
+          name="user-email"
           className={cx("subscribe-form__field")}
           placeholder="Your email"
           onChange={(event) => setFormState(event.target.value)}

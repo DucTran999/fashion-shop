@@ -10,13 +10,17 @@
   margin-bottom: 1em;
 
   &__header {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 500;
     padding: 0.1em;
     user-select: none;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+
+    @include s.breakpoint(lg) {
+      font-size: 2rem;
+    }
   }
 
   &__list {
@@ -25,9 +29,13 @@
   }
 
   &__item {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 400;
     padding: 0.5em;
+
+    @include s.breakpoint(lg) {
+      font-size: 1.6rem;
+    }
 
     &.active {
       cursor: default;

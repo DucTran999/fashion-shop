@@ -28,21 +28,13 @@ import Dialog from "../../components/Dialog";
 // Style
 import classNames from "classnames/bind";
 import style from "./CartProduct.module.scss";
-
 const cx = classNames.bind(style);
 
 const IMG_URL = process.env.REACT_APP_API_SERVER_URL;
 
-const CartProduct = ({ product }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [productQty, setProductQty] = useState(product.qty);
-
-  const errorCause = useSelector((state) => state.cart.update.errorCause);
-  const prevQuantity = useRef(product.qty);
-
+const InfoSection = ({ product }) => {
   const axiosPrivate = useAxiosPrivate();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleOnClick = (e) => {
     e.preventDefault();
@@ -64,17 +56,38 @@ const CartProduct = ({ product }) => {
     await getCartReq(product.cart_id, axiosPrivate, dispatch);
   };
 
-  const handleNavigateToProduct = async () => {
-    const slug = formatVietnameseToNonAccent(product.name);
-    updateSelection("category", dispatch);
-    navigate(`/product/${slug}`, {
-      state: {
-        category_id: product.category_id,
-        product_id: product.product_id,
-      },
-      replace: false,
-    });
-  };
+  return (
+    <>
+      <div className={cx("product-name")}>{formatCapitalize(product.name)}</div>
+      <div className={cx("product-variant")}>Size: {product.size}</div>
+      <div className={cx("product-variant")}>Color: {product.color}</div>
+      <div className={cx("product-variant")}>Available: {product.in_stock}</div>
+      <div className={cx("user-action")}>
+        <button
+          className={cx("event-btn", "remove")}
+          onClick={handleRemoveProduct}
+        >
+          <span className={cx("btn-icon")}>{ICONS.trash}</span>
+          <span className={cx("btn-title")}>Remove</span>
+        </button>
+        <button className={cx("event-btn", "wishlist")} onClick={handleOnClick}>
+          <span className={cx("btn-icon")}>{ICONS.heart}</span>
+          <span className={cx("btn-title")}>Add to wishlist</span>
+        </button>
+      </div>
+    </>
+  );
+};
+
+const QtyPriceSection = ({ product }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [productQty, setProductQty] = useState(product.qty);
+  const errorCause = useSelector((state) => state.cart.update.errorCause);
+
+  const prevQuantity = useRef(product.qty);
+
+  const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
 
   const handleQuantityOnChange = (e) => {
     const newQty = e.target.value;
@@ -93,6 +106,7 @@ const CartProduct = ({ product }) => {
 
   const handleQuantityOnBlur = async (e) => {
     const currentQty = e.target.value;
+
     if (!currentQty.length) {
       setProductQty(prevQuantity.current);
     } else if (+currentQty !== +prevQuantity.current) {
@@ -114,32 +128,66 @@ const CartProduct = ({ product }) => {
 
       // update latest cart
       await getCartReq(product.cart_id, axiosPrivate, dispatch);
-      setShowModal(true);
+
+      if (currentQty > product.in_stock) setShowModal(true);
     }
   };
 
+  const handleModalOnClose = () => {
+    if (productQty > product.in_stock) {
+      setProductQty(product.in_stock);
+    }
+    setShowModal(false);
+  };
+
   return (
-    <Container fluid={true}>
+    <>
       {showModal && (
-        <ModalContainer
-          modalStyle="transparent"
-          onClose={() => {
-            setProductQty(product.in_stock);
-            setShowModal(false);
-          }}
-        >
+        <ModalContainer modalStyle="transparent" onClose={handleModalOnClose}>
           {errorCause && (
             <Dialog
               typeDialog="info"
               message={errorCause}
-              onClose={() => {
-                setProductQty(product.in_stock);
-                setShowModal(false);
-              }}
+              onClose={handleModalOnClose}
             />
           )}
         </ModalContainer>
       )}
+      <input
+        type="text"
+        className={cx("input-qty")}
+        value={productQty}
+        onBlur={(e) => handleQuantityOnBlur(e)}
+        onChange={(e) => handleQuantityOnChange(e)}
+      />
+      <div className={cx("product-price")}>
+        Unit price: {formatMoney(product.price)}
+      </div>
+      <div className={cx("product-price")}>
+        Sub price: {formatMoney(product.sub_price)}
+      </div>
+    </>
+  );
+};
+
+const CartProduct = ({ product }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleNavigateToProduct = async () => {
+    const slug = formatVietnameseToNonAccent(product.name);
+    updateSelection("category", dispatch);
+    navigate(`/product/${slug}`, {
+      state: {
+        category_id: product.category_id,
+        product_id: product.product_id,
+      },
+      replace: false,
+    });
+  };
+
+  return (
+    <Container fluid={true}>
       <Row className={cx("product-wrap")}>
         <Col xs="6" sm="4" md="3" className={cx("col-cent")}>
           <LazyLoadImage
@@ -152,45 +200,10 @@ const CartProduct = ({ product }) => {
           />
         </Col>
         <Col xs="6" sm="5" md="6" className={cx("info-wrap")}>
-          <div className={cx("product-name")}>
-            {formatCapitalize(product.name)}
-          </div>
-          <div className={cx("product-variant")}>Size: {product.size}</div>
-          <div className={cx("product-variant")}>Color: {product.color}</div>
-          <div className={cx("product-variant")}>
-            Available: {product.in_stock}
-          </div>
-          <div className={cx("user-action")}>
-            <button
-              className={cx("event-btn", "remove")}
-              onClick={handleRemoveProduct}
-            >
-              <span className={cx("btn-icon")}>{ICONS.trash}</span>
-              <span className={cx("btn-title")}>Remove</span>
-            </button>
-            <button
-              className={cx("event-btn", "wishlist")}
-              onClick={handleOnClick}
-            >
-              <span className={cx("btn-icon")}>{ICONS.heart}</span>
-              <span className={cx("btn-title")}>Add to wishlist</span>
-            </button>
-          </div>
+          <InfoSection product={product} />
         </Col>
         <Col xs="12" sm="3" md="3">
-          <input
-            type="text"
-            className={cx("input-qty")}
-            value={productQty}
-            onBlur={(e) => handleQuantityOnBlur(e)}
-            onChange={(e) => handleQuantityOnChange(e)}
-          />
-          <div className={cx("product-price")}>
-            Unit price: {formatMoney(product.price)}
-          </div>
-          <div className={cx("product-price")}>
-            Sub price: {formatMoney(product.sub_price)}
-          </div>
+          <QtyPriceSection product={product} />
         </Col>
       </Row>
     </Container>
