@@ -13,6 +13,9 @@ const API_URL = {
 
   //variants:
   variants: "/api/v1/variants",
+
+  //orders
+  orders: "/api/v1/orders",
 };
 
 export default API_URL;
