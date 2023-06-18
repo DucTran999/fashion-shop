@@ -5,34 +5,10 @@ import userPayloadMiddleware from "./user.validation.js";
 
 const router = express.Router();
 
-router.get(
-  "/refresh-token",
-  authMiddleware.verifyRefreshToken,
-  userController.requestRefreshToken
-);
-
-router.get(
-  "/sign-out",
-  authMiddleware.verifyRefreshToken,
-  userController.requestSignOut
-);
-
 router.post(
-  "/sign-up",
+  "/",
   userPayloadMiddleware.validateSignUpPayload,
-  userController.requestSignUp
-);
-
-router.get(
-  "/get-users",
-  authMiddleware.verifyAdminAccessToken,
-  userController.requestGetUserList
-);
-
-router.post(
-  "/sign-in",
-  userPayloadMiddleware.validateLoginPayload,
-  userController.requestSignIn
+  userController.handleSignUpReq
 );
 
 router.patch(

@@ -17,28 +17,16 @@ class UserRepository {
     }
   };
 
-  isExistEmail = async (email) => {
-    const query = "SELECT email FROM users WHERE email=$1";
-    const values = [email];
+  findOneByEmail = async (email) => {
+    const query = `
+      SELECT user_id, first_name, email, password, is_admin, is_disabled
+        FROM users 
+        WHERE email=$1;
+      `;
 
     try {
-      const res = await pool.query(query, values);
-
-      return res.rowCount > 0;
-    } catch (err) {
-      throw new createHttpError.InternalServerError();
-    }
-  };
-
-  findUserByEmail = async (email) => {
-    const query =
-      "SELECT user_id, first_name, email, password, is_admin, is_disabled FROM users WHERE email=$1";
-    const values = [email];
-
-    try {
-      const res = await pool.query(query, values);
-
-      return res.rows;
+      const { rows } = await pool.query(query, [email]);
+      return rows;
     } catch (err) {
       throw new createHttpError.InternalServerError();
     }
@@ -72,7 +60,8 @@ class UserRepository {
     const query = `
       UPDATE users
         SET first_name=$2,last_name=$3, address=$4, phone=$5, gender=$6
-        WHERE user_id=$1;`;
+        WHERE user_id=$1;    
+      `;
     const values = [userId, firstName, lastName, address, phone, gender];
 
     try {
@@ -82,11 +71,12 @@ class UserRepository {
     }
   };
 
-  save = async (user) => {
-    const query = `INSERT INTO users 
+  save = async ({ first_name, last_name, email, password }) => {
+    const query = `
+      INSERT INTO users 
           (first_name, last_name, email, password)
         VALUES ($1, $2, $3, $4);`;
-    const values = [user.first_name, user.last_name, user.email, user.password];
+    const values = [first_name, last_name, email, password];
 
     try {
       await pool.query(query, values);

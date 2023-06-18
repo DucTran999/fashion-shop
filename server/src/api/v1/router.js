@@ -9,9 +9,12 @@ import uploadRouter from "./serviceUpload/uploads.route.js";
 import variantRouter from "./variants/variant.route.js";
 import cartRouter from "./cart/cart.route.js";
 import ordersRouter from "./orders/orders.route.js";
+import sessionRouter from "./sessions/session.route.js";
 
 dotenv.config();
 const route = express.Router();
+
+route.use("/sessions", sessionRouter);
 
 route.use("/users", userRouter);
 

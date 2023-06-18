@@ -2,82 +2,12 @@ import createHttpError from "http-errors";
 import userServices from "./user.services.js";
 
 class UserController {
-  requestSignUp = async (req, res, next) => {
-    try {
-      await userServices.addNewUser(req.body);
-      res.status(200).json({ status: "success", message: null });
-    } catch (err) {
-      next(err);
-    }
-  };
-
-  requestSignIn = async (req, res, next) => {
-    try {
-      const [accessToken, refreshToken] = await userServices.authentication(
-        req.body
-      );
-      res
-        .status(200)
-        .cookie("refresh_token", refreshToken, {
-          sameSite: "strict",
-          domain: process.env.DOMAIN_NAME,
-          httpOnly: true,
-          path: "/",
-        })
-        .json({
-          status: "success",
-          message: null,
-          elements: [{ access_token: accessToken }],
-        });
-    } catch (err) {
-      next(err);
-    }
-  };
-
-  requestSignOut = async (payload, req, res, next) => {
+  handleSignUpReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
-      await userServices.removeRefreshToken(payload.user_id);
+      await userServices.createUser(payload);
 
-      res
-        .status(200)
-        .clearCookie("refresh_token", {
-          domain: process.env.DOMAIN_NAME,
-          path: "/",
-        })
-        .json({ status: "success", message: "Logout Successful" });
-    } catch (err) {
-      next(err);
-    }
-  };
-
-  requestRefreshToken = async (payload, req, res, next) => {
-    try {
-      if (payload instanceof Error) {
-        throw payload;
-      }
-
-      const [accessToken, refreshToken] = await userServices.refreshToken(
-        payload
-      );
-
-      res
-        .status(200)
-        .cookie("refresh_token", refreshToken, {
-          sameSite: "strict",
-          domain: process.env.DOMAIN_NAME,
-          httpOnly: true,
-          path: "/",
-        })
-        .json({
-          status: "success",
-          message: null,
-          elements: [
-            {
-              access_token: accessToken,
-            },
-          ],
-        });
+      res.status(200).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }
