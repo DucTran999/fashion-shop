@@ -1,5 +1,7 @@
-import axios from "../api/init.axios";
 import { useDispatch } from "react-redux";
+
+import axios from "../api/init.axios";
+import API_URL from "../api/init.url";
 import LOCAL_STORAGE_KEY from "../api/init.localStorage";
 import {
   loginStart,
@@ -22,16 +24,19 @@ const useRefreshToken = () => {
     // request to get new token
     dispatch(loginStart());
     try {
-      const response = await axios.get("/api/v1/users/refresh-token", {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(
+        `${API_URL.sessions}/refresh-token`,
+        {},
+        { withCredentials: true }
+      );
 
       const newAccessToken = response.data.elements[0].access_token;
       const userRefresh = getUserCredential(response);
 
       // set new token for user
       dispatch(loginSuccess(userRefresh));
+
+      // remember device
       localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, true);
 
       return newAccessToken;

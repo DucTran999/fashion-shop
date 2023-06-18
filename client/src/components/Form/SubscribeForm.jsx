@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 
-import Button from "../Button/Button";
+import Button from "../Button";
 import styles from "./SubscribeForm.module.scss";
 import { isEmail } from "../../utils/Validator";
 import InputErrorMessage from "../Input/InputErrorMessage";

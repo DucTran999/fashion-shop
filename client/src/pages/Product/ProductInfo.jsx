@@ -24,7 +24,7 @@ const ProductInfo = () => {
         </Col>
         {currentVariant.in_stock > 0 ? (
           <Col sm="3" className={cx("product-info__stock", "col-cent")}>
-            Stock: {currentVariant.in_stock}
+            In Stock: {currentVariant.in_stock}
           </Col>
         ) : (
           <Col
