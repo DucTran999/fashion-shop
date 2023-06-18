@@ -5,8 +5,9 @@ import { Container, Col, Row } from "react-bootstrap";
 
 import ICONS from "../../assets/icons";
 import { COMMON_PATH } from "../../utils/constVariable";
-import { logOutUser } from "../../features/auth/apiRequest";
+import { logOutReq } from "../../features/auth/apiRequest";
 import { updateSidebarSelection } from "../../features/activeNav/navAction";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 // Component
 import ShopLogo from "../../components/Logo/ShopLogo";
@@ -23,10 +24,12 @@ const ViewMobile = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
 
   /* handle user action */
-  const handleLogOut = async () => {
-    await logOutUser(dispatch, navigate);
+  const handleLogOut = async (e) => {
+    e.preventDefault();
+    await logOutReq(user.user_id, axiosPrivate, dispatch, navigate);
   };
 
   const handleNavigateOnChangeOption = (optionTitle, path) => {

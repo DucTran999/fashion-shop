@@ -2,10 +2,11 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
-import { logOutUser } from "../../features/auth/apiRequest";
 
 import ICONS from "../../assets/icons";
 import IMAGES from "../../assets/images";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { logOutReq } from "../../features/auth/apiRequest";
 
 // Component
 import ShopLogo from "../../components/Logo/ShopLogo";
@@ -30,13 +31,13 @@ const SubNav = () => {
           {ICONS.search}
         </Link>
       </li>
+      <li className={cx("sub-nav__item")}>
+        <Link to="/account/notifications" className={cx("sub-nav__link")}>
+          {ICONS.bellSlime}
+        </Link>
+      </li>
       <li className={cx("sub-nav__item", "user")}>
         {user ? <UserBarIsLogged /> : <UserBarIsNotLogged />}
-      </li>
-      <li className={cx("sub-nav__item")}>
-        <Link to="/wishlist" className={cx("sub-nav__link")}>
-          {ICONS.favourite}
-        </Link>
       </li>
       <li className={cx("sub-nav__item")}>
         <div
@@ -64,22 +65,25 @@ const UserBarIsLogged = () => {
       title: "Account Settings",
     },
     {
-      link: "/account/notification",
-      title: "Notifications",
+      link: "/wishlist",
+      title: "My Wishlist",
     },
     {
       link: "/account/purchases",
       title: "My Purchases",
     },
   ];
+  const user = useSelector((state) => state.auth.login.currentUser);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const axiosPrivate = useAxiosPrivate();
 
   /* handle user action */
-  const handleLogOut = async () => {
-    await logOutUser(dispatch, navigate);
+  const handleLogOut = async (e) => {
+    e.preventDefault();
+    await logOutReq(user.user_id, axiosPrivate, dispatch, navigate);
   };
 
   const handleNavigateOnClick = (endpoint) => {

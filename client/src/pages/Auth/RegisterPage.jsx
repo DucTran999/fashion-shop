@@ -1,30 +1,31 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+// Util
+import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
 import useForm from "../../hooks/useForm";
+import * as validateMethod from "../../utils/Validator";
+import { registerReq } from "../../features/auth/apiRequest";
 
 // Component
-import ModalContainer from "../Modal/ModalContainer";
-import Popup from "../Modal/PopupContainer";
-import Input from "../Input/";
-import Button from "../Button/Button";
+import FormSwitch from "./FormSwitch";
+import ModalContainer from "../../components/Modal/ModalContainer";
+import Popup from "../../components/Modal/PopupContainer";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 import {
   LoadingAlert,
   SuccessAlertNavigate,
   ErrorAlert,
-} from "../Modal/PopupVariant";
-
-// Util
-import ERROR_MESSAGES from "../Input/InputErrorMessage";
-import * as validateMethod from "../../utils/Validator";
-import { registerUser } from "../../features/auth/apiRequest";
+} from "../../components/Modal/PopupVariant";
 
 // Style
 import classNames from "classnames/bind";
-import styles from "./RegisterForm.module.scss";
+import styles from "./RegisterPage.module.scss";
 const cx = classNames.bind(styles);
 
-function RegisterForm() {
+function RegisterPage() {
   document.title = "Be part of our family!";
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,60 +38,42 @@ function RegisterForm() {
   const registerLoading = useSelector(
     (state) => state.auth.register.isFetching
   );
-  const registerSuccess = useSelector((state) => state.auth.register.success);
-  const registerError = useSelector((state) => state.auth.register.error);
   const errorCause = useSelector((state) => state.auth.register.errorCause);
 
   const [formState, handleInput] = useForm(
     { firstName: "", lastName: "", email: "", password: "" },
-    {
-      firstName: false,
-      lastName: false,
-      email: false,
-      password: false,
-    }
+    { firstName: false, lastName: false, email: false, password: false }
   );
 
   const formData = formState.inputs;
   const formStatus = formState.statuses;
 
-  /* Handle button click event */
-  const handleCloseModal = () => {
-    setShowModal(false);
-    document.body.style.overflowY = "scroll";
-  };
-
-  const handleSwitchForm = () => {
-    navigate("/login", { replace: true });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setShowModal(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     document.body.style.overflow = "hidden";
+    setShowModal(true);
 
     // api accept fields with snake_case
     const user = {
-      first_name: formData.firstName.toString().trim(),
-      last_name: formData.lastName.toString().trim(),
-      email: formData.email.toString().trim(),
-      password: formData.password.toString().trim(),
+      first_name: String(formData.firstName).trim(),
+      last_name: String(formData.lastName).trim(),
+      email: String(formData.email).trim(),
+      password: String(formData.password).trim(),
     };
 
-    await registerUser(user, dispatch, navigate);
+    await registerReq(user, dispatch, navigate);
   };
 
-  /* Handle Side Effect */
   useEffect(() => {
     if (registerLoading) {
       setAlert("loading");
-    } else if (registerSuccess) {
-      setAlert("success");
-    } else if (registerError) {
+    } else if (errorCause) {
       setAlert("error");
+    } else {
+      setAlert("success");
     }
     // eslint-disable-next-line
-  }, [registerLoading, registerSuccess, registerError]);
+  }, [registerLoading, errorCause]);
 
   useEffect(() => {
     const buttonSwitchState = ({ firstName, lastName, email, password }) => {
@@ -107,46 +90,37 @@ function RegisterForm() {
 
   /* Register Form components */
   const RegisterPopup = () => {
+    const handleCloseModal = () => {
+      setShowModal(false);
+      document.body.style.overflowY = "scroll";
+    };
+
     return (
       <ModalContainer>
         <Popup header="Announcement">
-          {alert === "loading" && <LoadingAlert />}
-          {alert === "success" && (
+          {alert === "loading" ? (
+            <LoadingAlert />
+          ) : alert === "error" ? (
+            <ErrorAlert message={errorCause} onClose={handleCloseModal} />
+          ) : (
             <SuccessAlertNavigate
-              onClickEvent={() => {
+              onClickEvent={(e) => {
+                e.preventDefault();
                 navigate("/login", { replace: true });
               }}
               message="Thank you"
               btnTitle="Return to Login Page"
             />
           )}
-          {alert === "error" && (
-            <ErrorAlert message={errorCause} onClose={handleCloseModal} />
-          )}
         </Popup>
       </ModalContainer>
-    );
-  };
-
-  const FormHeader = () => {
-    return <div className={cx("header")}>Join Atlana Family</div>;
-  };
-
-  const FormSwitch = () => {
-    return (
-      <div className={cx("switch-mode")}>
-        Already have an account?
-        <span className={cx("switch-mode__btn")} onClick={handleSwitchForm}>
-          Sign in now!
-        </span>
-      </div>
     );
   };
 
   return (
     <Fragment>
       {showModal && <RegisterPopup />}
-      <FormHeader />
+      <div className={cx("header")}>Join Atlana Family</div>;
       <form className={cx("form-body")} onSubmit={handleSubmit}>
         <Input
           fieldName="firstName"
@@ -195,9 +169,9 @@ function RegisterForm() {
           title="Sign Up"
         />
       </form>
-      <FormSwitch />
+      <FormSwitch currentMode="register" />
     </Fragment>
   );
 }
 
-export default RegisterForm;
+export default RegisterPage;

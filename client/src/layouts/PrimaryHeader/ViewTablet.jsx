@@ -2,9 +2,11 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
-import { logOutUser } from "../../features/auth/apiRequest";
 
 import ICONS from "../../assets/icons";
+import { COMMON_PATH } from "../../utils/constVariable";
+import { logOutReq } from "../../features/auth/apiRequest";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 // Component
 import ShopLogo from "../../components/Logo/ShopLogo";
@@ -28,12 +30,15 @@ const MenuDropDown = () => {
 };
 
 const MenuDropDownServiceHasLogin = () => {
+  const user = useSelector((state) => state.auth.login.currentUser);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
 
   /* handle user action */
   const handleLogOut = async () => {
-    await logOutUser(dispatch, navigate);
+    await logOutReq(user.user_id, axiosPrivate, dispatch, navigate);
   };
 
   return (
@@ -46,7 +51,7 @@ const MenuDropDownServiceHasLogin = () => {
           Cart
         </Link>
         <div
-          onClick={() => navigate("/account/purchases", { replace: true })}
+          onClick={() => navigate(COMMON_PATH.purchase, { replace: true })}
           className={cx("menu__dropdown--tablet__element")}
         >
           My Purchases
@@ -56,12 +61,15 @@ const MenuDropDownServiceHasLogin = () => {
         </Link>
       </section>
       <section className={cx("dropdown__service", "last")}>
-        <Link
-          to="/account/profile"
+        <div
           className={cx("menu__dropdown--tablet__element")}
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(COMMON_PATH.account, { replace: true });
+          }}
         >
           Account Settings
-        </Link>
+        </div>
         <span
           className={cx("menu__dropdown--tablet__element")}
           onClick={handleLogOut}
@@ -74,15 +82,23 @@ const MenuDropDownServiceHasLogin = () => {
 };
 
 const MenuDropDownServiceNoLogin = () => {
+  const navigate = useNavigate();
+
   return (
     <nav className={cx("menu__dropdown--tablet")}>
       <section className={cx("dropdown__service")}>
         <Link to="/search" className={cx("menu__dropdown--tablet__element")}>
           Search
         </Link>
-        <Link to="/cart" className={cx("menu__dropdown--tablet__element")}>
+        <div
+          className={cx("menu__dropdown--tablet__element")}
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(COMMON_PATH.cart, { replace: true });
+          }}
+        >
           Cart
-        </Link>
+        </div>
       </section>
       <section className={cx("dropdown__service", "last")}>
         <Link to="/login" className={cx("menu__dropdown--tablet__element")}>

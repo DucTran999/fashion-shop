@@ -1,0 +1,26 @@
+@use "../../styles/" as s;
+
+.switch-mode {
+  display: block;
+  text-align: center;
+  margin-bottom: 2em;
+
+  /* Styles */
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--light-grey-clr);
+
+  &__btn {
+    display: inline-block;
+    text-decoration: none;
+
+    /* Style */
+    color: var(--primary-clr);
+    margin-left: 0.3em;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--tiffany-blue-clr);
+    }
+  }
+}

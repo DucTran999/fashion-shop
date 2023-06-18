@@ -1,5 +1,7 @@
 import axios from "../../api/init.axios";
+import API_URL from "../../api/init.url";
 import delay from "../../utils/delay";
+import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
 
 import {
   loginFailed,
@@ -13,14 +15,6 @@ import {
   logOutFailed,
 } from "./authSlice";
 
-import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
-
-const API_URL = {
-  LOGIN: "api/v1/users/sign-in",
-  REGISTER: "api/v1/users/sign-up",
-  LOGOUT: "/api/v1/users/sign-out",
-};
-
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];
   const userInfo = JSON.parse(atob(access_token.split(".")[1]));
@@ -29,13 +23,11 @@ const getUserCredential = (res) => {
   return credentials;
 };
 
-const loginUser = async (user, dispatch, navigate, location) => {
-  // Start Phase
+const logInReq = async (user, dispatch, navigate, location) => {
   dispatch(loginStart());
-  await delay(1000);
 
   try {
-    const res = await axios.post(API_URL.LOGIN, user, {
+    const res = await axios.post(API_URL.sessions, user, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,6 +36,8 @@ const loginUser = async (user, dispatch, navigate, location) => {
     });
     const userInfo = getUserCredential(res);
     dispatch(loginSuccess(userInfo));
+
+    // remember user used to login at this device
     localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, true);
 
     navigate(location, { replace: true });
@@ -60,17 +54,16 @@ const loginUser = async (user, dispatch, navigate, location) => {
   }
 };
 
-const registerUser = async (user, dispatch, navigate) => {
+const registerReq = async (user, dispatch, navigate) => {
   dispatch(registerStart());
-  await delay(1000);
 
   try {
-    const res = await axios.post(API_URL.REGISTER, user);
-    dispatch(registerSuccess(res));
+    await axios.post(API_URL.users, user);
+    dispatch(registerSuccess());
 
     // Auto return to login page after 5 seconds
     await delay(5000);
-    navigate("/login");
+    navigate("/login", { replace: true });
   } catch (err) {
     // Response timeout when api server have problem
     if (!err?.response) {
@@ -85,13 +78,13 @@ const registerUser = async (user, dispatch, navigate) => {
   }
 };
 
-const logOutUser = async (dispatch, navigate) => {
+const logOutReq = async (userId, axiosPrivate, dispatch, navigate) => {
   dispatch(logOutStart());
   try {
-    await axios.get(API_URL.LOGOUT, {
-      withCredentials: true,
-    });
+    await axiosPrivate.post(`${API_URL.sessions}/${userId}`, {});
     dispatch(logOutSuccess());
+
+    // browser remember account is logout
     localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
 
     navigate("/login", { replace: true });
@@ -100,4 +93,4 @@ const logOutUser = async (dispatch, navigate) => {
   }
 };
 
-export { loginUser, registerUser, logOutUser };
+export { logInReq, registerReq, logOutReq };

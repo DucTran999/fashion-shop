@@ -2,7 +2,7 @@ import React from "react";
 import className from "classnames/bind";
 import { Container, Row, Col } from "react-bootstrap";
 
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button";
 import SubscribeForm from "../../components/Form/SubscribeForm";
 import style from "./Footer.module.scss";
 

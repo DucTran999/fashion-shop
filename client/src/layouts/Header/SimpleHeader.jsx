@@ -6,7 +6,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import styles from "./SimpleHeader.module.scss";
 import Logo from "../../components/Logo/Logo";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button";
 
 const cx = classNames.bind(styles);
 

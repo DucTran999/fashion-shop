@@ -1,93 +1,53 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import useRefreshToken from "../../hooks/useRefreshToken";
 
+// Util
 import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
+import useRefreshToken from "../../hooks/useRefreshToken";
+import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
+import * as validateMethod from "../../utils/Validator";
+import { logInReq } from "../../features/auth/apiRequest";
 
 // Component
 import useForm from "../../hooks/useForm";
-import Input from "../Input/";
-import Button from "../Button/Button";
-import ModalContainer from "../Modal/ModalContainer";
-import Popup from "../Modal/PopupContainer";
-import { LoadingAlert, ErrorAlert } from "../Modal/PopupVariant";
-
-// Util
-import ERROR_MESSAGES from "../Input/InputErrorMessage";
-import * as validateMethod from "../../utils/Validator";
-import { loginUser } from "../../features/auth/apiRequest";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import ModalContainer from "../../components/Modal/ModalContainer";
+import Popup from "../../components/Modal/PopupContainer";
+import { LoadingAlert, ErrorAlert } from "../../components/Modal/PopupVariant";
+import SocialAuth from "./SocialAuth";
+import FormSwitch from "./FormSwitch";
 
 // Style
 import classNames from "classnames/bind";
-import styles from "./LoginForm.module.scss";
+import styles from "./Login.module.scss";
 const cx = classNames.bind(styles);
 
-const Separator = ({ content }) => {
-  return (
-    <div className={content ? cx("separator") : cx("separator", "no-content")}>
-      {content}
-    </div>
-  );
-};
-
-const SocialAuth = () => {
-  return (
-    <Fragment>
-      <Separator content="OR" />
-      <div className={cx("social-auth-list")}>
-        <Button
-          linkTo="/Facebook"
-          styles={"box-style-cm mg-tb-1 active"}
-          titleStyles={"sm-icon-title"}
-          type={"linkOut"}
-          icon={"facebook"}
-          title={"Login with Facebook"}
-        />
-        <Button
-          linkTo="/Google"
-          styles={"box-style-cm mg-tb-1 active"}
-          titleStyles={"sm-icon-title"}
-          type={"linkOut"}
-          icon={"google"}
-          title={"Login with Google"}
-        />
-      </div>
-      <Separator />
-    </Fragment>
-  );
-};
-
-function LoginForm() {
+function LoginPage() {
   document.title = "Login to start shopping!";
 
+  const refresh = useRefreshToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-
-  const refresh = useRefreshToken();
   const isMounted = useRef(false);
+
+  const from = location.state?.from?.pathname || "/";
 
   const [showModal, setShowModal] = useState(false);
   const [alert, setAlert] = useState("loading");
 
   const [formState, handleInput] = useForm(
-    {
-      email: "",
-      password: "",
-    },
-    {
-      email: false,
-      password: false,
-    }
+    { email: "", password: "" },
+    { email: false, password: false }
   );
 
   const formData = formState.inputs;
   const formStatus = formState.statuses;
 
-  const loginLoading = useSelector((state) => state.auth.login?.isFetching);
-  const errorCause = useSelector((state) => state.auth.login?.errorCause);
+  const loginLoading = useSelector((state) => state.auth.login.isFetching);
+  const errorCause = useSelector((state) => state.auth.login.errorCause);
 
   const [buttonState, setButtonState] = useState("inactive");
 
@@ -101,12 +61,7 @@ function LoginForm() {
       email: formData.email,
       password: formData.password,
     };
-    await loginUser(user, dispatch, navigate, from);
-  };
-
-  const handleCloseModal = () => {
-    document.body.style.overflowY = "scroll";
-    setShowModal(false);
+    await logInReq(user, dispatch, navigate, from);
   };
 
   useEffect(() => {
@@ -127,34 +82,37 @@ function LoginForm() {
     }
 
     document.body.style.overflowY = "scroll";
-    window.scrollTo(120, 0);
 
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (loginLoading) {
-      setShowModal(true);
       setAlert("loading");
     } else if (errorCause) {
-      setShowModal(true);
       setAlert("error");
     }
   }, [loginLoading, errorCause]);
 
+  // Change button state by form status
   useEffect(() => {
+    const buttonSwitchState = ({ email, password }) => {
+      /* When all field are valid turn on the button */
+      return email && password
+        ? setButtonState("active")
+        : setButtonState("inactive");
+    };
+
     buttonSwitchState(formStatus);
   }, [formStatus]);
 
-  const buttonSwitchState = ({ email, password }) => {
-    /* When all field are valid turn on the button */
-    return email && password
-      ? setButtonState("active")
-      : setButtonState("inactive");
-  };
-
   /* Modal */
   const LoginModal = () => {
+    const handleCloseModal = () => {
+      document.body.style.overflowY = "scroll";
+      setShowModal(false);
+    };
+
     return (
       <ModalContainer>
         <Popup header="Announcement">
@@ -167,29 +125,10 @@ function LoginForm() {
     );
   };
 
-  /* Auth Form components */
-  const FormHeader = () => {
-    return <div className={cx("header")}>Welcome Back</div>;
-  };
-
-  const FormSwitch = () => {
-    return (
-      <div className={cx("switch-mode")}>
-        Do not have an account?
-        <span
-          className={cx("switch-mode__btn")}
-          onClick={() => navigate("/register", { replace: true })}
-        >
-          Sign up now!
-        </span>
-      </div>
-    );
-  };
-
   return (
     <Fragment>
       {showModal && <LoginModal />}
-      <FormHeader />
+      <div className={cx("header")}>Welcome Back</div>;
       <form className={cx("form-body")} onSubmit={handleSubmit}>
         <Input
           fieldName="email"
@@ -214,9 +153,9 @@ function LoginForm() {
         />
       </form>
       <SocialAuth />
-      <FormSwitch />
+      <FormSwitch currentMode="login" />
     </Fragment>
   );
 }
 
-export default LoginForm;
+export default LoginPage;

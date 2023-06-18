@@ -1,4 +1,6 @@
 const API_URL = {
+  sessions: "/api/v1/sessions",
+
   categories: "/api/v1/categories",
 
   products: "/api/v1/products",

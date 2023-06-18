@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 // Component Injected
 import SectionHeader from "../../components/SectionHeader";
 import InputReadOnly from "../../components/InputReadOnly";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button";
 import Padding from "../../components/Padding";
 import ModalContainer from "../../components/Modal/ModalContainer";
 import PopupContainer from "../../components/Modal/PopupContainer";
