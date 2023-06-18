@@ -1,23 +1,9 @@
 import createHttpError from "http-errors";
 import Joi from "joi";
 
-const normalUserScheme = Joi.object({
+const userScheme = Joi.object({
   first_name: Joi.string().trim().required(),
   last_name: Joi.string().trim().required(),
-  email: Joi.string()
-    .email()
-    .pattern(new RegExp("@gmail.com$"))
-    .lowercase()
-    .required(),
-  password: Joi.string()
-    .trim()
-    .min(8)
-    .max(32)
-    .pattern(new RegExp("^\\S+$"))
-    .required(),
-});
-
-const userLoginScheme = Joi.object({
   email: Joi.string()
     .email()
     .pattern(new RegExp("@gmail.com$"))
@@ -63,19 +49,19 @@ const changePassSchema = Joi.object({
 });
 
 const validateSignUpPayload = (req, res, next) => {
-  const { error } = normalUserScheme.validate(req.body);
+  const { error } = userScheme.validate(req.body);
   if (error) {
     next(createHttpError.BadRequest());
   }
-  next();
-};
 
-const validateLoginPayload = (req, res, next) => {
-  const { error } = userLoginScheme.validate(req.body);
-  if (error) {
-    next(createHttpError.Unauthorized());
-  }
-  next();
+  // Clean up payload
+  const { first_name, last_name, email, password } = req.body;
+  next({
+    first_name: first_name.toLowerCase().trim(),
+    last_name: last_name.toLowerCase().trim(),
+    email: email.toLowerCase().trim(),
+    password: password.trim(),
+  });
 };
 
 const validateUpdatePayload = (req, res, next) => {
@@ -96,7 +82,6 @@ const validateChangePasswordPayload = (req, res, next) => {
 };
 
 export default {
-  validateLoginPayload,
   validateSignUpPayload,
   validateUpdatePayload,
   validateChangePasswordPayload,
