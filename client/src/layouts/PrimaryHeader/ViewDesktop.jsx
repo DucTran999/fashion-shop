@@ -61,7 +61,7 @@ const SubNav = () => {
 const UserBarIsLogged = () => {
   const loggedOptions = [
     {
-      link: "/account",
+      link: "/account/profile",
       title: "Account Settings",
     },
     {
@@ -99,7 +99,7 @@ const UserBarIsLogged = () => {
     <>
       <div
         className={cx("sub-nav__link")}
-        onClick={() => handleNavigateOnClick("/account")}
+        onClick={() => handleNavigateOnClick("/account/profile")}
       >
         <img
           src={IMAGES.defaultAvatar}
