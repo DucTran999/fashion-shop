@@ -16,7 +16,7 @@ const getUserReq = async (userId, axiosPrivate, dispatch) => {
   dispatch(getUserStart());
   delay(1000);
   try {
-    const res = await axiosPrivate.get(`${API_URL.users}/info/${userId}`, {
+    const res = await axiosPrivate.get(`${API_URL.users}/${userId}`, {
       timeout: 5000,
     });
     const user = res.data.elements;
@@ -39,7 +39,7 @@ const updateUserReq = async (userId, newInfo, axiosPrivate, dispatch) => {
   dispatch(updateUserStart());
 
   try {
-    await axiosPrivate.patch(`${API_URL.users}/info/${userId}`, newInfo, {
+    await axiosPrivate.patch(`${API_URL.users}/${userId}/info`, newInfo, {
       timeout: 5000,
     });
 
@@ -63,7 +63,7 @@ const changePasswordReq = async (userId, newPass, axiosPrivate, dispatch) => {
   dispatch(changeUserPassStart());
 
   try {
-    await axiosPrivate.patch(`${API_URL.users}/password/${userId}`, newPass, {
+    await axiosPrivate.patch(`${API_URL.users}/${userId}/password`, newPass, {
       timeout: 5000,
     });
 
