@@ -12,23 +12,29 @@ router.post(
 );
 
 router.patch(
-  "/info/:id",
+  "/:id/info",
   userPayloadMiddleware.validateUpdatePayload,
   authMiddleware.verifyAccessToken,
-  userController.updateUserInfo
+  userController.handleUpdateUserInfoReq
 );
 
 router.patch(
-  "/password/:id",
+  "/:id/password",
   userPayloadMiddleware.validateChangePasswordPayload,
   authMiddleware.verifyAccessToken,
-  userController.updateUserPassword
+  userController.handleChangeUserPasswordReq
 );
 
 router.get(
-  "/info/:id",
+  "/:id",
   authMiddleware.verifyAccessToken,
-  userController.getUserInfo
+  userController.handleGetUserInfoReq
+);
+
+router.get(
+  "/",
+  authMiddleware.verifyAdminAccessToken,
+  userController.handleGetUserListReq
 );
 
 export default router;

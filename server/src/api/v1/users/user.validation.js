@@ -67,6 +67,7 @@ const validateSignUpPayload = (req, res, next) => {
 const validateUpdatePayload = (req, res, next) => {
   const { error } = updateSchema.validate(req.body);
   if (error) {
+    console.log(error);
     next(createHttpError.BadRequest("Invalid Info!"));
   }
   next();

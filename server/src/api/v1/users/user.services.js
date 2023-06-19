@@ -8,7 +8,7 @@ class UserService {
     return await userRepository.selectAll();
   };
 
-  findUserById = async (userId) => {
+  getUserInfoById = async (userId) => {
     let user = await userRepository.findOneById(userId);
 
     if (user) {
@@ -17,7 +17,7 @@ class UserService {
     return user;
   };
 
-  updateUser = async (user_id, payload) => {
+  updateUserInfo = async (user_id, payload) => {
     const { first_name, last_name, address, phone, gender } = payload;
     await userRepository.updateOne(
       user_id,
@@ -29,7 +29,7 @@ class UserService {
     );
   };
 
-  updateNewPassword = async (userId, payload) => {
+  updateUserPassword = async (userId, payload) => {
     // Verify old password
     const { old_password, new_password } = payload;
     const { password } = await userRepository.findUserPassword(userId);
