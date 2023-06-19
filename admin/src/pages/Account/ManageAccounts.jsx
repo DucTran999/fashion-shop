@@ -1,44 +1,38 @@
-import React, { useState, useEffect } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-
+import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
+
+// Util, custom hook, ...
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { getAllUsersReq } from "../../redux/user/userRequest";
+
+// Component
 import Header from "../../layouts/Header";
 
+// style
 import classNames from "classnames/bind";
 import style from "./ManageAccounts.module.scss";
-import { useLocation, useNavigate } from "react-router-dom";
-
 const cx = classNames.bind(style);
 
 function ManageAccounts() {
-  const [users, setUsers] = useState();
+  const isMounted = useRef(false);
+  const users = useSelector((state) => state.user.getAll.userList);
 
   const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
 
-  // Direct refresh the users list
   const handleReload = async () => {
-    try {
-      const res = await axiosPrivate.get("/api/v1/users/get-users");
-      setUsers(res.data.elements);
-    } catch (error) {
-      navigate("/login", { state: { from: location }, replace: true });
-    }
+    await getAllUsersReq(axiosPrivate, dispatch);
   };
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const res = await axiosPrivate.get("/api/v1/users/get-users");
-        setUsers(res.data.elements);
-      } catch (error) {
-        navigate("/login", { state: { from: location }, replace: true });
-      }
-    };
+    if (!isMounted.current) {
+      isMounted.current = true;
+      handleReload();
+    }
 
-    getUsers();
-  }, [axiosPrivate, location, navigate]);
+    // eslint-disable-next-line
+  }, []);
 
   const ListAccount = () => {
     return (
@@ -92,7 +86,7 @@ function ManageAccounts() {
   return (
     <div>
       <Header />
-      <ListAccount />
+      {users && <ListAccount />}
     </div>
   );
 }

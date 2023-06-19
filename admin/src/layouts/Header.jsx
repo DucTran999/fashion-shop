@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { logOutReq } from "../redux/auth/apiCall";
 
 import { Container, Row, Col } from "react-bootstrap";
@@ -11,13 +13,14 @@ import styles from "./Header.module.scss";
 const cx = classNames.bind(styles);
 
 function Header() {
+  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const from = useLocation();
   const user = useSelector((state) => state.auth.login.currentUser);
 
   const handleLogout = async () => {
-    await logOutReq(dispatch, navigate, from);
+    await logOutReq(user.user_id, axiosPrivate, dispatch, navigate, from);
   };
 
   return (

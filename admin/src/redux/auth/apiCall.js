@@ -9,7 +9,7 @@ import {
   logOutSuccess,
 } from "./authSlice";
 
-const LOGIN_URL = "/api/v1/users/sign-in";
+import API_URL from "../../api/url.init";
 
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];
@@ -23,7 +23,7 @@ const loginReq = async (user, dispatch, navigate, location) => {
   dispatch(loginStart());
 
   try {
-    const res = await axios.post(LOGIN_URL, user, {
+    const res = await axios.post(API_URL.sessions, user, {
       withCredentials: true,
       headers: {
         "Content-type": "application/json",
@@ -47,15 +47,25 @@ const loginReq = async (user, dispatch, navigate, location) => {
   }
 };
 
-const logOutReq = async (dispatch, navigate, location) => {
+const logOutReq = async (
+  userId,
+  axiosPrivate,
+  dispatch,
+  navigate,
+  location
+) => {
   dispatch(logOutStart());
   try {
-    await axios.get("/api/v1/users/sign-out", {
-      headers: {
-        "Content-type": "application/json",
-      },
-      withCredentials: true,
-    });
+    await axiosPrivate.post(
+      `${API_URL.sessions}/${userId}`,
+      {},
+      {
+        headers: {
+          "Content-type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
     dispatch(logOutSuccess());
     navigate("/login", { state: location, replace: true });
   } catch (error) {

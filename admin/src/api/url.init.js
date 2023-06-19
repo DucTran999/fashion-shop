@@ -16,6 +16,12 @@ const API_URL = {
 
   //orders
   orders: "/api/v1/orders",
+
+  // users
+  users: "/api/v1/users",
+
+  // sessions
+  sessions: "/api/v1/sessions",
 };
 
 export default API_URL;

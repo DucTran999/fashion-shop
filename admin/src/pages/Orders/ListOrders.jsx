@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
 
+// utils func, custom hook, ...
 import { setFilter, resetOrdersList } from "../../redux/order/orderSlice";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { ORDER_STATE_ID } from "../../utils/constVariable";
@@ -18,9 +19,11 @@ import {
   getDateFromTimestamp,
 } from "../../utils/formatData";
 
+// Component Injected
 import ErrorBlock from "../../components/ErrorBlock";
 import ControlBar from "./ControlBar";
 
+// Style
 import classNames from "classnames/bind";
 import style from "./ListOrders.module.scss";
 const cx = classNames.bind(style);
