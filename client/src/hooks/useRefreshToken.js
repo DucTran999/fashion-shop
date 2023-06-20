@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 
 import axios from "../api/init.axios";
+import io from "../utils/init.socket";
 import API_URL from "../api/init.url";
 import LOCAL_STORAGE_KEY from "../api/init.localStorage";
 import {
@@ -35,6 +36,9 @@ const useRefreshToken = () => {
 
       // set new token for user
       dispatch(loginSuccess(userRefresh));
+
+      //announce to the server new user attendance
+      io.emit("user-login", userRefresh.user_id);
 
       // remember device
       localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, true);
