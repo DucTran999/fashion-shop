@@ -107,6 +107,18 @@
   --dark-grey-clr: #5f5f5f;
 
   // Black
+  --black-fading-clr: linear-gradient(
+    to right bottom,
+    #272727,
+    rgb(27, 27, 27, 0)
+  );
+  --green-fading-clr: linear-gradient(
+    to left bottom,
+    rgba(10, 141, 80, 0.8),
+    rgba(25, 136, 15, 0),
+    rgb(27, 27, 27, 0),
+    #0a0a0a
+  );
   --very-dark-black-clr: #0a0a0a;
   --darker-black-clr: #1b1b1b;
   --dark-black-clr: #292929;
