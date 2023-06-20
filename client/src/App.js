@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import socket from "./utils/init.socket";
+import useRefreshToken from "./hooks/useRefreshToken";
+import LOCAL_STORAGE_KEY from "./api/init.localStorage";
 
 import { AuthLayout, PrimaryLayout } from "./layouts";
 import {
@@ -13,11 +17,46 @@ import {
   Checkout,
   MissingPage,
   Purchase,
+  Notification,
 } from "./pages";
 import PersistLogin from "./routes/PersistLogin";
 import RequireAuth from "./routes/RequireAuth";
 
 function App() {
+  const refresh = useRefreshToken();
+
+  useEffect(() => {
+    const onConnect = () => {
+      /* If a user is in session and the server is down unexpectedly.
+      Try to refresh the token to keep the user login when the server restarts.
+      */
+      const isLogged = localStorage.getItem(LOCAL_STORAGE_KEY.isLogged);
+      if (isLogged === "true") refresh();
+
+      console.log("Socket Connected to Server!");
+    };
+
+    const onDisconnect = (reason) => {
+      console.log("disconnect because", reason);
+    };
+
+    const onFetchNotifications = (message, { type }) => {
+      console.log(message, type);
+    };
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+    socket.on("new-notification", onFetchNotifications);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+      socket.off("new-notification", onFetchNotifications);
+    };
+
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -63,6 +102,9 @@ function App() {
 
               {/* purchase path */}
               <Route path="/account/purchases" element={<Purchase />} />
+
+              {/* notification */}
+              <Route path="/account/notifications" element={<Notification />} />
             </Route>
 
             {/* Page not found 404 */}
