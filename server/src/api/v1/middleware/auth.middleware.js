@@ -66,9 +66,7 @@ const verifyAdminAccessToken = async (req, res, next) => {
 };
 
 const isRefreshTokenInWhiteList = async (tokenId, refreshToken) => {
-  await redisClient.connect();
   const tokenInRedis = await redisClient.get(tokenId);
-  await redisClient.disconnect();
 
   return tokenInRedis === refreshToken;
 };

@@ -2,17 +2,13 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import createError from "http-errors";
-import corsOptions from "./configs/cors.config.js";
-
 import { v4 as uuidv4 } from "uuid";
 
-/* Database */
-import "./api/v1/helpers/init.postgres.pool.js";
-import "./api/v1/helpers/init.redis.client.js";
-
+import corsOptions from "./configs/cors.config.js";
 import logger from "./middleware/logger.js";
 import apiRouter from "./api/api.route.js";
 

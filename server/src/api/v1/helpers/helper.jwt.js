@@ -31,17 +31,13 @@ const signAccessToken = async (user) => {
 };
 
 const saveRefreshTokenToRedis = async (user, refreshToken) => {
-  await redisClient.connect();
   await redisClient.set(user.user_id.toString(), refreshToken, {
-    EX: 365 * 24 * 60 * 60,
+    EX: 90 * 24 * 60 * 60,
   });
-  await redisClient.disconnect();
 };
 
 const removeRefreshTokenOnRedis = async (key) => {
-  await redisClient.connect();
   await redisClient.del(key);
-  await redisClient.disconnect();
 };
 
 const signRefreshToken = async (user) => {
