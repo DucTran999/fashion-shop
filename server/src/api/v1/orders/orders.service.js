@@ -5,6 +5,7 @@ import cartModel from "../cart/cart.model.js";
 import stateModel from "../states/state.model.js";
 import paymentMethodModel from "../paymentMethod/paymentMethod.model.js";
 
+import { sendNotifications } from "../../utils/init.socket.js";
 import { ORDER_STATE_ID } from "../../utils/constVariable.js";
 import { extractVariantId } from "../../utils/normalizeData.js";
 
@@ -125,23 +126,23 @@ class OrderService {
     if (!orderId) throw createHttpError.BadRequest();
     const order = req.body;
     if (!order) throw createHttpError.BadRequest();
-
+    sendNotifications(order.user_id, "order");
     // Decrease stock
-    const items = order.items;
-    const variantIds = extractVariantId(items);
-    const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
+    // const items = order.items;
+    // const variantIds = extractVariantId(items);
+    // const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
 
-    for (let i = 0; i < items.length; ++i) {
-      let newQty = qtyInStock[i].in_stock - items[i].qty;
-      await variantModel.updateNewQty(qtyInStock[i].id, newQty);
-    }
+    // for (let i = 0; i < items.length; ++i) {
+    //   let newQty = qtyInStock[i].in_stock - items[i].qty;
+    //   await variantModel.updateNewQty(qtyInStock[i].id, newQty);
+    // }
 
     // Update to delivery state
-    orderModel.updateOrderState(
-      order.user_id,
-      orderId,
-      ORDER_STATE_ID.shipping
-    );
+    // orderModel.updateOrderState(
+    //   order.user_id,
+    //   orderId,
+    //   ORDER_STATE_ID.shipping
+    // );
   };
 
   handleRejectAndCompleteOrder = async (req) => {
