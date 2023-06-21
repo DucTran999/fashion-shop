@@ -10,6 +10,7 @@ import variantRouter from "./variants/variant.route.js";
 import cartRouter from "./cart/cart.route.js";
 import ordersRouter from "./orders/orders.route.js";
 import sessionRouter from "./sessions/session.route.js";
+import notificationRouter from "./notifications/notification.route.js";
 
 dotenv.config();
 const route = express.Router();
@@ -33,6 +34,8 @@ route.use("/variants", variantRouter);
 route.use("/carts", cartRouter);
 
 route.use("/orders", ordersRouter);
+
+route.use("/notifications", notificationRouter);
 
 route.use("/", (req, res, next) => {
   res.status(200);
