@@ -5,6 +5,7 @@ import navbarReducer from "./activeNav/navSlice";
 import userReducer from "./user/userSlice";
 import cartReducer from "./cart/cartSlice";
 import orderReducer from "./order/orderSlice";
+import notificationReducer from "./notification/notificationSlice";
 
 export default configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export default configureStore({
     user: userReducer,
     cart: cartReducer,
     order: orderReducer,
+    notification: notificationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
