@@ -33,9 +33,10 @@ const socketConnection = (server) => {
 
 const sendNotifications = async (userId, type) => {
   const socketIds = await getUserSocketIds(userId);
+
+  // emit to all socket id consume by a user.
   if (socketIds) {
     for (let i = 0; i < socketIds.length; ++i) {
-      console.log(socketIds[i]);
       io.to(socketIds[i]).emit(
         "new-notification",
         "You have new notification",
@@ -45,4 +46,4 @@ const sendNotifications = async (userId, type) => {
   }
 };
 
-export { socketConnection, sendNotifications };
+export { io, socketConnection, sendNotifications };
