@@ -3,8 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import ICONS from "../../assets/icons";
+import { formatCapitalize } from "../../utils/formatData";
 import { updateSidebarSelection } from "../../features/activeNav/navAction";
 import { resetGetOrderListState } from "../../features/order/orderSlice";
+import { setNotificationFilter } from "../../features/notification/notificationSlice";
+
 // Style
 import classNames from "classnames/bind";
 import style from "./Sidebar.module.scss";
@@ -17,13 +20,13 @@ const AccountSettingNav = () => {
 
   const options = [
     {
-      title: "Public profile",
+      title: "public profile",
     },
     {
-      title: "Update information",
+      title: "update information",
     },
     {
-      title: "Change password",
+      title: "change password",
     },
   ];
 
@@ -49,7 +52,7 @@ const AccountSettingNav = () => {
               )}
               onClick={() => handleNavigateOnClick(option.title)}
             >
-              {option.title}
+              {formatCapitalize(option.title)}
             </li>
           );
         })}
@@ -62,21 +65,22 @@ const ManagePurchaseNav = () => {
   const optionSelected = useSelector((state) => state.navbar?.sidebar.active);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const options = [
     {
-      title: "Orders pending",
+      title: "orders pending",
     },
     {
-      title: "On delivery",
+      title: "on delivery",
     },
     {
-      title: "On cancelling",
+      title: "on cancelling",
     },
     {
-      title: "Cancelled",
+      title: "cancelled",
     },
     {
-      title: "Completed",
+      title: "completed",
     },
   ];
 
@@ -103,7 +107,56 @@ const ManagePurchaseNav = () => {
               )}
               onClick={() => handleNavigateOnClick(option.title)}
             >
-              {option.title}
+              {formatCapitalize(option.title)}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+const NotificationNav = () => {
+  const optionSelected = useSelector((state) => state.navbar?.sidebar.active);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const options = [
+    {
+      title: "news",
+    },
+    {
+      title: "promotions",
+    },
+    {
+      title: "orders",
+    },
+  ];
+
+  const handleNavigateOnClick = (title) => {
+    updateSidebarSelection(title, dispatch);
+    dispatch(setNotificationFilter("all"));
+    navigate("/account/notifications", { replace: true });
+  };
+
+  return (
+    <div className={cx("service")}>
+      <span className={cx("service__header")}>
+        {ICONS.bell}
+        <span style={{ paddingLeft: 5 }}>Notifications</span>
+      </span>
+      <ul className={cx("service__list")}>
+        {options.map((option) => {
+          return (
+            <li
+              key={option.title}
+              className={cx(
+                "service__item",
+                optionSelected === option.title ? "active" : "inactive"
+              )}
+              onClick={() => handleNavigateOnClick(option.title)}
+            >
+              {formatCapitalize(option.title)}
             </li>
           );
         })}
@@ -116,20 +169,8 @@ const Sidebar = () => {
   return (
     <div className={cx("sidebar-wrap")}>
       <AccountSettingNav />
-      <div className={cx("service")}>
-        <span className={cx("service__header")}>
-          {ICONS.bell}
-          <span style={{ paddingLeft: 5 }}>Notifications</span>
-        </span>
-        <ul className={cx("service__list")}>
-          <li className={cx("service__item")}>News</li>
-          <li className={cx("service__item")}>Promotions</li>
-          <li className={cx("service__item")}>Orders</li>
-        </ul>
-      </div>
-      <div className={cx("service")}>
-        <ManagePurchaseNav />
-      </div>
+      <NotificationNav />
+      <ManagePurchaseNav />
     </div>
   );
 };
