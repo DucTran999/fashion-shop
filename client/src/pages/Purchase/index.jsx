@@ -23,9 +23,10 @@ const Purchase = () => {
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
-      updateSidebarSelection("Orders pending", dispatch);
+      updateSidebarSelection("orders pending", dispatch);
     }
 
+    window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
 

@@ -89,8 +89,10 @@ function LoginPage() {
   useEffect(() => {
     if (loginLoading) {
       setAlert("loading");
+      setShowModal(true);
     } else if (errorCause) {
       setAlert("error");
+      setShowModal(true);
     }
   }, [loginLoading, errorCause]);
 

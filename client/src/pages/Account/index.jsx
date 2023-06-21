@@ -24,9 +24,10 @@ const Account = () => {
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
-      updateSidebarSelection("Public profile", dispatch);
+      updateSidebarSelection("public profile", dispatch);
     }
 
+    window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
 

@@ -47,10 +47,10 @@ const InformationSection = memo(({ userInfo }) => {
 const ProfileSection = ({ userInfo }) => {
   return (
     <Row className={cx("profile-layout")}>
-      <Col md="12" lg="8">
+      <Col sx="12" md="12" lg="8">
         <InformationSection userInfo={userInfo} />
       </Col>
-      <Col md="auto" lg="4">
+      <Col sx="auto" md="auto" lg="4">
         <div className={cx("avatar-wrap")}>
           <div className={cx("avatar-title")}>Profile Picture</div>
           <img
@@ -65,7 +65,7 @@ const ProfileSection = ({ userInfo }) => {
   );
 };
 
-const PublicProfile = () => {
+const PublicProfile = ({ optionSelected }) => {
   const isMounted = useRef(false);
 
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -90,7 +90,7 @@ const PublicProfile = () => {
   return (
     <Container className={cx("profile-wrap")}>
       <Row>
-        <SectionHeader title="Public profile" />
+        <SectionHeader title={optionSelected} />
       </Row>
       {isLoading ? (
         <PageSpinner />

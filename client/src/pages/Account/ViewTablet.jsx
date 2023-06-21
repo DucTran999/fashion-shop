@@ -13,16 +13,18 @@ import UpdateInfo from "./UpdateInfo";
 import ChangePassword from "./ChangePassword";
 
 const AccountSettingSection = () => {
-  const optionSelected = useSelector((state) => state.navbar?.sidebar.active);
+  const optionSelected = useSelector((state) => state.navbar.sidebar.active);
 
   return (
     <>
-      {optionSelected === "Public profile" ? (
-        <PublicProfile />
-      ) : optionSelected === "Update information" ? (
-        <UpdateInfo />
+      {optionSelected === "public profile" ? (
+        <PublicProfile optionSelected={optionSelected} />
+      ) : optionSelected === "update information" ? (
+        <UpdateInfo optionSelected={optionSelected} />
       ) : (
-        optionSelected === "Change password" && <ChangePassword />
+        optionSelected === "change password" && (
+          <ChangePassword optionSelected={optionSelected} />
+        )
       )}
     </>
   );

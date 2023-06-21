@@ -13,22 +13,24 @@ import UpdateInfo from "./UpdateInfo";
 import ChangePassword from "./ChangePassword";
 
 const AccountSettingSection = () => {
-  const optionSelected = useSelector((state) => state.navbar?.sidebar.active);
+  const optionSelected = useSelector((state) => state.navbar.sidebar.active);
 
   return (
     <>
-      {optionSelected === "Public profile" ? (
-        <PublicProfile />
-      ) : optionSelected === "Update information" ? (
-        <UpdateInfo />
+      {optionSelected === "public profile" ? (
+        <PublicProfile optionSelected={optionSelected} />
+      ) : optionSelected === "update information" ? (
+        <UpdateInfo optionSelected={optionSelected} />
       ) : (
-        optionSelected === "Change password" && <ChangePassword />
+        optionSelected === "change password" && (
+          <ChangePassword optionSelected={optionSelected} />
+        )
       )}
     </>
   );
 };
 
-const ViewTablet = () => {
+const ViewMobile = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
 
   const axiosPrivate = useAxiosPrivate();
@@ -41,9 +43,9 @@ const ViewTablet = () => {
   }, []);
 
   const accountSettingOptions = [
-    { title: "Public profile" },
-    { title: "Update information" },
-    { title: "Change password" },
+    { title: "public profile" },
+    { title: "update information" },
+    { title: "change password" },
   ];
 
   return (
@@ -63,4 +65,4 @@ const ViewTablet = () => {
   );
 };
 
-export default ViewTablet;
+export default ViewMobile;
