@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
 
 import ICONS from "../../assets/icons";
+import { COMMON_PATH } from "../../utils/constVariable";
 import IMAGES from "../../assets/images";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { logOutReq } from "../../features/auth/apiRequest";
@@ -20,9 +21,13 @@ const cx = classNames.bind(styles);
 
 /* Sub nav component */
 const SubNav = () => {
-  const user = useSelector((state) => state.auth.login?.currentUser);
-  const cart = useSelector((state) => state.cart.get?.info);
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const cart = useSelector((state) => state.cart.get.info);
+  const hasUnreadNotification = useSelector(
+    (state) => state.notification.hasUnread
+  );
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <ul className={cx("sub-nav")}>
@@ -32,9 +37,16 @@ const SubNav = () => {
         </Link>
       </li>
       <li className={cx("sub-nav__item")}>
-        <Link to="/account/notifications" className={cx("sub-nav__link")}>
+        <div
+          className={cx("sub-nav__link")}
+          onClick={() => {
+            updateSelection("notifications", dispatch);
+            navigate(COMMON_PATH.notification, { replace: true });
+          }}
+        >
           {ICONS.bellSlime}
-        </Link>
+          {hasUnreadNotification && <span className={cx("bell-dot")}></span>}
+        </div>
       </li>
       <li className={cx("sub-nav__item", "user")}>
         {user ? <UserBarIsLogged /> : <UserBarIsNotLogged />}
@@ -42,7 +54,7 @@ const SubNav = () => {
       <li className={cx("sub-nav__item")}>
         <div
           className={cx("sub-nav__link")}
-          onClick={() => navigate("/cart", { replace: true })}
+          onClick={() => navigate(COMMON_PATH.cart, { replace: true })}
         >
           {ICONS.cart}
         </div>

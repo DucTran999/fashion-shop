@@ -109,6 +109,18 @@
   border: 2px solid var(--darker-black-clr);
 }
 
+.bell-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.05em 0.2em 0 0;
+  width: 0.5em;
+  height: 0.5em;
+  border: 0.1em solid var(--darker-black-clr);
+  border-radius: 45px;
+  background: var(--tiffany-blue-clr);
+}
+
 // Sub nav - cart
 .cart__num-products {
   position: absolute;

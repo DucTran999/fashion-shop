@@ -117,13 +117,21 @@ const ViewMobile = () => {
 
           <section className={cx("sidebar-service")}>
             <nav className={cx("service-list")} onClick={handleCloseSidebar}>
-              <Link to="/blogs" className={cx("service-item")}>
-                Notification
-              </Link>
               <div
                 onClick={() =>
                   handleNavigateOnChangeOption(
-                    "Orders pending",
+                    "account/notifications",
+                    COMMON_PATH.notification
+                  )
+                }
+                className={cx("service-item")}
+              >
+                Notification
+              </div>
+              <div
+                onClick={() =>
+                  handleNavigateOnChangeOption(
+                    "orders pending",
                     COMMON_PATH.purchase
                   )
                 }

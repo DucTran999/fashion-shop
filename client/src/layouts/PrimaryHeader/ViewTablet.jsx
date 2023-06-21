@@ -15,6 +15,7 @@ import ShopLogo from "../../components/Logo/ShopLogo";
 import classNames from "classnames/bind";
 import styles from "./ViewTablet.module.scss";
 import PrimaryNav from "./PrimaryNav";
+import { updateSelection } from "../../features/activeNav/navAction";
 const cx = classNames.bind(styles);
 
 /* Sub nav component */
@@ -41,15 +42,31 @@ const MenuDropDownServiceHasLogin = () => {
     await logOutReq(user.user_id, axiosPrivate, dispatch, navigate);
   };
 
+  const handleNavigateOnClick = (linkTo, pageName) => {
+    updateSelection(pageName, dispatch);
+    navigate(linkTo, { replace: true });
+  };
+
   return (
     <nav className={cx("menu__dropdown--tablet")}>
       <section className={cx("dropdown__service")}>
         <Link to="/search" className={cx("menu__dropdown--tablet__element")}>
           Search
         </Link>
-        <Link to="/cart" className={cx("menu__dropdown--tablet__element")}>
+        <div
+          className={cx("menu__dropdown--tablet__element")}
+          onClick={() => handleNavigateOnClick(COMMON_PATH.cart, "Cart")}
+        >
           Cart
-        </Link>
+        </div>
+        <div
+          className={cx("menu__dropdown--tablet__element")}
+          onClick={() =>
+            handleNavigateOnClick(COMMON_PATH.notification, "Cart")
+          }
+        >
+          Notifications
+        </div>
         <div
           onClick={() => navigate(COMMON_PATH.purchase, { replace: true })}
           className={cx("menu__dropdown--tablet__element")}

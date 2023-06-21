@@ -1,0 +1,79 @@
+@use "../../../styles/" as s;
+
+.col-cent {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.notification-list {
+  margin: 1em 0;
+  height: 26em;
+  overflow: auto;
+}
+
+.notification-wrap {
+  border-radius: 5px;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  border: 2px solid var(--grey-clr);
+
+  &.inactive {
+    background: var(--black-fading-clr);
+    border: 2px solid var(--grey-clr);
+  }
+
+  &.active {
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(
+        to bottom,
+        var(--primary-opacity-clr),
+        var(--primary-clr),
+        rgba(0, 0, 0, 0)
+      )
+      30 stretch;
+  }
+}
+
+.notification__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .notification__time {
+    padding: 0 0 0 1em;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: var(--jade-clr);
+  }
+}
+
+.notification__message {
+  font-size: 1.4rem;
+}
+
+.notification__btn {
+  font-weight: 500;
+  font-size: 1.4rem;
+  border: none;
+  background: transparent;
+  color: var(--light-grey-clr);
+
+  &:hover {
+    transition: 0.25s;
+    color: var(--primary-opacity-clr);
+  }
+
+  &--remove {
+    margin: 0.5em;
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: var(--tomato-clr);
+
+    &:hover {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+}
