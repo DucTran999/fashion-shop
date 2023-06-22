@@ -1,21 +1,15 @@
 import createHttpError from "http-errors";
-import { formatHyphenToUpperCase } from "../../utils/formatData.js";
 import notificationModel from "./notification.model.js";
+import { NOTIFICATION_TYPE } from "../../utils/constVariable.js";
 
 class NotificationService {
-  addOrderNotification = async (order, state) => {
+  pushOrderNotification = async (userId, message) => {
     const timestamp = Date.now();
-    const { user_id, id, created_at, total_price } = order;
-    const owner = `notifications:user#${user_id}`;
-    const date = new Date(created_at.replace(" ", "T"));
+    const owner = `notifications:user#${userId}`;
 
     const notification = {
       time: timestamp,
-      id: formatHyphenToUpperCase(id),
-      type: "order",
-      at: date,
-      state: state,
-      total: total_price,
+      ...message,
       unread: true,
     };
 
@@ -44,21 +38,21 @@ class NotificationService {
       const notification = JSON.parse(notificationRaw);
 
       // Order notifications are the majority so check first
-      if (notification.type === "orders") {
-        newsNotify.all.push(notification);
+      if (notification.type === NOTIFICATION_TYPE.orders) {
+        ordersNotify.all.push(notification);
         notification.unread
-          ? newsNotify.unread.push(notification)
-          : newsNotify.read.push(notification);
-      } else if (notification.type === "promotions") {
+          ? ordersNotify.unread.push(notification)
+          : ordersNotify.read.push(notification);
+      } else if (notification.type === NOTIFICATION_TYPE.promotions) {
         promotionsNotify.all.push(notification);
         notification.unread
           ? promotionsNotify.unread.push(notification)
           : promotionsNotify.read.push(notification);
       } else {
-        ordersNotify.all.push(notification);
+        newsNotify.all.push(notification);
         notification.unread
-          ? ordersNotify.unread.push(notification)
-          : ordersNotify.read.push(notification);
+          ? newsNotify.unread.push(notification)
+          : newsNotify.read.push(notification);
       }
     }
 

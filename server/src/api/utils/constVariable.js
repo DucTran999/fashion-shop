@@ -10,4 +10,10 @@ const ORDER_STATE_ID = {
   cancelling: "5",
 };
 
-export { MAGIC_NUMBER, ORDER_STATE_ID };
+const NOTIFICATION_TYPE = {
+  news: "news",
+  promotions: "promotions",
+  orders: "orders",
+};
+
+export { MAGIC_NUMBER, ORDER_STATE_ID, NOTIFICATION_TYPE };

@@ -4,49 +4,47 @@ import authMiddleware from "../middleware/auth.middleware.js";
 import payloadMiddleware from "./orders.validation.js";
 
 const router = express.Router();
+router.get(
+  "/:id",
+  authMiddleware.verifyAccessToken,
+  ordersController.getUserOrdersByStateReq
+);
 
 router.get(
   "/",
   authMiddleware.verifyAdminAccessToken,
-  ordersController.getAllOrdersWithState
+  ordersController.getAllUserOrdersByStateReq
 );
 
 router.post(
   "/",
-  payloadMiddleware.validatePlaceOrderPayload,
+  payloadMiddleware.placeOrderPayloadValidator,
   authMiddleware.verifyAccessToken,
-  ordersController.placeNewOrder
+  ordersController.placeOrderReq
 );
 
 router.patch(
-  "/:id",
-  authMiddleware.verifyAccessToken,
-  ordersController.adminUpdateOrderState
-);
-
-router.get(
-  "/:id",
-  authMiddleware.verifyAccessToken,
-  ordersController.getUserOrderWithState
-);
-
-// User send req for canceling an order. Need admin confirm to be cancelled.
-router.delete(
-  "/:id",
-  authMiddleware.verifyAccessToken,
-  ordersController.cancelOrder
+  "/:order_id",
+  authMiddleware.verifyAdminAccessToken,
+  ordersController.adminUpdateOrderStateReq
 );
 
 router.patch(
   "/:id/to-ship",
   authMiddleware.verifyAdminAccessToken,
-  ordersController.confirmOrder
+  ordersController.confirmUserOrderReq
 );
 
 router.patch(
   "/:id/shipping-failed",
   authMiddleware.verifyAdminAccessToken,
-  ordersController.cancelOrderDeliveryFailed
+  ordersController.cancelUserOrderShippingFailedReq
+);
+
+router.delete(
+  "/:id",
+  authMiddleware.verifyAccessToken,
+  ordersController.cancelOrderPendingAdminApprovalReq
 );
 
 export default router;
