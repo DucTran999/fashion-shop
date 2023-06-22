@@ -2,7 +2,6 @@ import { Server } from "socket.io";
 import {
   addOneSocketId,
   delOneSocketId,
-  getUserSocketIds,
   delUserSocketIds,
 } from "../v1/helpers/helper.socket.js";
 
@@ -31,19 +30,4 @@ const socketConnection = (server) => {
   });
 };
 
-const sendNotifications = async (userId, type) => {
-  const socketIds = await getUserSocketIds(userId);
-
-  // emit to all socket id consume by a user.
-  if (socketIds) {
-    for (let i = 0; i < socketIds.length; ++i) {
-      io.to(socketIds[i]).emit(
-        "new-notification",
-        "You have new notification",
-        { type: type }
-      );
-    }
-  }
-};
-
-export { io, socketConnection, sendNotifications };
+export { io, socketConnection };

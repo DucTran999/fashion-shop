@@ -1,6 +1,7 @@
 import createHttpError from "http-errors";
 import notificationModel from "./notification.model.js";
 import { NOTIFICATION_TYPE } from "../../utils/constVariable.js";
+import { emitUserFetchNotifications } from "../helpers/helper.socket.js";
 
 class NotificationService {
   pushOrderNotification = async (userId, message) => {
@@ -18,6 +19,8 @@ class NotificationService {
       timestamp,
       JSON.stringify(notification)
     );
+
+    emitUserFetchNotifications(userId);
   };
 
   getUserNotifications = async (req, payload) => {

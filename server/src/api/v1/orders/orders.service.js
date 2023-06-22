@@ -3,7 +3,6 @@ import createHttpError from "http-errors";
 import orderModel from "./orders.model.js";
 import variantModel from "../variants/variant.model.js";
 import cartModel from "../cart/cart.model.js";
-import stateModel from "../states/state.model.js";
 import paymentMethodModel from "../paymentMethod/paymentMethod.model.js";
 import notificationService from "../notifications/notification.service.js";
 import messageTemplate from "../notifications/messageTemplate.js";
@@ -85,37 +84,37 @@ class OrderService {
     const { payment_method_id } = req.body;
 
     // Check payment method
-    // const paymentMethod = await paymentMethodModel.findPaymentById(
-    //   +payment_method_id
-    // );
-    // if (!paymentMethod?.length) throw createHttpError.BadRequest();
+    const paymentMethod = await paymentMethodModel.findPaymentById(
+      +payment_method_id
+    );
+    if (!paymentMethod?.length) throw createHttpError.BadRequest();
 
     // Verify cart not empty
-    // const items = await cartModel.findAll(user_id);
-    // if (!items.length) throw createHttpError.BadRequest();
+    const items = await cartModel.findAll(user_id);
+    if (!items.length) throw createHttpError.BadRequest();
 
     // Check cart not overstocking
-    // const productOverStock = await orderModel.findProductOverstock(user_id);
-    // if (productOverStock.length > 0) {
-    //   throw createHttpError.Conflict("Your cart has product overstock!");
-    // }
+    const productOverStock = await orderModel.findProductOverstock(user_id);
+    if (productOverStock.length > 0) {
+      throw createHttpError.Conflict("Your cart has product overstock!");
+    }
 
     // TODO: Limit order per day
 
     // Calculate cart total price (TODO: Voucher, coupon, discount code)
-    // const initSum = 0;
-    // const total_price = items.reduce(
-    //   (accumulator, currentVariant) => accumulator + currentVariant.sub_price,
-    //   initSum
-    // );
+    const initSum = 0;
+    const total_price = items.reduce(
+      (accumulator, currentVariant) => accumulator + currentVariant.sub_price,
+      initSum
+    );
 
     // Save or to DB
-    // await orderModel.save(
-    //   user_id,
-    //   JSON.stringify(items),
-    //   total_price,
-    //   payment_method_id
-    // );
+    await orderModel.save(
+      user_id,
+      JSON.stringify(items),
+      total_price,
+      payment_method_id
+    );
 
     // await cartModel.clearCart(user_id);
     const message = messageTemplate.placeOrderSuccessMsg();
@@ -129,21 +128,21 @@ class OrderService {
     if (!order) throw createHttpError.BadRequest();
 
     // Decrease stock
-    // const items = order.items;
-    // const variantIds = extractVariantId(items);
-    // const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
+    const items = order.items;
+    const variantIds = extractVariantId(items);
+    const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
 
-    // for (let i = 0; i < items.length; ++i) {
-    //   let newQty = qtyInStock[i].in_stock - items[i].qty;
-    //   await variantModel.updateNewQty(qtyInStock[i].id, newQty);
-    // }
+    for (let i = 0; i < items.length; ++i) {
+      let newQty = qtyInStock[i].in_stock - items[i].qty;
+      await variantModel.updateNewQty(qtyInStock[i].id, newQty);
+    }
 
-    // // Update to delivery state
-    // orderModel.updateOrderState(
-    //   order.user_id,
-    //   orderId,
-    //   ORDER_STATE_ID.shipping
-    // );
+    // Update to delivery state
+    orderModel.updateOrderState(
+      order.user_id,
+      orderId,
+      ORDER_STATE_ID.shipping
+    );
 
     const message = messageTemplate.confirmOrderToShipMsg(order);
     await notificationService.pushOrderNotification(order.user_id, message);
@@ -156,7 +155,7 @@ class OrderService {
     if (!body) throw createHttpError.BadRequest();
     const { user_id, state_id } = req.body;
 
-    // orderModel.updateOrderState(user_id, orderId, state_id);
+    orderModel.updateOrderState(user_id, orderId, state_id);
 
     // Push notification
     if (state_id === ORDER_STATE_ID.cancelled) {
@@ -175,21 +174,21 @@ class OrderService {
     if (!order) throw createHttpError.BadRequest();
 
     // revert qty in stock
-    // const items = order.items;
-    // const variantIds = extractVariantId(items);
-    // const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
+    const items = order.items;
+    const variantIds = extractVariantId(items);
+    const qtyInStock = await variantModel.findLatestQtyInStock(variantIds);
 
-    // for (let i = 0; i < items.length; ++i) {
-    //   let newQty = qtyInStock[i].in_stock + items[i].qty;
-    //   await variantModel.updateNewQty(qtyInStock[i].id, newQty);
-    // }
+    for (let i = 0; i < items.length; ++i) {
+      let newQty = qtyInStock[i].in_stock + items[i].qty;
+      await variantModel.updateNewQty(qtyInStock[i].id, newQty);
+    }
 
     // Update to cancelled state
-    // orderModel.updateOrderState(
-    //   order.user_id,
-    //   orderId,
-    //   ORDER_STATE_ID.cancelled
-    // );
+    orderModel.updateOrderState(
+      order.user_id,
+      orderId,
+      ORDER_STATE_ID.cancelled
+    );
 
     const message = messageTemplate.cancelOrderOnShippingFailureMsg(orderId);
     await notificationService.pushOrderNotification(order.user_id, message);
@@ -199,11 +198,11 @@ class OrderService {
     if (payload.user_id !== req.params.id) throw createHttpError.Unauthorized();
     const { order_id } = req.query;
 
-    // await orderModel.updateOrderState(
-    //   payload.user_id,
-    //   order_id,
-    //   ORDER_STATE_ID.cancelling
-    // );
+    await orderModel.updateOrderState(
+      payload.user_id,
+      order_id,
+      ORDER_STATE_ID.cancelling
+    );
 
     // Push notification
     const message = messageTemplate.requestCancelOrderMsg(order_id);

@@ -1,4 +1,5 @@
 import redisClient from "./init.redis.client.js";
+import { io } from "../../utils/init.socket.js";
 
 // Clear all user socket when server down
 const clearAllUserSocketIds = async () => {
@@ -55,10 +56,22 @@ const delUserSocketIds = async (userId) => {
   }
 };
 
+const emitUserFetchNotifications = async (userId) => {
+  const socketIds = await getUserSocketIds(userId);
+
+  // emit to all socket id consume by a user.
+  if (socketIds) {
+    for (let i = 0; i < socketIds.length; ++i) {
+      io.to(socketIds[i]).emit("new-notification", "You have new notification");
+    }
+  }
+};
+
 export {
   addOneSocketId,
   delOneSocketId,
   getUserSocketIds,
   delUserSocketIds,
   clearAllUserSocketIds,
+  emitUserFetchNotifications,
 };
