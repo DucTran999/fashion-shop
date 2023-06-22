@@ -40,18 +40,12 @@ function App() {
       console.log("disconnect because", reason);
     };
 
-    const onFetchNotifications = (message, { type }) => {
-      console.log(message, type);
-    };
-
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("new-notification", onFetchNotifications);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("new-notification", onFetchNotifications);
     };
 
     // eslint-disable-next-line
@@ -88,7 +82,7 @@ function App() {
             {/* Protected route */}
             <Route element={<RequireAuth />}>
               {/* Account path */}
-              <Route path="/account/:slug" element={<Account />} />
+              <Route path="/account/profile" element={<Account />} />
               <Route
                 path="/account"
                 element={<Navigate to="/account/profile" replace={true} />}
@@ -105,6 +99,8 @@ function App() {
 
               {/* notification */}
               <Route path="/account/notifications" element={<Notification />} />
+
+              <Route path="/account/:slug" element={<Account />} />
             </Route>
 
             {/* Page not found 404 */}

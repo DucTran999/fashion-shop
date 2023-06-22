@@ -3,6 +3,7 @@ import API_URL from "../../api/init.url";
 import delay from "../../utils/delay";
 import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
 import io from "../../utils/init.socket";
+import { resetNotificationList } from "../notification/notificationSlice";
 
 import {
   loginFailed,
@@ -93,6 +94,7 @@ const logOutReq = async (userId, axiosPrivate, dispatch, navigate) => {
 
     // browser remember account is logout
     localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
+    dispatch(resetNotificationList());
 
     navigate("/login", { replace: true });
   } catch (error) {

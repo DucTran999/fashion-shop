@@ -4,6 +4,7 @@ import axios from "../api/init.axios";
 import io from "../utils/init.socket";
 import API_URL from "../api/init.url";
 import LOCAL_STORAGE_KEY from "../api/init.localStorage";
+import { resetNotificationList } from "../features/notification/notificationSlice";
 import {
   loginStart,
   loginFailed,
@@ -46,6 +47,7 @@ const useRefreshToken = () => {
       return newAccessToken;
     } catch (err) {
       localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
+      dispatch(resetNotificationList());
       dispatch(loginFailed("Session expired!"));
     }
   };

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   filter: "all",
+  hasUnread: false,
   get: {
     isFetching: false,
     notifications: null,
@@ -26,6 +27,14 @@ const notificationSlice = createSlice({
       state.filter = action.payload;
     },
 
+    // reset notifications state
+    resetNotificationList: (state) => {
+      state.get.isFetching = false;
+      state.get.notifications = null;
+      state.get.errorCause = null;
+      state.hasUnread = false;
+    },
+
     // fetch orderNotify
     getNotificationStart: (state) => {
       state.get.isFetching = true;
@@ -34,6 +43,7 @@ const notificationSlice = createSlice({
       state.get.isFetching = false;
       state.get.notifications = action.payload;
       state.get.errorCause = null;
+      state.hasUnread = action.payload.hasUnread;
     },
     getNotificationFailed: (state, action) => {
       state.get.isFetching = false;
@@ -71,6 +81,7 @@ const notificationSlice = createSlice({
 
 export const {
   setNotificationFilter,
+  resetNotificationList,
   getNotificationStart,
   getNotificationSuccess,
   getNotificationFailed,
