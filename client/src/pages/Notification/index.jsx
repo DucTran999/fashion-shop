@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import useWindowDimension from "../../hooks/useWindowDimension";
 import { updateSidebarSelection } from "../../features/activeNav/navAction";
+import { setNotificationFilter } from "../../features/notification/notificationSlice";
 import { formatCapitalize } from "../../utils/formatData";
 
 import ViewDesktop from "./ViewDesktop";
@@ -23,6 +24,7 @@ const Notification = () => {
     if (!isMounted.current) {
       isMounted.current = true;
       updateSidebarSelection("news", dispatch);
+      setNotificationFilter("all", dispatch);
     }
 
     window.scrollTo(0, 0);

@@ -45,14 +45,15 @@ const NotificationLayout = ({ user }) => {
   return (
     <Container style={{ position: "relative" }}>
       <SectionHeader title={optionSelected} />
-      <StateFilter />
+      <StateFilter /> {console.log(notifications)}
       {isFetching && !notifications ? (
         <LoadingSpinner />
       ) : errorCause ? (
         <ErrorBlock msg={errorCause} />
       ) : (
         notifications &&
-        filter && (
+        filter &&
+        optionSelected && (
           <RenderListNotifications
             notifications={notifications[optionSelected]}
             filter={filter}

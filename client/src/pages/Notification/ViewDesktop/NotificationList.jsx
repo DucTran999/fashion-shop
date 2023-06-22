@@ -1,11 +1,10 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { format } from "date-fns";
 
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { format } from "date-fns";
-import { getMsg } from "../../../helpers/orderTemplateMsg";
-import { ORDER_STATE_ORIGINAL } from "../../../utils/constVariable";
+import { formatCapitalize } from "../../../utils/formatData";
 import {
   changeNotificationMarkReq,
   getNotificationsReq,
@@ -65,17 +64,9 @@ const Notification = ({ notification }) => {
         </span>
       </div>
       <Col lg="10" className={cx("notification__message")}>
-        <div>{ORDER_STATE_ORIGINAL[notification.state].toUpperCase()}</div>
-        <div>
-          {notification.type === "order"
-            ? getMsg(
-                user.first_name,
-                notification.state,
-                notification.id,
-                notification.total,
-                notification.at
-              )
-            : ""}
+        <div>{notification.subject.toUpperCase()}</div>
+        <div style={{ textAlign: "justify" }}>
+          Hi, {formatCapitalize(user.first_name)}. {notification.message}
         </div>
       </Col>
       <Col lg="2" className={cx("col-cent")}>
