@@ -68,7 +68,6 @@ class OrderModel {
     try {
       await pool.query(query, [user_id, order_id, state_id]);
     } catch (error) {
-      console.log(error);
       throw createHttpError.InternalServerError();
     }
   };

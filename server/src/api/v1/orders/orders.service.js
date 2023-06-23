@@ -153,17 +153,27 @@ class OrderService {
     if (!orderId) throw createHttpError.BadRequest();
     const body = req.body;
     if (!body) throw createHttpError.BadRequest();
-    const { user_id, state_id } = req.body;
+    const { user_id, current_state_id, next_state_id } = req.body;
 
-    orderModel.updateOrderState(user_id, orderId, state_id);
+    orderModel.updateOrderState(user_id, orderId, next_state_id);
 
     // Push notification
-    if (state_id === ORDER_STATE_ID.cancelled) {
-      const message = messageTemplate.approveUserCancelOrderMsg(orderId);
-      await notificationService.pushOrderNotification(user_id, message);
-    } else {
+    if (current_state_id === ORDER_STATE_ID.shipping) {
       const message = messageTemplate.informOrderShippingSuccessMsg(orderId);
       await notificationService.pushOrderNotification(user_id, message);
+      return;
+    }
+
+    if (current_state_id === ORDER_STATE_ID.pending) {
+      const message = messageTemplate.cancelOrderOverstockMsg(orderId);
+      await notificationService.pushOrderNotification(user_id, message);
+      return;
+    }
+
+    if (current_state_id === ORDER_STATE_ID.cancelling) {
+      const message = messageTemplate.approveUserCancelOrderMsg(orderId);
+      await notificationService.pushOrderNotification(user_id, message);
+      return;
     }
   };
 

@@ -12,6 +12,7 @@ const HEADER_TAG = {
   pendingCancel: "pending cancel order",
   shippingFailed: "shipping failure",
   cancelSuccess: "cancel order success",
+  orderFailed: "order unsuccessful",
 };
 
 const placeOrderSuccessMsg = () => {
@@ -66,6 +67,20 @@ const cancelOrderOnShippingFailureMsg = (orderId) => {
   return { subject: subject, message: message, type: NOTIFICATION_TYPE.orders };
 };
 
+const cancelOrderOverstockMsg = (orderId) => {
+  const subject = HEADER_TAG.orderFailed;
+  const message = `
+    The order ${formatHyphenToUpperCase(orderId)} you just placed.
+    Unfortunately, the products you ordered are currently out of stock and we 
+    cannot fulfill your order at this time. We understand how frustrating this 
+    can be and want to assure you that we are working diligently to restock the 
+    products as soon as possible.
+    Thank you for your understanding and continued patronage.
+  `;
+
+  return { subject: subject, message: message, type: NOTIFICATION_TYPE.orders };
+};
+
 const approveUserCancelOrderMsg = (orderId) => {
   const subject = HEADER_TAG.cancelSuccess;
   const message = `
@@ -81,11 +96,10 @@ const approveUserCancelOrderMsg = (orderId) => {
 const informOrderShippingSuccessMsg = (orderId) => {
   const subject = HEADER_TAG.cancelSuccess;
   const message = `
-        We are writing to confirm that your order has been successfully delivered 
-        and received. We hope that you are satisfied with your purchase and that it
-        meets your expectations.
-        The order id: ${formatHyphenToUpperCase(orderId)}
-    `;
+   We are writing to confirm that your order ${formatHyphenToUpperCase(orderId)}
+    has been successfully delivered and received. We hope that you are satisfied
+    with your purchase and that it meets your expectations.
+  `;
 
   return { subject: subject, message: message, type: NOTIFICATION_TYPE.orders };
 };
@@ -95,6 +109,7 @@ export default {
   confirmOrderToShipMsg,
   requestCancelOrderMsg,
   cancelOrderOnShippingFailureMsg,
+  cancelOrderOverstockMsg,
   approveUserCancelOrderMsg,
   informOrderShippingSuccessMsg,
 };
