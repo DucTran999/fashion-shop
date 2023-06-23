@@ -10,6 +10,7 @@ const pool = new Pool(DB_CONNECT_INFO.pg);
 
 // End pool when server down.
 process.on("SIGINT", async () => {
+  console.log("Postgres Pool ::: End <<<");
   await pool.end();
   process.exit(0);
 });

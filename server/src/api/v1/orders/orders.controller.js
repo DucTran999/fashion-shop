@@ -1,9 +1,9 @@
 import ordersService from "./orders.service.js";
 
 class OrderController {
-  getAllOrdersWithState = async (req, res, next) => {
+  getAllUserOrdersByStateReq = async (req, res, next) => {
     try {
-      const orders = await ordersService.getAllOrders(req);
+      const orders = await ordersService.getAllUserOrdersByState(req);
 
       res
         .status(200)
@@ -13,10 +13,10 @@ class OrderController {
     }
   };
 
-  getUserOrderWithState = async (payload, req, res, next) => {
+  getUserOrdersByStateReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
-      const orders = await ordersService.getAllUserOrderWithState(req, payload);
+      const orders = await ordersService.getUserOrdersByState(req, payload);
 
       res
         .status(200)
@@ -26,10 +26,10 @@ class OrderController {
     }
   };
 
-  placeNewOrder = async (payload, req, res, next) => {
+  placeOrderReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
-      await ordersService.placeNewOrder(req, payload);
+      await ordersService.placeOrder(req, payload);
 
       res.status(200).json({ status: "success", message: null });
     } catch (err) {
@@ -37,9 +37,9 @@ class OrderController {
     }
   };
 
-  confirmOrder = async (req, res, next) => {
+  confirmUserOrderReq = async (req, res, next) => {
     try {
-      await ordersService.confirmOrder(req);
+      await ordersService.confirmUserOrder(req);
 
       res.status(200).json({ status: "success", message: null });
     } catch (err) {
@@ -48,9 +48,9 @@ class OrderController {
   };
 
   // use for set state to completed and cancelled order
-  adminUpdateOrderState = async (req, res, next) => {
+  adminUpdateOrderStateReq = async (req, res, next) => {
     try {
-      await ordersService.handleRejectAndCompleteOrder(req);
+      await ordersService.adminUpdateOrderState(req);
 
       res.status(200).json({ status: "success", message: null });
     } catch (err) {
@@ -58,9 +58,9 @@ class OrderController {
     }
   };
 
-  cancelOrderDeliveryFailed = async (req, res, next) => {
+  cancelUserOrderShippingFailedReq = async (req, res, next) => {
     try {
-      await ordersService.handleCancelOrderShippingFailed(req);
+      await ordersService.cancelUserOrderShippingFailed(req);
 
       res.status(200).json({ status: "success", message: null });
     } catch (err) {
@@ -68,10 +68,10 @@ class OrderController {
     }
   };
 
-  cancelOrder = async (payload, req, res, next) => {
+  cancelOrderPendingAdminApprovalReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
-      await ordersService.updateOrderState(req, payload, 5);
+      await ordersService.cancelOrderPendingAdminApproval(req, payload);
 
       res.status(200).json({ status: "success", message: null });
     } catch (err) {
