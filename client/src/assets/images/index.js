@@ -42,7 +42,7 @@ const IMAGES = {
   category8: require("./category/image_categories-8.webp"),
 
   //Waiting Image
-  defaultImg: require("./default/blur_img.jpg"),
+  defaultImg: require("./default/blur_img.webp"),
 };
 
 export default IMAGES;
