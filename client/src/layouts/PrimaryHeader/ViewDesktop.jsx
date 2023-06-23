@@ -4,15 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
 
 import ICONS from "../../assets/icons";
-import { COMMON_PATH } from "../../utils/constVariable";
 import IMAGES from "../../assets/images";
+import { COMMON_PATH } from "../../utils/constVariable";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { logOutReq } from "../../features/auth/apiRequest";
+import { formatCapitalize } from "../../utils/formatData";
 
 // Component
 import ShopLogo from "../../components/Logo/ShopLogo";
 import PrimaryNav from "./PrimaryNav";
-import { updateSelection } from "../../features/activeNav/navAction";
+import {
+  updateSelection,
+  updateSidebarSelection,
+} from "../../features/activeNav/navAction";
 
 //Style
 import classNames from "classnames/bind";
@@ -21,13 +25,25 @@ const cx = classNames.bind(styles);
 
 /* Sub nav component */
 const SubNav = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const currentPath = location.pathname;
+
   const user = useSelector((state) => state.auth.login.currentUser);
   const cart = useSelector((state) => state.cart.get.info);
   const hasUnreadNotification = useSelector(
     (state) => state.notification.hasUnread
   );
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+
+  const handleIconNavigateOnClick = (path, subNavActive, sidebarActive) => {
+    if (path !== currentPath) {
+      updateSelection(subNavActive, dispatch);
+      updateSidebarSelection(sidebarActive, dispatch);
+      navigate(path, { replace: true });
+    }
+  };
 
   return (
     <ul className={cx("sub-nav")}>
@@ -39,10 +55,13 @@ const SubNav = () => {
       <li className={cx("sub-nav__item")}>
         <div
           className={cx("sub-nav__link")}
-          onClick={() => {
-            updateSelection("notifications", dispatch);
-            navigate(COMMON_PATH.notification, { replace: true });
-          }}
+          onClick={() =>
+            handleIconNavigateOnClick(
+              COMMON_PATH.notification,
+              "notifications",
+              "news"
+            )
+          }
         >
           {ICONS.bellSlime}
           {hasUnreadNotification && <span className={cx("bell-dot")}></span>}
@@ -73,16 +92,22 @@ const SubNav = () => {
 const UserBarIsLogged = () => {
   const loggedOptions = [
     {
-      link: "/account/profile",
-      title: "Account Settings",
+      link: COMMON_PATH.account,
+      title: "account settings",
+      navbar: "account",
+      sidebar: "public profile",
     },
     {
       link: "/wishlist",
-      title: "My Wishlist",
+      title: "my wishlist",
+      navbar: "wishlist",
+      sidebar: "wishlist",
     },
     {
-      link: "/account/purchases",
-      title: "My Purchases",
+      link: COMMON_PATH.purchase,
+      title: "my purchases",
+      navbar: "purchase",
+      sidebar: "orders pending",
     },
   ];
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -92,18 +117,19 @@ const UserBarIsLogged = () => {
   const location = useLocation();
   const axiosPrivate = useAxiosPrivate();
 
+  const currentPath = location.pathname;
+
   /* handle user action */
   const handleLogOut = async (e) => {
     e.preventDefault();
     await logOutReq(user.user_id, axiosPrivate, dispatch, navigate);
   };
 
-  const handleNavigateOnClick = (endpoint) => {
-    if (location.pathname.includes("account")) {
-      navigate(endpoint, { state: location, replace: true });
-    } else {
-      updateSelection("", dispatch);
-      navigate(endpoint, { replace: false });
+  const handleIconNavigateOnClick = (path, subNavActive, sidebarActive) => {
+    if (currentPath !== path) {
+      updateSelection(subNavActive, dispatch);
+      updateSidebarSelection(sidebarActive, dispatch);
+      navigate(path, { replace: true });
     }
   };
 
@@ -111,7 +137,13 @@ const UserBarIsLogged = () => {
     <>
       <div
         className={cx("sub-nav__link")}
-        onClick={() => handleNavigateOnClick("/account/profile")}
+        onClick={() =>
+          handleIconNavigateOnClick(
+            COMMON_PATH.account,
+            "account",
+            "public profile"
+          )
+        }
       >
         <img
           src={IMAGES.defaultAvatar}
@@ -125,9 +157,15 @@ const UserBarIsLogged = () => {
             <li key={idx} className={cx("user-options__option")}>
               <div
                 className={cx("user-options__link")}
-                onClick={() => handleNavigateOnClick(option.link)}
+                onClick={() =>
+                  handleIconNavigateOnClick(
+                    option.link,
+                    option.navbar,
+                    option.sidebar
+                  )
+                }
               >
-                {option.title}
+                {formatCapitalize(option.title)}
               </div>
             </li>
           );
