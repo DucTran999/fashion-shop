@@ -19,12 +19,14 @@ const AccountSettingSection = () => {
 
   return (
     <>
-      {optionSelected === "Public profile" ? (
-        <PublicProfile />
-      ) : optionSelected === "Update information" ? (
-        <UpdateInfo />
+      {optionSelected === "public profile" ? (
+        <PublicProfile optionSelected={optionSelected} />
+      ) : optionSelected === "update information" ? (
+        <UpdateInfo optionSelected={optionSelected} />
       ) : (
-        optionSelected === "Change password" && <ChangePassword />
+        optionSelected === "change password" && (
+          <ChangePassword optionSelected={optionSelected} />
+        )
       )}
     </>
   );

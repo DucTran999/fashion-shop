@@ -1,0 +1,25 @@
+@use "../../../styles/" as s;
+
+.wrap {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  color: var(--grey-clr);
+  padding: 2em 0;
+}
+
+.icon {
+  font-size: 3em;
+
+  @include s.breakpoint(lg) {
+    font-size: 5em;
+  }
+}
+
+.message {
+  font-size: 1em;
+  font-weight: 500;
+  user-select: none;
+  pointer-events: none;
+}

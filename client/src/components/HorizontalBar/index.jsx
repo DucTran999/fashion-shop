@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { sidebarChangeOption } from "../../features/activeNav/navSlice";
+import { formatCapitalize } from "../../utils/formatData";
 
 import classNames from "classnames/bind";
 import style from "./HorizontalBar.module.scss";
@@ -12,7 +13,6 @@ const HorizontalBar = ({ options }) => {
   const dispatch = useDispatch();
 
   const handleSwitchOnClick = (option) => {
-    console.log("handler");
     dispatch(sidebarChangeOption(option));
   };
 
@@ -28,7 +28,7 @@ const HorizontalBar = ({ options }) => {
             )}
             onClick={() => handleSwitchOnClick(option.title)}
           >
-            {option.title}
+            {formatCapitalize(option.title)}
           </span>
         );
       })}

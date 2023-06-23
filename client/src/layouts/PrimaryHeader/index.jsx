@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import socket from "../../utils/init.socket";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useWindowDimension from "../../hooks/useWindowDimension";
 import { getCartReq } from "../../features/cart/cartRequest";
-import { getCartSuccess } from "../../features/cart/cartSlice";
+import { getNotificationsReq } from "../../features/notification/notificationRequest";
 
 import ViewDesktop from "./ViewDesktop";
 import ViewTablet from "./ViewTablet";
@@ -16,8 +17,12 @@ import styles from "./PrimaryHeader.module.scss";
 const cx = classNames.bind(styles);
 
 const PrimaryHeader = () => {
+  const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
   const { width } = useWindowDimension();
 
+  const isMounted = useRef(false);
+  const user = useSelector((state) => state.auth.login.currentUser);
   const [fix, setFix] = useState(false);
 
   const setFixed = () => {
@@ -30,17 +35,26 @@ const PrimaryHeader = () => {
 
   window.addEventListener("scroll", setFixed);
 
-  const user = useSelector((state) => state.auth.login?.currentUser);
-  const axiosPrivate = useAxiosPrivate();
-  const dispatch = useDispatch();
-
+  // Fetch notification and cart after login or refresh
   useEffect(() => {
-    if (user) {
-      getCartReq(user.user_id, axiosPrivate, dispatch);
-    } else {
-      const localCart = localStorage.getItem("@atlana/cart");
-      dispatch(getCartSuccess(JSON.parse(localCart)));
+    if (!isMounted.current) {
+      isMounted.current = true;
+      if (user) {
+        getCartReq(user.user_id, axiosPrivate, dispatch);
+        getNotificationsReq(user.user_id, axiosPrivate, dispatch);
+      }
     }
+
+    const onFetchNotifications = (message) => {
+      console.log(message);
+      if (user) {
+        getNotificationsReq(user.user_id, axiosPrivate, dispatch);
+      }
+    };
+
+    socket.on("new-notification", onFetchNotifications);
+
+    return () => socket.off("new-notification", onFetchNotifications);
 
     // eslint-disable-next-line
   }, []);

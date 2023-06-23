@@ -116,10 +116,10 @@ const FormChangeInfo = ({ userInfo }) => {
 const InfoSection = ({ userInfo }) => {
   return (
     <Row className={cx("info-section-wrap")}>
-      <Col md="12" lg="8">
+      <Col xs="12" md="12" lg="8">
         <FormChangeInfo userInfo={userInfo} />
       </Col>
-      <Col md="12" lg="4">
+      <Col xs="12" md="12" lg="4">
         <div className={cx("avatar-wrap")}>
           <div className={cx("avatar-title")}>Profile Picture</div>
           <img
@@ -134,7 +134,7 @@ const InfoSection = ({ userInfo }) => {
   );
 };
 
-const UpdateInfo = () => {
+const UpdateInfo = ({ optionSelected }) => {
   const isMounted = useRef(false);
 
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -157,7 +157,7 @@ const UpdateInfo = () => {
   return (
     <Container className={cx("page-wrap")}>
       <Row>
-        <SectionHeader title="Update Information" />
+        <SectionHeader title={optionSelected} />
       </Row>
       {errorCause ? (
         <ErrorBlock msg={errorCause} />

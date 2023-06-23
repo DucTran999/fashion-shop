@@ -10,6 +10,8 @@ const API_URL = {
   carts: "/api/v1/carts",
 
   orders: "/api/v1/orders",
+
+  notifications: "/api/v1/notifications",
 };
 
 export default API_URL;

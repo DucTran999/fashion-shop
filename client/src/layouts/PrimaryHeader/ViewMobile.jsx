@@ -5,9 +5,10 @@ import { Container, Col, Row } from "react-bootstrap";
 
 import ICONS from "../../assets/icons";
 import { COMMON_PATH } from "../../utils/constVariable";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { logOutReq } from "../../features/auth/apiRequest";
 import { updateSidebarSelection } from "../../features/activeNav/navAction";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { setNotificationFilter } from "../../features/notification/notificationSlice";
 
 // Component
 import ShopLogo from "../../components/Logo/ShopLogo";
@@ -117,13 +118,20 @@ const ViewMobile = () => {
 
           <section className={cx("sidebar-service")}>
             <nav className={cx("service-list")} onClick={handleCloseSidebar}>
-              <Link to="/blogs" className={cx("service-item")}>
+              <div
+                onClick={() => {
+                  updateSidebarSelection("news", dispatch);
+                  dispatch(setNotificationFilter("all"));
+                  navigate(COMMON_PATH.notification, { replace: true });
+                }}
+                className={cx("service-item")}
+              >
                 Notification
-              </Link>
+              </div>
               <div
                 onClick={() =>
                   handleNavigateOnChangeOption(
-                    "Orders pending",
+                    "orders pending",
                     COMMON_PATH.purchase
                   )
                 }

@@ -2,6 +2,8 @@ import axios from "../../api/init.axios";
 import API_URL from "../../api/init.url";
 import delay from "../../utils/delay";
 import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
+import io from "../../utils/init.socket";
+import { resetNotificationList } from "../notification/notificationSlice";
 
 import {
   loginFailed,
@@ -36,6 +38,9 @@ const logInReq = async (user, dispatch, navigate, location) => {
     });
     const userInfo = getUserCredential(res);
     dispatch(loginSuccess(userInfo));
+
+    //announce to the server new user attendance
+    io.emit("user-login", userInfo.user_id);
 
     // remember user used to login at this device
     localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, true);
@@ -84,8 +89,12 @@ const logOutReq = async (userId, axiosPrivate, dispatch, navigate) => {
     await axiosPrivate.post(`${API_URL.sessions}/${userId}`, {});
     dispatch(logOutSuccess());
 
+    //announce to the server an user left
+    io.emit("user-logout", userId);
+
     // browser remember account is logout
     localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
+    dispatch(resetNotificationList());
 
     navigate("/login", { replace: true });
   } catch (error) {

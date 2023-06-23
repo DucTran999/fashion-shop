@@ -1,8 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 
 import useWindowDimension from "../../hooks/useWindowDimension";
-import { updateSidebarSelection } from "../../features/activeNav/navAction";
 import { formatCapitalize } from "../../utils/formatData";
 
 import ViewDesktop from "./ViewDesktop";
@@ -11,22 +9,14 @@ import ViewMobile from "./ViewMobile";
 
 // Style
 import classNames from "classnames/bind";
-import style from "./Account.module.scss";
+import style from "./Notification.module.scss";
 const cx = classNames.bind(style);
 
-const Account = () => {
-  document.title = formatCapitalize("Personal Account");
-
-  const isMounted = useRef(false);
-  const dispatch = useDispatch();
+const Notification = () => {
+  document.title = formatCapitalize("notifications");
   const { width } = useWindowDimension();
 
   useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      updateSidebarSelection("public profile", dispatch);
-    }
-
     window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
@@ -44,4 +34,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Notification;

@@ -11,10 +11,12 @@ const cx = classNames.bind(style);
 function MissingPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleClick = () => {
     updateSelection("home", dispatch);
     navigate("/", { replace: true });
   };
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);

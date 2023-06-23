@@ -21,7 +21,7 @@ const ViewDesktop = () => {
 
   useEffect(() => {
     getUserReq(user.user_id, axiosPrivate, dispatch);
-    updateSidebarSelection("Orders pending", dispatch);
+    updateSidebarSelection("orders pending", dispatch);
     // eslint-disable-next-line
   }, []);
 

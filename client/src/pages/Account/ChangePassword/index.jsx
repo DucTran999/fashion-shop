@@ -128,7 +128,9 @@ const ChangePassword = () => {
         <SectionHeader title="Change password" />
       </Row>
       <Row>
-        <Col lg="8">{user && <FormChangePassword userId={user.user_id} />}</Col>
+        <Col xs="12" lg="8">
+          {user && <FormChangePassword userId={user.user_id} />}
+        </Col>
       </Row>
     </Container>
   );
