@@ -105,7 +105,11 @@ const ActionButtonGroup = ({ order, curFilter }) => {
   const handleRejectOnClick = async () => {
     await updateOrderStateReq(
       order.id,
-      { user_id: order.user_id, state_id: ORDER_STATE_ID.cancelled },
+      {
+        user_id: order.user_id,
+        current_state_id: order.state_id,
+        next_state_id: ORDER_STATE_ID.cancelled,
+      },
       axiosPrivate,
       dispatch
     );
@@ -120,17 +124,25 @@ const ActionButtonGroup = ({ order, curFilter }) => {
   const handleShipSuccessOnClick = async () => {
     await updateOrderStateReq(
       order.id,
-      { user_id: order.user_id, state_id: ORDER_STATE_ID.completed },
+      {
+        user_id: order.user_id,
+        current_state_id: order.state_id,
+        next_state_id: ORDER_STATE_ID.completed,
+      },
       axiosPrivate,
       dispatch
     );
     await getAllOrdersReq(curFilter, axiosPrivate, dispatch);
   };
 
-  const handleConfirmCancelOrder = async () => {
+  const handleConfirmCancelOrderRequest = async () => {
     await updateOrderStateReq(
       order.id,
-      { user_id: order.user_id, state_id: ORDER_STATE_ID.cancelled },
+      {
+        user_id: order.user_id,
+        current_state_id: order.state_id,
+        next_state_id: ORDER_STATE_ID.cancelled,
+      },
       axiosPrivate,
       dispatch
     );
@@ -198,7 +210,7 @@ const ActionButtonGroup = ({ order, curFilter }) => {
         <Col md="1" className={cx("col-cent")}>
           <button
             className={cx("btn-event", "success")}
-            onClick={handleConfirmCancelOrder}
+            onClick={handleConfirmCancelOrderRequest}
           >
             Confirm
           </button>
