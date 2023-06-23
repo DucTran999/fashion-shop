@@ -4,26 +4,18 @@ import { useSelector } from "react-redux";
 
 // Component Injected
 import Padding from "../../../components/Padding";
-import Sidebar from "../../../components/Sidebar";
-import Header from "../../Account/Header";
 import NotificationLayout from "../CommonComponent/NotificationLayout";
+import TypeFilterBar from "./TypeFilterBar";
 
-const ViewDesktop = () => {
+const ViewMobile = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
 
   return (
     <>
-      <Padding />
       <Container>
+        <TypeFilterBar />
         <Row>
-          <Header />
-        </Row>
-        <Padding />
-        <Row>
-          <Col lg="3" style={{ display: "flex", justifyContent: "center" }}>
-            <Sidebar />
-          </Col>
-          <Col lg="9">{user && <NotificationLayout />}</Col>
+          <Col>{user && <NotificationLayout />}</Col>
         </Row>
       </Container>
       <Padding />
@@ -31,4 +23,4 @@ const ViewDesktop = () => {
   );
 };
 
-export default ViewDesktop;
+export default ViewMobile;

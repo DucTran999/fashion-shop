@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 // Component Injected
 import Padding from "../../../components/Padding";
-import Sidebar from "../../../components/Sidebar";
 import Header from "../../Account/Header";
+import Sidebar from "../../../components/Sidebar";
 import NotificationLayout from "../CommonComponent/NotificationLayout";
 
 const ViewDesktop = () => {
@@ -14,16 +14,16 @@ const ViewDesktop = () => {
   return (
     <>
       <Padding />
-      <Container>
+      <Container fluid={true}>
         <Row>
           <Header />
         </Row>
         <Padding />
         <Row>
-          <Col lg="3" style={{ display: "flex", justifyContent: "center" }}>
+          <Col md="3" style={{ display: "flex", justifyContent: "center" }}>
             <Sidebar />
           </Col>
-          <Col lg="9">{user && <NotificationLayout />}</Col>
+          <Col md="9">{user && <NotificationLayout />}</Col>
         </Row>
       </Container>
       <Padding />

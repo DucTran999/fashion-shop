@@ -10,7 +10,11 @@
 }
 
 .icon {
-  font-size: 5em;
+  font-size: 3em;
+
+  @include s.breakpoint(lg) {
+    font-size: 5em;
+  }
 }
 
 .message {

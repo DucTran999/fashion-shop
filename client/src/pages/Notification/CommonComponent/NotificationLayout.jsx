@@ -2,12 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Container } from "react-bootstrap";
 
-import SectionHeader from "../../../components/SectionHeader";
-import StateFilter from "./StateFilter";
-import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+// Component Injected
 import ErrorBlock from "../../../components/ErrorBlock";
+import SectionHeader from "../../../components/SectionHeader";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+
+import StateFilter from "../CommonComponent/StateFilter";
+import EmptyNotification from "../CommonComponent/EmptyNotification";
+
 import NotificationList from "./NotificationList";
-import EmptyNotification from "./EmptyNotification";
 
 const NotificationLayout = () => {
   const optionSelected = useSelector((state) => state.navbar.sidebar.active);

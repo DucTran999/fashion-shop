@@ -63,13 +63,13 @@ const Notification = ({ notification }) => {
           remove
         </span>
       </div>
-      <Col lg="10" className={cx("notification__message")}>
+      <Col md="12" lg="10" className={cx("notification__message")}>
         <div>{notification.subject.toUpperCase()}</div>
         <div style={{ textAlign: "justify" }}>
           Hi, {formatCapitalize(user.first_name)}. {notification.message}
         </div>
       </Col>
-      <Col lg="2" className={cx("col-cent")}>
+      <Col md="12" lg="2" className={cx("col-cent")}>
         <button
           className={cx("notification__btn")}
           onClick={() => handleMarkMessage(notification.unread)}

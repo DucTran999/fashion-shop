@@ -5,17 +5,21 @@ import { Container, Col, Row } from "react-bootstrap";
 
 import ICONS from "../../assets/icons";
 import { COMMON_PATH } from "../../utils/constVariable";
-import { logOutReq } from "../../features/auth/apiRequest";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { logOutReq } from "../../features/auth/apiRequest";
+import { setNotificationFilter } from "../../features/notification/notificationSlice";
+import {
+  updateSelection,
+  updateSidebarSelection,
+} from "../../features/activeNav/navAction";
 
 // Component
+import PrimaryNav from "./PrimaryNav";
 import ShopLogo from "../../components/Logo/ShopLogo";
 
 //Style
 import classNames from "classnames/bind";
 import styles from "./ViewTablet.module.scss";
-import PrimaryNav from "./PrimaryNav";
-import { updateSelection } from "../../features/activeNav/navAction";
 const cx = classNames.bind(styles);
 
 /* Sub nav component */
@@ -61,9 +65,12 @@ const MenuDropDownServiceHasLogin = () => {
         </div>
         <div
           className={cx("menu__dropdown--tablet__element")}
-          onClick={() =>
-            handleNavigateOnClick(COMMON_PATH.notification, "Cart")
-          }
+          onClick={() => {
+            updateSelection("notification", dispatch);
+            updateSidebarSelection("news", dispatch);
+            dispatch(setNotificationFilter("all"));
+            navigate(COMMON_PATH.notification, { replace: true });
+          }}
         >
           Notifications
         </div>
