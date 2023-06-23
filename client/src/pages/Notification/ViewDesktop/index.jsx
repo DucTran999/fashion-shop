@@ -1,11 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-
-// custom hook, util func, ...
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { getUserReq } from "../../../features/user/userRequest";
-import { updateSidebarSelection } from "../../../features/activeNav/navAction";
+import { useSelector } from "react-redux";
 
 // Component Injected
 import Padding from "../../../components/Padding";
@@ -15,16 +10,6 @@ import NotificationLayout from "./NotificationLayout";
 
 const ViewDesktop = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
-
-  const axiosPrivate = useAxiosPrivate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getUserReq(user.user_id, axiosPrivate, dispatch);
-    updateSidebarSelection("news", dispatch);
-
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <>
@@ -38,7 +23,7 @@ const ViewDesktop = () => {
           <Col lg="3" style={{ display: "flex", justifyContent: "center" }}>
             <Sidebar />
           </Col>
-          <Col lg="9">{user && <NotificationLayout user={user} />}</Col>
+          <Col lg="9">{user && <NotificationLayout />}</Col>
         </Row>
       </Container>
       <Padding />

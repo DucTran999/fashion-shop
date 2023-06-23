@@ -7,7 +7,7 @@ const navbarSlice = createSlice({
       active: "home",
     },
     sidebar: {
-      active: "Public profile",
+      active: "public profile",
     },
   },
   reducers: {

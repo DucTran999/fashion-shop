@@ -1,9 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 
 import useWindowDimension from "../../hooks/useWindowDimension";
-import { updateSidebarSelection } from "../../features/activeNav/navAction";
-import { setNotificationFilter } from "../../features/notification/notificationSlice";
 import { formatCapitalize } from "../../utils/formatData";
 
 import ViewDesktop from "./ViewDesktop";
@@ -15,18 +12,9 @@ const cx = classNames.bind(style);
 
 const Notification = () => {
   document.title = formatCapitalize("notifications");
-
-  const isMounted = useRef(false);
-  const dispatch = useDispatch();
   const { width } = useWindowDimension();
 
   useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      updateSidebarSelection("news", dispatch);
-      setNotificationFilter("all", dispatch);
-    }
-
     window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
