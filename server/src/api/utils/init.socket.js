@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import corsOptions from "../../configs/cors.config.js";
 import {
   addOneSocketId,
   delOneSocketId,
@@ -8,7 +9,7 @@ import {
 let io;
 
 const socketConnection = (server) => {
-  io = new Server(server, { cors: "*" });
+  io = new Server(server, { cors: corsOptions });
 
   io.on("connection", (socket) => {
     console.log(`Client connected`, socket.id);
