@@ -15,6 +15,7 @@ const store = configureStore({
         ignoredActionPaths: ["payload.headers"],
       },
     }),
+  devTools: process.env.NODE_ENV === "production" ? false : true,
 });
 
 export default store;
