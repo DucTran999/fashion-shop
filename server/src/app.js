@@ -21,11 +21,10 @@ const createApp = () => {
   // products image
   app.use(express.static("public"));
 
-  // helmet
-  // app.use(helmet());
-
-  // Logging
-  // app.use(morgan("common"));
+  if (process.env.NODE_ENV === "production") {
+    app.use(helmet());
+    app.use(morgan("common"));
+  }
 
   // body-parser
   app.use(bodyParser.urlencoded({ extended: false }));

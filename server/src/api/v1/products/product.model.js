@@ -110,7 +110,9 @@ class ProductModel {
           ON p.id = v.product_id
         JOIN categories as cat
           ON cat.id = p.category_id
-      WHERE v.size_id = 1 AND v.product_id = ANY($1::int[]);
+      WHERE v.size_id = 1 AND v.product_id = ANY($1::int[]) 
+      ORDER BY v.product_id, v.id;
+      ;
     `;
 
     try {
