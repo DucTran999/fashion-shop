@@ -69,11 +69,11 @@
     "@babel/plugin-transform-spread": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@jest/globals": "^27.5.1",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^29.5.0",
     "bootstrap": "^5.2.3",
     "jest": "^26.6.3",
     "morgan": "^1.10.0",
-    "nodemon": "^1.14.9",
+    "nodemon": "^2.0.22",
     "supertest": "^6.3.3"
   }
 }
