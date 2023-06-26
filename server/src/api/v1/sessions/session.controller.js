@@ -13,7 +13,7 @@ class SessionController {
       res
         .status(200)
         .cookie("refresh_token", refreshToken, {
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+          sameSite: "strict",
           domain: process.env.DOMAIN_NAME,
           secure: process.env.NODE_ENV === "production" ? true : false,
           httpOnly: true,
@@ -57,7 +57,7 @@ class SessionController {
       res
         .status(200)
         .cookie("refresh_token", refreshToken, {
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+          sameSite: "strict",
           domain: process.env.DOMAIN_NAME,
           secure: process.env.NODE_ENV === "production" ? true : false,
           httpOnly: true,
