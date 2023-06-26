@@ -23,7 +23,7 @@ const createApp = () => {
 
   if (process.env.NODE_ENV === "production") {
     app.use(helmet());
-    app.use(morgan("common"));
+    // app.use(morgan("common"));
   }
 
   // body-parser
