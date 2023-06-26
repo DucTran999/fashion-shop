@@ -1,0 +1,52 @@
+@use "../../styles/" as s;
+
+.sidebar-wrap {
+  border-right: 2px solid var(--grey-clr);
+  border-radius: 2px;
+  width: 100%;
+}
+
+.service {
+  margin-bottom: 1em;
+
+  &__header {
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 0.1em;
+    user-select: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    @include s.breakpoint(lg) {
+      font-size: 2rem;
+    }
+  }
+
+  &__list {
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    font-size: 1.4rem;
+    font-weight: 400;
+    padding: 0.5em;
+
+    @include s.breakpoint(lg) {
+      font-size: 1.6rem;
+    }
+
+    &.active {
+      cursor: default;
+      user-select: none;
+      font-weight: 500;
+      color: var(--primary-opacity-clr);
+    }
+
+    &.inactive:hover {
+      cursor: pointer;
+      color: var(--primary-opacity-clr);
+    }
+  }
+}

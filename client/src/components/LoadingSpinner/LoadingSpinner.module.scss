@@ -1,0 +1,19 @@
+@use "../../styles" as s;
+
+.spinner-wrap {
+  width: 100%;
+  color: var(--primary-opacity-clr);
+  text-align: center;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.spinner-title {
+  margin-left: 1em;
+  font-size: 0.7em;
+}

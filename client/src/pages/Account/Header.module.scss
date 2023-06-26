@@ -1,0 +1,35 @@
+@use "../../styles/" as s;
+
+// Global
+.col-cent {
+  display: flex;
+  justify-content: center;
+}
+
+// header
+.header-wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: fit-content;
+}
+
+.account-ava {
+  border-radius: 45px;
+  width: 3.5em;
+  height: 3.5em;
+}
+
+.account-info {
+  margin-left: 1em;
+
+  &__name {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--primary-opacity-clr);
+  }
+
+  &__type {
+    font-size: 1.5rem;
+  }
+}

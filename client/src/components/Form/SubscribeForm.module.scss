@@ -1,0 +1,56 @@
+@use "../../styles/" as u;
+
+.subscribe-form {
+  margin: 0.8em 0;
+  position: relative;
+
+  &__title {
+    text-align: justify;
+    font-size: 1.4rem;
+    color: var(--light-grey-clr);
+  }
+
+  &__form {
+    position: relative;
+    display: flex;
+    margin-top: 1em;
+    justify-content: center;
+    align-items: center;
+
+    @include u.breakpoint(md) {
+      justify-content: flex-start;
+    }
+  }
+
+  &__field {
+    position: relative;
+    width: 20rem;
+    height: 3.5rem;
+    padding-left: 0.5em;
+
+    /* Decoration */
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--primary-opacity-clr);
+
+    font-size: 1.4rem;
+    color: var(--primary-opacity-clr);
+    background-color: var(--very-dark-black-clr);
+
+    &--err {
+      position: absolute;
+      bottom: -2em;
+      font-size: 1.2rem;
+      color: var(--pastel-clr);
+      display: none;
+    }
+
+    &:valid ~ &--err {
+      display: block;
+    }
+
+    &:focus ~ &--err {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,204 @@
+@use "../../styles" as s;
+
+// Image
+.card-wrap {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+}
+
+.image-wrap {
+  position: relative;
+  cursor: pointer;
+
+  background-image: url(../../assets/images/default/blur_img.webp);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  height: 0;
+  width: 100%;
+  padding-bottom: calc(1.5 * 100%); // image ratio
+
+  &:hover > .navigate-btn {
+    display: block;
+  }
+}
+
+.product-img {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+.product-name {
+  width: 100%;
+
+  color: var(--turquoise-clr);
+  opacity: 0.8;
+  font-weight: 500;
+  font-size: 1em;
+  padding: 0 0 0.3em 0;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  font-size: 0.9em;
+  color: var(--gold-clr);
+  align-self: flex-start;
+}
+
+// Switch variant
+.change-variant__bar {
+  position: relative;
+  margin: 0.7em 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-variant__btn {
+  width: 1em;
+  height: 1em;
+  margin: 0 0.5em;
+  border-radius: 5px;
+
+  border: 2px solid white;
+
+  &.white {
+    background-color: white;
+    border: 2px solid var(--grey-clr);
+  }
+
+  &.vanilla {
+    background-color: var(--vanilla-clr);
+  }
+
+  &.wheat {
+    background-color: var(--wheat-clr);
+  }
+
+  &.brown {
+    background-color: var(--brown-clr);
+  }
+
+  // Red
+  &.dark-red {
+    background-color: var(--crimson-clr);
+  }
+
+  //Yellow
+  &.yellow {
+    background-color: var(--amber-clr);
+  }
+
+  &.deep-vanilla {
+    background-color: var(--skin-clr);
+  }
+
+  &.black {
+    background-color: var(--very-dark-black-clr);
+  }
+
+  //Purple
+  &.violet {
+    background-color: var(--violet-clr);
+  }
+
+  // Grey
+  &.light-grey {
+    background-color: var(--light-grey-clr);
+  }
+
+  // Blue
+  &.light-blue {
+    background-color: var(--light-blue-clr);
+  }
+
+  &.blue {
+    background-color: var(--blue-clr);
+  }
+
+  &.dark-blue {
+    background-color: var(--navy-blue-clr);
+  }
+
+  // Green
+  &.light-green {
+    background-color: var(--light-green-blue-clr);
+  }
+
+  &.green-jade {
+    background-color: var(--jade-clr);
+  }
+
+  &.dark-green {
+    background-color: var(--dark-green-clr);
+  }
+
+  // Pink
+  &.light-pink {
+    background-color: var(--baby-pink-clr);
+  }
+
+  &.pink {
+    background-color: var(--hot-pink-clr);
+  }
+
+  &.pink-lily {
+    background-color: var(--lily-clr);
+  }
+}
+
+// Navigate - still bug
+.navigate-btn {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 45%;
+  left: 25%;
+  width: 50%;
+
+  text-align: center;
+  color: white;
+
+  padding: 0.2em 0.8em;
+  background-color: var(--primary-clr);
+  border-radius: 20px;
+  animation: growFromCenter 0.5s;
+
+  z-index: 6;
+}
+
+// Wishlist
+.add-wishlist-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0.2em;
+  padding: 0.8em;
+  font-size: 1.5em;
+  font-weight: 500;
+  z-index: 1;
+
+  @include s.breakpoint(md) {
+    font-size: 2em;
+  }
+
+  &.active {
+    color: var(--pastel-red-clr);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,85 @@
+@use "../../styles/" as s;
+
+.popup-box {
+  &__message {
+    height: auto;
+    &--loading,
+    &--success,
+    &--fail,
+    &--info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-weight: 500;
+      font-size: 1.6rem;
+
+      @include s.breakpoint(sm) {
+        font-size: 2rem;
+      }
+
+      @include s.breakpoint(md) {
+        font-size: 2.4rem;
+      }
+    }
+
+    &--loading {
+      margin-bottom: 3em;
+      color: var(--light-grey-clr);
+
+      @include s.breakpoint(sm) {
+        margin-bottom: 2.6em;
+      }
+
+      @include s.breakpoint(md) {
+        margin-bottom: 2.1em;
+      }
+    }
+
+    &--success {
+      color: var(--spearmint-clr);
+    }
+
+    &--fail {
+      color: var(--raspberry-clr);
+    }
+
+    &--info {
+      color: var(--blue-clr);
+    }
+  }
+
+  &__btn {
+    width: 80%;
+    height: 20%;
+    margin-bottom: 1em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    border-radius: 5px;
+    &.active {
+      background-image: var(--dark-gradient-3-clr);
+    }
+    &.inactive {
+      background: var(--light-grey-clr);
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &--title {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--very-dark-black-clr);
+    }
+
+    @include s.breakpoint(md) {
+      width: 60%;
+    }
+  }
+}

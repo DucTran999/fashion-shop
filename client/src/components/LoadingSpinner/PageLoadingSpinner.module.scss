@@ -1,0 +1,14 @@
+@use "../../styles" as s;
+
+.spinner-wrap {
+  @include s.abs-center;
+
+  color: var(--primary-opacity-clr);
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.spinner-title {
+  margin-left: 1em;
+  font-size: 0.7em;
+}

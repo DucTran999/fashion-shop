@@ -1,0 +1,108 @@
+@use "../../styles/" as s;
+
+.col-cent {
+  text-align: center;
+}
+
+.product-wrap {
+  position: relative;
+  width: 100%;
+  padding: 1em 0;
+  border-bottom: 2px solid var(--grey-clr);
+  display: flex;
+}
+
+.product-img {
+  width: 80%;
+  border-radius: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.product-name {
+  color: var(--primary-opacity-clr);
+  font-weight: 500;
+  font-size: 1.3rem;
+
+  @include s.breakpoint(md) {
+    font-size: 1.4em;
+  }
+}
+
+.product-variant {
+  font-size: 1.4rem;
+  padding: 0.2em;
+}
+
+.user-action {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.5em;
+}
+
+.event-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  margin-right: 0.8em;
+
+  border: none;
+  background: transparent;
+  color: var(--grey-clr);
+
+  &.remove {
+    color: var(--pastel-red-clr);
+  }
+
+  &.wishlist {
+    color: var(--hot-pink-clr);
+  }
+
+  &:hover {
+    transition: 0.25;
+    opacity: 0.8;
+  }
+}
+
+.input-qty {
+  color: var(--light-grey-clr);
+  background: black;
+  width: 80%;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  padding: 0.2em 0.5em;
+  margin-top: 0.8em;
+
+  @include s.breakpoint(sm) {
+    margin: 0;
+  }
+}
+
+.btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.btn-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0.3em;
+  font-size: 1.4rem;
+  display: none;
+
+  @include s.breakpoint(md) {
+    display: block;
+  }
+}
+
+.product-price {
+  color: var(--gold-clr);
+  padding-top: 1em;
+  font-size: 1.5rem;
+}

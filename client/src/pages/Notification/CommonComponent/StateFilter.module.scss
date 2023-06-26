@@ -1,0 +1,29 @@
+@use "../../../styles/" as s;
+
+.filter-wrap {
+  font-weight: 500;
+  padding: 0.5em;
+}
+
+.filter-title {
+  text-align: center;
+  width: fit-content;
+  padding-bottom: 0.3em;
+
+  @include s.breakpoint(sm) {
+    margin: 0 2em;
+    border-bottom: 2px solid var(--grey-clr);
+  }
+
+  &.active {
+    transition: 0.5s ease-in-out;
+    color: var(--primary-opacity-clr);
+    border-bottom: 2px solid var(--primary-opacity-clr);
+    pointer-events: none;
+  }
+
+  &.inactive {
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+}

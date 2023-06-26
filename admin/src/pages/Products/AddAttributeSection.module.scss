@@ -1,0 +1,34 @@
+@use "../../styles/" as s;
+
+// form style
+.form-header {
+  font-size: 2rem;
+}
+
+.manage-atr-wrap {
+  border: 2px solid var(--primary-clr);
+  margin: 0.5em 0.1em;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+
+.form-wrap {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.6rem;
+}
+
+.form-control {
+  outline: none;
+  margin: 0 0.5em;
+}
+
+.btn-submit {
+  padding: 0 0.5em;
+
+  color: var(--medium-black-clr);
+  background-color: (--light-grey-clr);
+}

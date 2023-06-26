@@ -1,0 +1,28 @@
+@use "../../styles/" as s;
+
+.container-policy {
+  background-color: black;
+  padding: 1em 0 2.5em 0;
+}
+
+.policy-wrap {
+  color: var(--light-grey-clr);
+  text-align: center;
+}
+
+.policy__icon {
+  color: var(--primary-opacity-clr);
+  font-size: 2.8em;
+}
+
+.policy__title {
+  color: var(--primary-opacity-clr);
+  font-weight: 500;
+  font-size: 1.2em;
+  margin: 0.2em;
+}
+
+.policy__content {
+  line-height: 1.6rem;
+  font-size: 0.9em;
+}

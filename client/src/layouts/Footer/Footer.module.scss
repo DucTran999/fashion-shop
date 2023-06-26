@@ -1,0 +1,126 @@
+@use "../../styles/" as u;
+
+.site-footer {
+  display: flex;
+  flex-direction: column;
+
+  @include u.breakpoint(lg) {
+    padding-top: 7em;
+    background: var(--dark-white-clr);
+  }
+
+  .primary-footer {
+    /* Dimension */
+    padding: 1em 0 2.5em 0;
+    border-width: 0.3em;
+    text-align: center;
+
+    /* gradient separate line */
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-style: solid;
+    border-image: var(--dark-gradient-4-clr);
+    border-image-slice: 1;
+
+    /* Background cover */
+    background-color: var(--medium-black-clr);
+
+    .primary-footer__header {
+      text-align: center;
+      line-height: 2.5em;
+
+      border-radius: 3px;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: black;
+
+      background-image: var(--dark-gradient-4-clr);
+
+      @include u.breakpoint(lg) {
+        text-align: left;
+        line-height: 2em;
+
+        font-size: 1.8rem;
+        font-weight: 500;
+        background-image: none;
+        color: var(--dark-white-clr);
+
+        border-radius: 0;
+        border-bottom: 0.16em solid var(--mint-blue-clr);
+      }
+    }
+
+    .shop-introduction {
+      margin-top: 1em;
+      text-align: justify;
+
+      /* Style */
+      font-size: 1.4rem;
+      color: var(--white-clr);
+    }
+  }
+
+  .copyright-footer {
+    padding: 1em;
+    border-width: 0.3em;
+    text-align: center;
+
+    // gradient border
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-style: solid;
+    border-image: var(--dark-gradient-4-clr);
+    border-image-slice: 1;
+
+    // darker background
+    background-color: var(--very-dark-black-clr);
+
+    .copyright {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--light-grey-clr);
+    }
+  }
+}
+
+/* Social list*/
+.social {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0.8em 0;
+
+  @include u.breakpoint(lg) {
+    justify-content: space-between;
+  }
+
+  @include u.breakpoint(xxl) {
+    width: 80%;
+  }
+
+  &__label {
+    font-size: 1.4rem;
+    color: var(--dark-white-clr);
+  }
+}
+
+.user-service-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em 0;
+}
+
+/* App download */
+.app-download {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1em 0;
+
+  &__store {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,56 @@
+@use "../../styles/" as s;
+
+.mg-left-1 {
+  margin-left: 1em;
+}
+
+.mg-left-05 {
+  margin-left: 0.5em;
+}
+
+.mg-tb-1 {
+  margin: 1em 0;
+}
+
+// form style
+.add-form-wrap {
+  border: 2px solid var(--primary-clr);
+  padding: 0.5em;
+  margin: 0.5em 0.1em;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.form-header {
+  font-size: 2rem;
+  margin-bottom: 1em;
+}
+
+.form-wrap {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  font-size: 1.6rem;
+}
+
+.form-control {
+  outline: none;
+  margin: 0 0.5em;
+}
+
+.btn-submit {
+  padding: 0 0.5em;
+  width: fit-content;
+
+  color: var(--medium-black-clr);
+  background-color: (--light-grey-clr);
+}
+
+// dropdown
+.dropdown-wrap {
+  margin: 0.5em 0;
+}

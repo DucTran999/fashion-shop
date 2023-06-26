@@ -1,0 +1,23 @@
+@use "../../styles/" as s;
+
+// Global style
+.theme {
+  background: var(--medium-black-clr);
+}
+
+.col-cent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5em 0;
+}
+
+.product-list-empty {
+  text-align: center;
+  color: var(--primary-opacity-clr);
+  height: 4em;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
