@@ -1,8 +1,8 @@
 # Fashion Online shop
-This is an online shop project built with PERN stack ( PostgreSQL, Express, React, and Node.js). The project allows users to browse products, add items to their cart, and check out their purchases.
+This online shop project was built with PERN stack ( PostgreSQL, Express, React, and Node.js). The project allows users to browse products, add items to their cart, and check out their purchases, get notifications in real time.
 
 ## License
-- This project is just for practicing my skills in web development and it is not used for e-commerce purposes.
+- This project is just for practicing my web development skills and is not used for e-commerce purposes.
 - **The images copyright** I'm using in the project are **possessed by [the MARC brand], [Freepik], and [Pixels]**, and I want to give many thanks to them for the beautiful images.
 
 [the MARC brand]: https://marc.com.vn/
