@@ -58,18 +58,27 @@ services:
 
 [Redis free clound]: https://redis.com/try-free/
 
-4. Start the server:
+4. Run the script to add the schema using
+```
+$ psql -h YOUR_HOST -d YOUR_DATABASE_NAME -U YOUR_USERNAME -f atlanashop_schema.sql
+```
+Customize the schema to suit your requirements or create it on your own.
+
+5. Start project:
 - Go to the server directory and start the server in development mode. 
 ```
 $ cd server
 $ npm run dev
 ```
-
-5. Start the react app using:
+- Start the client page using:
 ```
 $ cd client
 $ npm start
 ```
-
+- Start the admin page using:
+```
+$ cd admin
+$ npm start
+```
 
 
