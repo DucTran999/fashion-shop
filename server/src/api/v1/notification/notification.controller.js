@@ -28,7 +28,7 @@ class NotificationController {
       if (payload instanceof Error) throw payload;
       await notificationService.changeNotificationMark(req, payload);
 
-      res.status(200).json({
+      res.status(201).json({
         status: "success",
         message: null,
       });
@@ -42,10 +42,7 @@ class NotificationController {
       if (payload instanceof Error) throw payload;
       await notificationService.deleteNotification(req, payload);
 
-      res.status(200).json({
-        status: "success",
-        message: null,
-      });
+      res.status(204).end();
     } catch (err) {
       next(err);
     }
