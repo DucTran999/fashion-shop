@@ -5,6 +5,10 @@
   width: 100%;
   border-radius: 5px;
   max-height: 550rem;
+
+  @include u.breakpoint(lg) {
+    animation: slideIn 1s;
+  }
 }
 
 .banner {
@@ -15,6 +19,7 @@
 
   @include u.breakpoint("md") {
     width: 50%;
+    animation: fadeIn 0.5s;
   }
 }
 

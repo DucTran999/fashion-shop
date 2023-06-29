@@ -73,6 +73,7 @@ function Carousel() {
                     src={slide.desktopSz}
                     className={cx("mega-img")}
                     alt={slide.alt}
+                    loading="lazy"
                   />
                   <div className={cx("overlay")}></div>
                   <button className={cx("btn-link")}>See more</button>
