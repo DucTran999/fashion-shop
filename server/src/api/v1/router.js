@@ -5,7 +5,7 @@ import categoryRouter from "./categories/category.route.js";
 import sizeRouter from "./sizes/size.route.js";
 import colorRouter from "./colors/colors.route.js";
 import productRouter from "./products/product.route.js";
-import uploadRouter from "./serviceUpload/uploads.route.js";
+import uploadRouter from "./upload/upload.route.js";
 import variantRouter from "./variants/variant.route.js";
 import cartRouter from "./cart/cart.route.js";
 import ordersRouter from "./orders/orders.route.js";

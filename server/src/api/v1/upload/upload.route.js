@@ -1,5 +1,5 @@
 import express from "express";
-import uploadsController from "./uploads.controller.js";
+import uploadsController from "./upload.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
 
 const router = express.Router();
@@ -7,13 +7,13 @@ const router = express.Router();
 router.post(
   "/product-img",
   authMiddleware.verifyAdminAccessToken,
-  uploadsController.saveAProductImage
+  uploadsController.uploadProductImageReq
 );
 
 router.post(
   "/product-gallery",
   authMiddleware.verifyAdminAccessToken,
-  uploadsController.saveProductGallery
+  uploadsController.uploadProductGalleryReq
 );
 
 export default router;

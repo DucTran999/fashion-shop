@@ -22,6 +22,9 @@ const API_URL = {
 
   // sessions
   sessions: "/api/v1/sessions",
+
+  // upload
+  uploads: "/api/v1/uploads",
 };
 
 export default API_URL;

@@ -11,7 +11,7 @@
     "babel-compile": "babel ./src -d ./build/src/",
     "build": "npm run clean && npm run babel-compile",
     "dev": "nodemon --exec babel-node ./src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest ",
     "start": "npm run build && node ./build/src/server.js"
   },
   "repository": {
@@ -69,6 +69,7 @@
     "@babel/plugin-transform-spread": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@jest/globals": "^27.5.1",
+    "axios": "^1.4.0",
     "babel-jest": "^29.5.0",
     "bootstrap": "^5.2.3",
     "jest": "^26.6.3",
