@@ -27,6 +27,8 @@ import { BiMoney } from "react-icons/bi";
 import { BsFillBellFill } from "react-icons/bs";
 import { RiBillFill } from "react-icons/ri";
 import { FaBoxOpen } from "react-icons/fa";
+import { SlBell } from "react-icons/sl";
+import { VscBellSlash, VscBellDot } from "react-icons/vsc";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { MdCurrencyExchange, MdLocalShipping, MdInfo } from "react-icons/md";
 import { AiFillCreditCard, AiFillSetting, AiFillHeart } from "react-icons/ai";
@@ -61,6 +63,9 @@ const ICONS = {
   headphone: <TfiHeadphoneAlt />,
   settings: <AiFillSetting />,
   bell: <BsFillBellFill />,
+  bellSlime: <SlBell />,
+  bellSlash: <VscBellSlash />,
+  bellDot: <VscBellDot />,
   bill: <RiBillFill />,
   infoIcon: <MdInfo />,
   heart: <AiFillHeart />,
