@@ -8,9 +8,9 @@ import productRouter from "./products/product.route.js";
 import uploadRouter from "./upload/upload.route.js";
 import variantRouter from "./variants/variant.route.js";
 import cartRouter from "./cart/cart.route.js";
-import ordersRouter from "./orders/orders.route.js";
-import sessionRouter from "./sessions/session.route.js";
-import notificationRouter from "./notifications/notification.route.js";
+import ordersRouter from "./order/order.route.js";
+import sessionRouter from "./session/session.route.js";
+import notificationRouter from "./notification/notification.route.js";
 
 dotenv.config();
 const route = express.Router();

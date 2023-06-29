@@ -1,4 +1,4 @@
-import ordersService from "./orders.service.js";
+import ordersService from "./order.service.js";
 
 class OrderController {
   getAllUserOrdersByStateReq = async (req, res, next) => {
@@ -31,7 +31,7 @@ class OrderController {
       if (payload instanceof Error) throw payload;
       await ordersService.placeOrder(req, payload);
 
-      res.status(200).json({ status: "success", message: null });
+      res.status(201).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }
@@ -41,7 +41,7 @@ class OrderController {
     try {
       await ordersService.confirmUserOrder(req);
 
-      res.status(200).json({ status: "success", message: null });
+      res.status(201).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }
@@ -52,7 +52,7 @@ class OrderController {
     try {
       await ordersService.adminUpdateOrderState(req);
 
-      res.status(200).json({ status: "success", message: null });
+      res.status(201).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }
@@ -62,7 +62,7 @@ class OrderController {
     try {
       await ordersService.cancelUserOrderShippingFailed(req);
 
-      res.status(200).json({ status: "success", message: null });
+      res.status(201).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }
@@ -73,7 +73,7 @@ class OrderController {
       if (payload instanceof Error) throw payload;
       await ordersService.cancelOrderPendingAdminApproval(req, payload);
 
-      res.status(200).json({ status: "success", message: null });
+      res.status(201).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }

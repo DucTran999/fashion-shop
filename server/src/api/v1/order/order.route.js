@@ -1,7 +1,7 @@
 import express from "express";
-import ordersController from "./orders.controller.js";
+import ordersController from "./order.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
-import payloadMiddleware from "./orders.validation.js";
+import payloadMiddleware from "./order.validation.js";
 
 const router = express.Router();
 router.get(
