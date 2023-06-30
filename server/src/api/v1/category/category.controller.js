@@ -2,7 +2,7 @@ import categoryModel from "./category.model.js";
 import createHttpError from "http-errors";
 
 class CategoryController {
-  getAll = async (_req, res, next) => {
+  getAllCategoriesReq = async (_req, res, next) => {
     try {
       const categories = await categoryModel.findAll();
 
@@ -11,36 +11,6 @@ class CategoryController {
         message: null,
         elements: categories,
       });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getOneById = async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const category = await categoryModel.findOneById(id);
-
-      res.status(200).json({
-        status: "success",
-        message: null,
-        elements: category,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  addOne = async (req, res, next) => {
-    try {
-      // Abort when category already existed
-      const isExisted = await categoryModel.findByName(req.body.category_name);
-      if (isExisted) {
-        throw new createHttpError.Conflict("Already existed!");
-      }
-
-      await categoryModel.save(req.body);
-      res.status(200).json({ status: "success", message: null });
     } catch (error) {
       next(error);
     }
@@ -60,19 +30,47 @@ class CategoryController {
     }
   };
 
-  changeInfo = async (req, res, next) => {
+  getCategoryByIdReq = async (req, res, next) => {
     try {
-      await categoryModel.updateData(req.params.id, req.body.category_name);
+      const { id } = req.params;
+      const category = await categoryModel.findOneById(id);
 
-      res
-        .status(200)
-        .json({ status: "success", message: "Category change info success" });
+      res.status(200).json({
+        status: "success",
+        message: null,
+        elements: category,
+      });
     } catch (error) {
       next(error);
     }
   };
 
-  recovery = async (req, res, next) => {
+  addNewCategoryReq = async (req, res, next) => {
+    try {
+      // Abort when category already existed
+      const isExisted = await categoryModel.findByName(req.body.category_name);
+      if (isExisted) {
+        throw new createHttpError.Conflict("Already existed!");
+      }
+
+      await categoryModel.save(req.body);
+      res.status(201).json({ status: "success", message: null });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  updateCategoryReq = async (req, res, next) => {
+    try {
+      await categoryModel.updateData(req.params.id, req.body.category_name);
+
+      res.status(200).json({ status: "success", message: null });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  recoveryCategoryReq = async (req, res, next) => {
     try {
       await categoryModel.setVisible(req.params.id);
 
@@ -82,13 +80,11 @@ class CategoryController {
     }
   };
 
-  remove = async (req, res, next) => {
+  removeCategoryReq = async (req, res, next) => {
     try {
       await categoryModel.delete(req.params.id);
 
-      res
-        .status(200)
-        .json({ status: "success", message: "Delete Category Successfully" });
+      res.status(204).end();
     } catch (error) {
       next(error);
     }
