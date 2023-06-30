@@ -2,7 +2,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 import userRouter from "./user/user.route.js";
 import categoryRouter from "./categories/category.route.js";
-import sizeRouter from "./sizes/size.route.js";
+import sizeRouter from "./size/size.route.js";
 import colorRouter from "./colors/colors.route.js";
 import productRouter from "./products/product.route.js";
 import uploadRouter from "./upload/upload.route.js";

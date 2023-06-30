@@ -4,14 +4,22 @@ import authMiddleware from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", authMiddleware.verifyAdminAccessToken, sizeController.getAll);
-
-router.post("/", authMiddleware.verifyAdminAccessToken, sizeController.addOne);
-
 router.patch(
   "/:id",
   authMiddleware.verifyAdminAccessToken,
-  sizeController.updateValue
+  sizeController.updateSizeReq
+);
+
+router.get(
+  "/",
+  authMiddleware.verifyAdminAccessToken,
+  sizeController.getAllSizesReq
+);
+
+router.post(
+  "/",
+  authMiddleware.verifyAdminAccessToken,
+  sizeController.addNewSizeReq
 );
 
 export default router;
