@@ -1,11 +1,11 @@
 import createHttpError from "http-errors";
 
-import orderModel from "./orders.model.js";
+import orderModel from "./order.model.js";
 import variantModel from "../variants/variant.model.js";
 import cartModel from "../cart/cart.model.js";
-import paymentMethodModel from "../paymentMethod/paymentMethod.model.js";
-import notificationService from "../notifications/notification.service.js";
-import messageTemplate from "../notifications/messageTemplate.js";
+import paymentModel from "../payment/payment.model.js";
+import notificationService from "../notification/notification.service.js";
+import messageTemplate from "../notification/messageTemplate.js";
 
 import { ORDER_STATE_ID } from "../../utils/constVariable.js";
 import { extractVariantId } from "../../utils/normalizeData.js";
@@ -84,7 +84,7 @@ class OrderService {
     const { payment_method_id } = req.body;
 
     // Check payment method
-    const paymentMethod = await paymentMethodModel.findPaymentById(
+    const paymentMethod = await paymentModel.findPaymentById(
       +payment_method_id
     );
     if (!paymentMethod?.length) throw createHttpError.BadRequest();
@@ -116,7 +116,7 @@ class OrderService {
       payment_method_id
     );
 
-    // await cartModel.clearCart(user_id);
+    await cartModel.clearCart(user_id);
     const message = messageTemplate.placeOrderSuccessMsg();
     await notificationService.pushOrderNotification(user_id, message);
   };

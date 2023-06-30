@@ -11,7 +11,7 @@ class SessionController {
       );
 
       res
-        .status(200)
+        .status(201)
         .cookie("refresh_token", refreshToken, {
           sameSite: "strict",
           domain: process.env.DOMAIN_NAME,
@@ -35,12 +35,12 @@ class SessionController {
       await sessionService.removeRefreshToken(payload.user_id);
 
       res
-        .status(200)
+        .status(204)
         .clearCookie("refresh_token", {
           domain: process.env.DOMAIN_NAME,
           path: "/",
         })
-        .json({ status: "success", message: "Logout Successful" });
+        .end();
     } catch (err) {
       next(err);
     }
@@ -55,7 +55,7 @@ class SessionController {
       );
 
       res
-        .status(200)
+        .status(201)
         .cookie("refresh_token", refreshToken, {
           sameSite: "strict",
           domain: process.env.DOMAIN_NAME,

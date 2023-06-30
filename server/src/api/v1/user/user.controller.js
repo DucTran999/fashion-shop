@@ -7,7 +7,7 @@ class UserController {
       if (payload instanceof Error) throw payload;
       await userServices.createUser(payload);
 
-      res.status(200).json({ status: "success", message: null });
+      res.status(201).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }
@@ -16,7 +16,9 @@ class UserController {
   handleGetUserListReq = async (req, res, next) => {
     try {
       let users = await userServices.getAllUsers();
-      res.status(200).json({ status: 200, message: null, elements: users });
+      res
+        .status(200)
+        .json({ status: "success", message: null, elements: users });
     } catch (err) {
       next(err);
     }
@@ -34,7 +36,9 @@ class UserController {
 
       let user = await userServices.getUserInfoById(req.params.id);
 
-      res.status(200).json({ status: 200, message: null, elements: user });
+      res
+        .status(200)
+        .json({ status: "success", message: null, elements: user });
     } catch (err) {
       next(err);
     }
@@ -49,7 +53,7 @@ class UserController {
       }
       await userServices.updateUserInfo(payload.user_id, req.body);
 
-      res.status(200).json({ status: 200, message: "Updated Successfully" });
+      res.status(200).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }
@@ -64,7 +68,7 @@ class UserController {
       }
       await userServices.updateUserPassword(payload.user_id, req.body);
 
-      res.status(200).json({ status: 200, message: "Updated Successfully" });
+      res.status(200).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }

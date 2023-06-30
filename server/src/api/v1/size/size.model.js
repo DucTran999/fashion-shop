@@ -3,7 +3,7 @@ import createHttpError from "http-errors";
 
 class SizeModel {
   findAll = async () => {
-    const query = "SELECT id, value FROM sizes;";
+    const query = "SELECT id, value FROM sizes ORDER BY id;";
 
     try {
       const { rows } = await pool.query(query);
@@ -20,7 +20,6 @@ class SizeModel {
       const { rows } = await pool.query(query, [sizeVal]);
       return rows.length > 0;
     } catch (err) {
-      console.log(err);
       throw new createHttpError.InternalServerError();
     }
   };
@@ -35,16 +34,16 @@ class SizeModel {
     }
   };
 
-  updateSize = async (id, size) => {
-    const query =
-      "UPDATE sizes \
-    SET value = $2, updated_at=CURRENT_TIMESTAMP \
-    WHERE id = $1;";
+  update = async (id, size) => {
+    const query = ` 
+      UPDATE sizes 
+        SET value = $2, updated_at=CURRENT_TIMESTAMP 
+        WHERE id = $1;
+    `;
 
     try {
       await pool.query(query, [id, size]);
     } catch (err) {
-      console.log(err);
       throw new createHttpError.InternalServerError();
     }
   };

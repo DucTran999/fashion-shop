@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import userRepository from "../users/user.repository.js";
+import userRepository from "../user/user.repository.js";
 import jwtHelper from "../helpers/helper.jwt.js";
 import { isPasswordMatch } from "../../utils/passwordHandler.js";
 

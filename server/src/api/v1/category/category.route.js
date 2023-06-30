@@ -5,45 +5,39 @@ import checkPayload from "./category.validation.js";
 
 const router = express.Router();
 
-// find all categories
-router.get("/", categoryController.getAll);
-
-// find all product in specific category
 router.get("/:id/products", categoryController.getAllProductInCategory);
 
-// find category by id
 router.get(
   "/:id",
   authMiddleware.verifyAdminAccessToken,
-  categoryController.getOneById
+  categoryController.getCategoryByIdReq
 );
 
-// update category information
 router.patch(
   "/:id",
   authMiddleware.verifyAdminAccessToken,
-  categoryController.changeInfo
+  categoryController.updateCategoryReq
 );
 
-// Add new category
 router.post(
   "/",
   checkPayload.validateAddCategoryPayload,
   authMiddleware.verifyAdminAccessToken,
-  categoryController.addOne
+  categoryController.addNewCategoryReq
 );
 
-// Recovery category
 router.patch(
   "/:id/recovery",
   authMiddleware.verifyAdminAccessToken,
-  categoryController.recovery
+  categoryController.recoveryCategoryReq
 );
 
 router.delete(
   "/:id",
-  // authMiddleware.verifyAdminAccessToken,
-  categoryController.remove
+  authMiddleware.verifyAdminAccessToken,
+  categoryController.removeCategoryReq
 );
+
+router.get("/", categoryController.getAllCategoriesReq);
 
 export default router;
