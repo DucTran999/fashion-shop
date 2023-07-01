@@ -32,6 +32,7 @@ const authSlice = createSlice({
       state.login.currentUser = null;
       state.login.errorCause = action.payload;
     },
+
     // when switch form
     resetLoginState: (state) => {
       state.login.isFetching = false;
@@ -51,6 +52,7 @@ const authSlice = createSlice({
       state.register.isFetching = false;
       state.register.errorCause = action.payload;
     },
+
     // when switch form
     resetRegisterState: (state) => {
       state.register.isFetching = false;

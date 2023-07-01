@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // Util
+import socket from "../../utils/init.socket";
 import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
 import useForm from "../../hooks/useForm";
 import * as validateMethod from "../../utils/Validator";
 import { registerReq } from "../../features/auth/apiRequest";
+import { sendNewVerifyEmailReq } from "../../features/user/userRequest";
 
 // Component
 import FormSwitch from "./FormSwitch";
@@ -39,6 +41,9 @@ function RegisterPage() {
     (state) => state.auth.register.isFetching
   );
   const errorCause = useSelector((state) => state.auth.register.errorCause);
+  const isSending = useSelector(
+    (state) => state.user.sendVerifyEmail.isSending
+  );
 
   const [formState, handleInput] = useForm(
     { firstName: "", lastName: "", email: "", password: "" },
@@ -61,8 +66,36 @@ function RegisterPage() {
       password: String(formData.password).trim(),
     };
 
-    await registerReq(user, dispatch, navigate);
+    await registerReq(user, dispatch);
   };
+
+  const handleResendVerifyEmail = async (e) => {
+    e.preventDefault();
+    if (!isSending) {
+      await sendNewVerifyEmailReq(
+        {
+          email: formData.email.trim().toLowerCase(),
+          first_name: formData.firstName.trim().toLowerCase(),
+        },
+        dispatch
+      );
+    }
+  };
+
+  // Listen verify action success navigate to login page
+  useEffect(() => {
+    const onVerify = (message) => {
+      console.log(message);
+      navigate("/login", { replace: true });
+    };
+    socket.on("verify-email-registration", onVerify);
+
+    return () => {
+      socket.off("verify-email-registration", onVerify);
+    };
+
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (registerLoading) {
@@ -104,12 +137,9 @@ function RegisterPage() {
             <ErrorAlert message={errorCause} onClose={handleCloseModal} />
           ) : (
             <SuccessAlertNavigate
-              onClickEvent={(e) => {
-                e.preventDefault();
-                navigate("/login", { replace: true });
-              }}
-              message="Thank you"
-              btnTitle="Return to Login Page"
+              onClickEvent={handleResendVerifyEmail}
+              message="A verified email has been sent!"
+              btnTitle="Resend verify email"
             />
           )}
         </Popup>
