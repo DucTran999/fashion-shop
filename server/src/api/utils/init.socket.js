@@ -4,6 +4,7 @@ import {
   addOneSocketId,
   delOneSocketId,
   delUserSocketIds,
+  addRegisterSocketId,
 } from "../v1/helpers/helper.socket.js";
 
 let io;
@@ -22,6 +23,10 @@ const socketConnection = (server) => {
 
     socket.on("user-logout", async (clientUserId) => {
       await delUserSocketIds(clientUserId);
+    });
+
+    socket.on("user-register", async (email) => {
+      await addRegisterSocketId(socket.id, email);
     });
 
     socket.on("disconnect", async () => {

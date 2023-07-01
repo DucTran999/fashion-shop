@@ -37,6 +37,12 @@ const formatHyphenToLowerCase = (original) => {
   return arr.join(" ");
 };
 
+const formatHyphenToLowerCaseNoSpace = (original) => {
+  const arr = original.toLowerCase().trim().split("-");
+
+  return arr.join("");
+};
+
 const formatHyphenToUpperCase = (original) => {
   const arr = original.toUpperCase().trim().split("-");
 
@@ -81,6 +87,7 @@ export {
   formatCapitalize,
   formatHyphenToCapitalize,
   formatHyphenToLowerCase,
+  formatHyphenToLowerCaseNoSpace,
   formatHyphenToUpperCase,
   formatVietnameseToNonAccent,
   convertStateToStateCode,

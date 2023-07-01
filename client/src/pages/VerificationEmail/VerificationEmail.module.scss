@@ -1,0 +1,79 @@
+@use "../../styles/" as s;
+
+.row-cent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--darker-black-clr);
+  color: var(--light-grey-clr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-layout {
+  padding: 2em;
+  position: relative;
+  max-width: 40em;
+  background: var(--very-dark-black-clr);
+
+  @include s.breakpoint(md) {
+    width: 60%;
+    max-width: 40em;
+    background: var(--very-dark-black-clr);
+    border-radius: 20px;
+  }
+}
+
+.icon {
+  text-align: center;
+  font-size: 5em;
+  color: var(--primary-opacity-clr);
+  animation: growFromCenter 0.5s;
+  padding: 0.2em;
+
+  &.error-clr {
+    color: var(--crimson-clr);
+  }
+}
+
+.header {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 500;
+  animation: growFromCenter 0.5s;
+  color: var(--primary-opacity-clr);
+
+  &.error-clr {
+    color: var(--crimson-clr);
+  }
+}
+
+.message {
+  text-align: center;
+  color: var(--grey-clr);
+  animation: growFromCenter 0.5s;
+  padding: 0.5em 0 2em 0;
+}
+
+.btn-action {
+  width: fit-content;
+  text-align: center;
+  padding: 0.5em 1.5em;
+
+  border: none;
+  border-radius: 10px;
+
+  font-weight: 500;
+  background-color: var(--light-grey-clr);
+  animation: growFromCenter 0.5s;
+
+  &:hover {
+    background: var(--dark-gradient-3-clr);
+  }
+}

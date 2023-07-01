@@ -1,6 +1,7 @@
 "use strict";
-import pool from "../helpers/init.postgres.pool.js";
 import createHttpError from "http-errors";
+import pool from "../helpers/init.postgres.pool.js";
+import redisClient from "../helpers/init.redis.client.js";
 
 class UserRepository {
   /* This class provides methods to interact with users' tables */
@@ -32,6 +33,15 @@ class UserRepository {
     }
   };
 
+  findOneByEmailInRedis = async (email) => {
+    try {
+      const key = `registration:user#${email}`;
+      return await redisClient.get(key);
+    } catch (error) {
+      throw createHttpError.InternalServerError();
+    }
+  };
+
   findOneById = async (userId) => {
     const query = `
       SELECT user_id, first_name, last_name, email,
@@ -56,6 +66,16 @@ class UserRepository {
     }
   };
 
+  checkVerifyEmailTokenExist = async (email, token) => {
+    try {
+      const key = `verification:${email}#${token}`;
+
+      return await redisClient.exists(key);
+    } catch (error) {
+      throw createHttpError.InternalServerError();
+    }
+  };
+
   updateOne = async (userId, firstName, lastName, address, phone, gender) => {
     const query = `
       UPDATE users
@@ -72,6 +92,8 @@ class UserRepository {
   };
 
   save = async ({ first_name, last_name, email, password }) => {
+    const tempUserKey = `registration:user#${email}`;
+
     const query = `
       INSERT INTO users 
           (first_name, last_name, email, password)
@@ -80,7 +102,17 @@ class UserRepository {
 
     try {
       await pool.query(query, values);
+      await redisClient.del(tempUserKey);
     } catch (err) {
+      throw new createHttpError.InternalServerError();
+    }
+  };
+
+  saveToRedis = async (user) => {
+    try {
+      const key = `registration:user#${user.email}`;
+      await redisClient.set(key, JSON.stringify(user), { EX: 3 * 3600 });
+    } catch (error) {
       throw new createHttpError.InternalServerError();
     }
   };
@@ -119,6 +151,33 @@ class UserRepository {
       await pool.query(query, [newPassword, userId]);
     } catch (err) {
       throw new createHttpError.InternalServerError();
+    }
+  };
+
+  deleteVerifyEmailToken = async (email, token) => {
+    try {
+      if (token) {
+        const key = `verification:${email}#${token}`;
+        await redisClient.del(key);
+      } else {
+        const pattern = `verification:${email}#*`;
+        const keys = await redisClient.keys(pattern);
+
+        if (keys.length > 0) {
+          await redisClient.del(keys[0]);
+        }
+      }
+    } catch (error) {
+      throw createHttpError.InternalServerError();
+    }
+  };
+
+  resetUserTempExpireTime = async (email) => {
+    try {
+      const userTempKey = `registration:user#${email}`;
+      await redisClient.expire(userTempKey, 3600);
+    } catch (error) {
+      throw createHttpError.InternalServerError();
     }
   };
 }

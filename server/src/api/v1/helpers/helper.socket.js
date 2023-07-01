@@ -38,9 +38,7 @@ const delOneSocketId = async (socketId, userId) => {
 const getUserSocketIds = async (userId) => {
   try {
     const key = `sockets:user#${userId}`;
-    const ids = await redisClient.sMembers(key);
-
-    return ids;
+    return await redisClient.sMembers(key);
   } catch (error) {
     console.log("Server Internal Error");
   }
@@ -67,8 +65,32 @@ const emitUserFetchNotifications = async (userId) => {
   }
 };
 
+const emitUserVerifySuccess = async (email) => {
+  // know which client send register request
+  try {
+    const key = `registration:socket#${email}`;
+    const socketId = await redisClient.get(key);
+    io.to(socketId).emit("verify-email-registration", "Verify Success");
+    redisClient.del(key);
+  } catch (error) {
+    console.log("Server Internal Error");
+  }
+};
+
+const addRegisterSocketId = async (socketId, email) => {
+  // know which client send register request
+  try {
+    const key = `registration:socket#${email}`;
+    await redisClient.set(key, socketId, { EX: 3 * 3600 });
+  } catch (error) {
+    console.log("Server Internal Error");
+  }
+};
+
 export {
   addOneSocketId,
+  addRegisterSocketId,
+  emitUserVerifySuccess,
   delOneSocketId,
   getUserSocketIds,
   delUserSocketIds,

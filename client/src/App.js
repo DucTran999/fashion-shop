@@ -18,6 +18,7 @@ import {
   MissingPage,
   Purchase,
   Notification,
+  VerificationEmail,
 } from "./pages";
 import PersistLogin from "./routes/PersistLogin";
 import RequireAuth from "./routes/RequireAuth";
@@ -55,6 +56,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Public route */}
+        <Route
+          path="/auth/verify-email/:cipher/:token"
+          element={<VerificationEmail />}
+        />
+
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
