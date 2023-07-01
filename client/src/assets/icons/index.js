@@ -30,7 +30,12 @@ import { FaBoxOpen } from "react-icons/fa";
 import { SlBell } from "react-icons/sl";
 import { VscBellSlash, VscBellDot } from "react-icons/vsc";
 import { IoTrashBinSharp } from "react-icons/io5";
-import { MdCurrencyExchange, MdLocalShipping, MdInfo } from "react-icons/md";
+import {
+  MdCurrencyExchange,
+  MdLocalShipping,
+  MdInfo,
+  MdEmail,
+} from "react-icons/md";
 import { AiFillCreditCard, AiFillSetting, AiFillHeart } from "react-icons/ai";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 
@@ -70,6 +75,7 @@ const ICONS = {
   infoIcon: <MdInfo />,
   heart: <AiFillHeart />,
   trash: <IoTrashBinSharp />,
+  envelop: <MdEmail />,
 
   /* Social */
   google: <GoogleOutlined />,
