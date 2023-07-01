@@ -1,7 +1,10 @@
 import createHttpError from "http-errors";
 import userRepository from "./user.repository.js";
-import { encryptUserPayload, decrypt } from "../../utils/normalizeData.js";
+import emailSender from "../email/emailSender.js";
 import { hashPassword, isPasswordMatch } from "../../utils/passwordHandler.js";
+import { EMAIL_TYPE } from "../../utils/constVariable.js";
+import { encryptUserPayload, decrypt } from "../../utils/normalizeData.js";
+import { emitUserVerifySuccess } from "../helpers/helper.socket.js";
 
 class UserService {
   getAllUsers = async () => {
@@ -44,8 +47,8 @@ class UserService {
     }
   };
 
-  createUser = async (userInfo) => {
-    const { email, password } = userInfo;
+  createTempUser = async (userInfo) => {
+    const { first_name, email, password } = userInfo;
 
     // Check email is exist or not
     const userInDB = await userRepository.findOneByEmail(email);
@@ -53,12 +56,70 @@ class UserService {
       throw new createHttpError.Conflict("Email already registered!");
     }
 
-    // hashing password before save to DB
+    // Check user registered but not verify
+    const userInRedis = await userRepository.findOneByEmailInRedis(email);
+    if (userInRedis) {
+      throw createHttpError.Conflict("Email already registered!");
+    }
+
+    // Hashing password before save to DB
     const hash = await hashPassword(password);
     const user = { ...userInfo, password: hash };
 
+    // Write to Redis
+    await userRepository.saveToRedis(user);
+
+    // Send email for verify
+    emailSender.sendEmail(EMAIL_TYPE.verifyNewRegister, email, first_name);
+  };
+
+  sendVerifyEmailRegistration = async (email, firstName) => {
+    // Check tempUser exist when verifying
+    const tempUser = await userRepository.findOneByEmailInRedis(email);
+    if (!tempUser) {
+      await userRepository.deleteVerifyEmailToken(email, "");
+
+      throw createHttpError.NotFound(
+        `User no longer available! Please register again.`
+      );
+    }
+
+    // Delete current token and reset account expire time
+    userRepository.deleteVerifyEmailToken(email, "");
+    userRepository.resetUserTempExpireTime(email);
+
+    // send new email verify
+    emailSender.sendEmail(EMAIL_TYPE.verifyNewRegister, email, firstName);
+  };
+
+  verifyEmailRegistration = async (cipher, token) => {
+    const email = decrypt(decodeURIComponent(cipher));
+    const isTokenExpired = await userRepository.checkVerifyEmailTokenExist(
+      email,
+      token
+    );
+
+    // Check token expired
+    if (!isTokenExpired)
+      throw createHttpError.NotFound(
+        `Verification link expired! Please request a new verification link!`
+      );
+
+    // Check tempUser exist when verifying
+    const tempUser = await userRepository.findOneByEmailInRedis(email);
+    if (!tempUser) {
+      await userRepository.deleteVerifyEmailToken(email, token);
+
+      throw createHttpError.NotFound(
+        `User no longer available! Please register again.`
+      );
+    }
+
     // write to DB
-    await userRepository.save(user);
+    await userRepository.save(JSON.parse(tempUser));
+    await userRepository.deleteVerifyEmailToken(email, token);
+
+    await emitUserVerifySuccess(email);
   };
 }
 

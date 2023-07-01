@@ -2,10 +2,10 @@ import createHttpError from "http-errors";
 import userServices from "./user.services.js";
 
 class UserController {
-  handleSignUpReq = async (payload, req, res, next) => {
+  signUpReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
-      await userServices.createUser(payload);
+      await userServices.createTempUser(payload);
 
       res.status(201).json({ status: "success", message: null });
     } catch (err) {
@@ -13,7 +13,7 @@ class UserController {
     }
   };
 
-  handleGetUserListReq = async (req, res, next) => {
+  getAllUsersReq = async (req, res, next) => {
     try {
       let users = await userServices.getAllUsers();
       res
@@ -24,7 +24,7 @@ class UserController {
     }
   };
 
-  handleGetUserInfoReq = async (payload, req, res, next) => {
+  getUserInfoReq = async (payload, req, res, next) => {
     try {
       // Check payload
       if (payload instanceof Error) throw payload;
@@ -44,7 +44,29 @@ class UserController {
     }
   };
 
-  handleUpdateUserInfoReq = async (payload, req, res, next) => {
+  sendNewVerifyEmailReq = async (req, res, next) => {
+    try {
+      const { email, first_name } = req.body;
+      await userServices.sendVerifyEmailRegistration(email, first_name);
+
+      res.status(201).json({ status: "success", message: null });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  verifyEmailRegistrationReq = async (req, res, next) => {
+    try {
+      const { cipher, token } = req.params;
+      await userServices.verifyEmailRegistration(cipher, token);
+
+      res.status(200).json({ status: "success", message: null });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  updateUserInfoReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
 
@@ -59,7 +81,7 @@ class UserController {
     }
   };
 
-  handleChangeUserPasswordReq = async (payload, req, res, next) => {
+  changeUserPasswordReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
 

@@ -7,6 +7,10 @@ class SessionService {
   authenticate = async (payload) => {
     const { email, password } = payload;
 
+    // Check account is verified
+    const isAccountVerified = await userRepository.findOneByEmailInRedis(email);
+    if (isAccountVerified) throw createHttpError.Forbidden();
+
     // Check email existence
     const userInDB = await userRepository.findOneByEmail(email);
     if (!userInDB.length) throw createHttpError.Unauthorized();
