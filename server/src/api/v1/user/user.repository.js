@@ -101,7 +101,7 @@ class UserRepository {
     const values = [first_name, last_name, email, password];
 
     try {
-      // await pool.query(query, values);
+      await pool.query(query, values);
       await redisClient.del(tempUserKey);
     } catch (err) {
       throw new createHttpError.InternalServerError();
