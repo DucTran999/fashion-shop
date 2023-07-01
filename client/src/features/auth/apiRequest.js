@@ -1,6 +1,5 @@
 import axios from "../../api/init.axios";
 import API_URL from "../../api/init.url";
-import delay from "../../utils/delay";
 import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
 import io from "../../utils/init.socket";
 import { resetNotificationList } from "../notification/notificationSlice";
@@ -53,22 +52,22 @@ const logInReq = async (user, dispatch, navigate, location) => {
       dispatch(loginFailed("Input not valid"));
     } else if (err.response?.status === 401) {
       dispatch(loginFailed("Wrong email or password"));
+    } else if (err.response?.status === 403) {
+      dispatch(loginFailed("Account not verified!"));
     } else {
       dispatch(loginFailed("Login Failed!"));
     }
   }
 };
 
-const registerReq = async (user, dispatch, navigate) => {
+const registerReq = async (user, dispatch) => {
   dispatch(registerStart());
 
   try {
     await axios.post(API_URL.users, user);
     dispatch(registerSuccess());
 
-    // Auto return to login page after 5 seconds
-    await delay(5000);
-    navigate("/login", { replace: true });
+    io.emit("user-register", user.email);
   } catch (err) {
     // Response timeout when api server have problem
     if (!err?.response) {
