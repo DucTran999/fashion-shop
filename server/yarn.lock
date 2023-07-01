@@ -1370,11 +1370,6 @@
   resolved "https://registry.npmjs.org/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.3.tgz"
   integrity sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==
 
-"@popperjs/core@^2.11.6":
-  version "2.11.7"
-  resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.7.tgz"
-  integrity sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==
-
 "@redis/bloom@1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@redis/bloom/-/bloom-1.2.0.tgz"
@@ -2002,11 +1997,6 @@ body-parser@1.20.1:
     raw-body "2.5.1"
     type-is "~1.6.18"
     unpipe "1.0.0"
-
-bootstrap@^5.2.3:
-  version "5.2.3"
-  resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-5.2.3.tgz"
-  integrity sha512-cEKPM+fwb3cT8NzQZYEu4HilJ3anCrWqh3CHAok1p9jXqMPsPTBhU25fBckEJHJ/p+tTxTFTsFQGM+gaHpi3QQ==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -4891,6 +4881,11 @@ node-releases@^2.0.12:
   version "2.0.12"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.12.tgz"
   integrity sha512-QzsYKWhXTWx8h1kIvqfnC++o0pEmpRQA/aenALsL2F4pqNVr7YzcdMlDij5WBnwftRbJCNJL/O7zdKaxKPHqgQ==
+
+nodemailer@^6.9.3:
+  version "6.9.3"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.3.tgz"
+  integrity sha512-fy9v3NgTzBngrMFkDsKEj0r02U7jm6XfC3b52eoNV+GCrGj+s8pt5OqhiJdWKuw51zCTdiNR/IUD1z33LIIGpg==
 
 nodemon@^2.0.22:
   version "2.0.22"
