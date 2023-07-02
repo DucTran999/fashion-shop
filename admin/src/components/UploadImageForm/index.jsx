@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
+import API_URL from "../../api/url.init";
+
 import classNames from "classnames/bind";
 import style from "./UploadImageForm.module.scss";
 const cx = classNames.bind(style);
-
-const apiURL = {
-  apiUploadImg: "/api/v1/uploads/product-gallery",
-};
 
 const UploadAndDisplayImage = ({ parentGetImageList }) => {
   const [images, setImages] = useState([]);
@@ -19,9 +17,11 @@ const UploadAndDisplayImage = ({ parentGetImageList }) => {
   // Upload file to server
   const callApiUploadImg = async (payload) => {
     try {
-      const res = await axiosPrivate.post(apiURL.apiUploadImg, payload, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await axiosPrivate.post(
+        `${API_URL.uploads}/product-gallery`,
+        payload,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
 
       setMessage(res.data.message);
     } catch (error) {

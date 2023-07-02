@@ -9,6 +9,19 @@ This online shop project was built with PERN stack ( PostgreSQL, Express, React,
 [Freepik]: https://www.freepik.com/search?format=search&query=fashion&type=photo
 [Pixels]: https://www.pexels.com/vi-vn/tim-kiem/model/
 
+## Preview:
+1. Login Page:
+  
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/c59f0890-49c6-4512-a5f2-49e9f348ba29)
+
+2. Home Page:
+
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/44a5b880-15fe-4d4d-81d0-b3a77573d148)
+
+3. Products list:
+
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/9bbbb091-b54e-4e31-8a4b-f03043fe2050)
+
 ## Browser support
 - Chrome
 - Firefox

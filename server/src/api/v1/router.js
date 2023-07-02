@@ -1,16 +1,16 @@
 import express from "express";
 import * as dotenv from "dotenv";
-import userRouter from "./users/user.route.js";
-import categoryRouter from "./categories/category.route.js";
-import sizeRouter from "./sizes/size.route.js";
+import userRouter from "./user/user.route.js";
+import categoryRouter from "./category/category.route.js";
+import sizeRouter from "./size/size.route.js";
 import colorRouter from "./colors/colors.route.js";
 import productRouter from "./products/product.route.js";
-import uploadRouter from "./serviceUpload/uploads.route.js";
+import uploadRouter from "./upload/upload.route.js";
 import variantRouter from "./variants/variant.route.js";
 import cartRouter from "./cart/cart.route.js";
-import ordersRouter from "./orders/orders.route.js";
-import sessionRouter from "./sessions/session.route.js";
-import notificationRouter from "./notifications/notification.route.js";
+import ordersRouter from "./order/order.route.js";
+import sessionRouter from "./session/session.route.js";
+import notificationRouter from "./notification/notification.route.js";
 
 dotenv.config();
 const route = express.Router();

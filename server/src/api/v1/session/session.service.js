@@ -1,11 +1,15 @@
 import createHttpError from "http-errors";
-import userRepository from "../users/user.repository.js";
+import userRepository from "../user/user.repository.js";
 import jwtHelper from "../helpers/helper.jwt.js";
 import { isPasswordMatch } from "../../utils/passwordHandler.js";
 
 class SessionService {
   authenticate = async (payload) => {
     const { email, password } = payload;
+
+    // Check account is verified
+    const isAccountVerified = await userRepository.findOneByEmailInRedis(email);
+    if (isAccountVerified) throw createHttpError.Forbidden();
 
     // Check email existence
     const userInDB = await userRepository.findOneByEmail(email);

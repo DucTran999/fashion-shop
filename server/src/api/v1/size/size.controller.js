@@ -2,7 +2,7 @@ import sizeModel from "./size.model.js";
 import createHttpError from "http-errors";
 
 class SizeController {
-  getAll = async (req, res, next) => {
+  getAllSizesReq = async (req, res, next) => {
     try {
       const sizes = await sizeModel.findAll();
 
@@ -14,7 +14,7 @@ class SizeController {
     }
   };
 
-  addOne = async (req, res, next) => {
+  addNewSizeReq = async (req, res, next) => {
     try {
       const { size_value } = req.body;
       const isExisted = await sizeModel.findByValue(size_value);
@@ -29,7 +29,7 @@ class SizeController {
     }
   };
 
-  updateValue = async (req, res, next) => {
+  updateSizeReq = async (req, res, next) => {
     try {
       const { id } = req.params;
       const { size_value } = req.body;
@@ -39,10 +39,8 @@ class SizeController {
         throw createHttpError.Conflict("Size existed");
       }
 
-      await sizeModel.updateSize(id, size_value);
-      res
-        .status(200)
-        .json({ status: "success", message: "Update Size Successfully" });
+      await sizeModel.update(id, size_value);
+      res.status(200).json({ status: "success", message: null });
     } catch (err) {
       next(err);
     }

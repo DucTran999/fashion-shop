@@ -9,3 +9,4 @@ export { default as Cart } from "./Cart";
 export { default as Checkout } from "./Checkout";
 export { default as Purchase } from "./Purchase";
 export { default as Notification } from "./Notification";
+export { default as VerificationEmail } from "./VerificationEmail";

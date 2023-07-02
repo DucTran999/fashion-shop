@@ -1,19 +1,25 @@
 import express from "express";
-import uploadsController from "./uploads.controller.js";
+import sizeController from "./size.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.post(
-  "/product-img",
+router.patch(
+  "/:id",
   authMiddleware.verifyAdminAccessToken,
-  uploadsController.saveAProductImage
+  sizeController.updateSizeReq
+);
+
+router.get(
+  "/",
+  authMiddleware.verifyAdminAccessToken,
+  sizeController.getAllSizesReq
 );
 
 router.post(
-  "/product-gallery",
+  "/",
   authMiddleware.verifyAdminAccessToken,
-  uploadsController.saveProductGallery
+  sizeController.addNewSizeReq
 );
 
 export default router;

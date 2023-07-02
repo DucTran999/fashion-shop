@@ -1,8 +1,8 @@
 import createHttpError from "http-errors";
-import { uploadSingleImg, uploadMultiImg } from "./uploads.validate.js";
+import { uploadSingleImg, uploadMultiImg } from "./upload.validate.js";
 
 class UploadController {
-  saveAProductImage = (req, res, next) => {
+  uploadProductImageReq = (req, res, next) => {
     // Handle upload
     uploadSingleImg(req, res, (err) => {
       // Request got an error when validation
@@ -15,13 +15,11 @@ class UploadController {
         return next(createHttpError.BadRequest("File not found"));
       }
 
-      res
-        .status(200)
-        .json({ status: "success", message: "images upload successfully!" });
+      res.status(201).json({ status: "success", message: null });
     });
   };
 
-  saveProductGallery = (req, res, next) => {
+  uploadProductGalleryReq = (req, res, next) => {
     // Handle upload
     uploadMultiImg(req, res, (err) => {
       // Request got an error when validation
@@ -35,10 +33,7 @@ class UploadController {
         return next(createHttpError.BadRequest("File not found"));
       }
 
-      res.status(200).json({
-        status: "success",
-        message: "images gallery upload successfully!",
-      });
+      res.status(201).json({ status: "success", message: null });
     });
   };
 }

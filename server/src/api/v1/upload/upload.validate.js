@@ -1,6 +1,6 @@
 import multer from "multer";
-import { storageProduct } from "./uploads.config.js";
-const whitelist = ["image/png", "image/jpg", "image/webp", "image/jpeg"];
+import { storageProduct } from "./upload.config.js";
+const MINE_WHITELIST = ["image/png", "image/jpg", "image/webp", "image/jpeg"];
 
 const uploadSingleImg = multer({
   storage: storageProduct,
@@ -10,7 +10,7 @@ const uploadSingleImg = multer({
     fileSize: 50 * 2048 * 2048, // 200 KB for a 1365x2048 WEBP JPG PNG
   },
   fileFilter: (_req, file, callback) => {
-    if (!whitelist.includes(file.mimetype)) {
+    if (!MINE_WHITELIST.includes(file.mimetype)) {
       return callback(new Error("Only images are allowed"));
     }
     callback(null, true);
@@ -27,7 +27,7 @@ const uploadMultiImg = multer({
   fileFilter: (_req, files, callback) => {
     // Check all files MINE
     for (let i = 0; i < files.length; ++i) {
-      if (!whitelist.includes(files[i].mimetype)) {
+      if (!MINE_WHITELIST.includes(files[i].mimetype)) {
         return callback(new Error("Only images are allowed"));
       }
     }
