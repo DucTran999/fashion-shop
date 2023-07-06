@@ -27,10 +27,7 @@ router.patch(
   userController.changeUserPasswordReq
 );
 
-router.get(
-  "/verify-email/:cipher/:token",
-  userController.verifyEmailRegistrationReq
-);
+router.get("/verify-email/:cipher/:token", userController.verifyEmailReq);
 
 router.get(
   "/:id",

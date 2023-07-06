@@ -18,6 +18,7 @@ const NOTIFICATION_TYPE = {
 
 const EMAIL_TYPE = {
   verifyNewRegister: "1",
+  verifyUnlockLogin: "2",
 };
 
 export { MAGIC_NUMBER, ORDER_STATE_ID, NOTIFICATION_TYPE, EMAIL_TYPE };
