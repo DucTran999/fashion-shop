@@ -11,7 +11,7 @@ import { logOutReq } from "../../features/auth/apiRequest";
 import { formatCapitalize } from "../../utils/formatData";
 
 // Component
-import ShopLogo from "../../components/Logo/ShopLogo";
+import ShopLogo from "../../components/Logo";
 import PrimaryNav from "./PrimaryNav";
 import {
   updateSelection,

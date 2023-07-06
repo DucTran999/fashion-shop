@@ -11,7 +11,7 @@ import { updateSidebarSelection } from "../../features/activeNav/navAction";
 import { setNotificationFilter } from "../../features/notification/notificationSlice";
 
 // Component
-import ShopLogo from "../../components/Logo/ShopLogo";
+import ShopLogo from "../../components/Logo";
 import ModalContainer from "../../components/Modal/ModalContainer";
 
 //Style

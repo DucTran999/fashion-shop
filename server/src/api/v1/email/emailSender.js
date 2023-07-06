@@ -1,7 +1,10 @@
 import nodemailer from "nodemailer";
 import * as dotenv from "dotenv";
 import { EMAIL_TYPE } from "../../utils/constVariable.js";
-import { emailVerifyNewRegister } from "./templateEmail.js";
+import {
+  emailVerifyLoginAttempt,
+  emailVerifyNewRegister,
+} from "./templateEmail.js";
 import { encrypt } from "../../utils/normalizeData.js";
 import { formatHyphenToLowerCaseNoSpace } from "../../utils/formatData.js";
 import { v4 as uuidv4 } from "uuid";
@@ -34,8 +37,25 @@ const sendEmail = (type, customerEmail, customerName) => {
       subject: "Verify email for new registration!",
       html: emailVerifyNewRegister(customerName, emailEncoded, token),
     };
-    redisClient.set(`verification:${customerEmail}#${token}`, customerEmail, {
+
+    redisClient.set(`verification:${customerEmail}#${token}`, "registration", {
       EX: 3600,
+      NX: true,
+    });
+  }
+
+  if (type === EMAIL_TYPE.verifyUnlockLogin) {
+    const emailEncoded = encodeURIComponent(encrypt(customerEmail));
+
+    mailContent = {
+      from: process.env.ADMIN_EMAIL,
+      to: customerEmail,
+      subject: "Confirm to unlock account!",
+      html: emailVerifyLoginAttempt(customerName, emailEncoded, token),
+    };
+
+    redisClient.set(`verification:${customerEmail}#${token}`, "unlock", {
+      EX: 60 * 5,
       NX: true,
     });
   }

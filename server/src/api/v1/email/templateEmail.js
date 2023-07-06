@@ -30,4 +30,35 @@ const emailVerifyNewRegister = (username, emailEncoded, token) => {
   return message;
 };
 
-export { emailVerifyNewRegister };
+const emailVerifyLoginAttempt = (username, emailEncoded, token) => {
+  let verifyBtn = `
+    <a href="${process.env.REACT_CLIENT_URI}/auth/verify-email/${emailEncoded}/${token}" 
+        style="display: block; width: 250px; height: 50px; font-size: 16px;
+        background-color: #00a86b; color: #fff; font-weight: 500;
+        text-align: center; margin: 10px 0; line-height: 50px;
+        text-decoration: none; border-radius: 10px;"
+    >
+        Yes, I do that.
+    </a>
+    `;
+
+  let message = `
+    <h1 style="text-align: center; color: #00a86b">
+      <b> VERIFY EMAIL TO UNLOCK ACCOUNT </b>
+    </h1>
+    Hi ${formatCapitalize(username)},
+    <p> Someone is trying to access your account. We temporarily locked your account
+      in 5 minutes. If it's you, please click the button below we will unlock your
+      account immediately.
+    </p>
+    <div style="text-align: center;">
+        ${verifyBtn}
+    </div>
+    <div> Thank you for using our service! </div>
+    <br> Best regards,</br>
+    <br> The Atlana shop team </br>
+    `;
+  return message;
+};
+
+export { emailVerifyNewRegister, emailVerifyLoginAttempt };

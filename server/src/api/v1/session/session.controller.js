@@ -25,6 +25,9 @@ class SessionController {
           elements: [{ access_token: accessToken }],
         });
     } catch (err) {
+      if (err.status === 401) {
+        sessionService.updateLoginAttempt(payload);
+      }
       next(err);
     }
   };

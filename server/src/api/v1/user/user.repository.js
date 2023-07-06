@@ -66,16 +66,6 @@ class UserRepository {
     }
   };
 
-  checkVerifyEmailTokenExist = async (email, token) => {
-    try {
-      const key = `verification:${email}#${token}`;
-
-      return await redisClient.exists(key);
-    } catch (error) {
-      throw createHttpError.InternalServerError();
-    }
-  };
-
   updateOne = async (userId, firstName, lastName, address, phone, gender) => {
     const query = `
       UPDATE users
@@ -151,6 +141,16 @@ class UserRepository {
       await pool.query(query, [newPassword, userId]);
     } catch (err) {
       throw new createHttpError.InternalServerError();
+    }
+  };
+
+  checkVerifyEmailTokenExist = async (email, token) => {
+    try {
+      const key = `verification:${email}#${token}`;
+
+      return await redisClient.get(key);
+    } catch (error) {
+      throw createHttpError.InternalServerError();
     }
   };
 
