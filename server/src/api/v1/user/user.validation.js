@@ -1,6 +1,9 @@
 import createHttpError from "http-errors";
 import Joi from "joi";
 
+const strongPasswd =
+  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
+
 const userScheme = Joi.object({
   first_name: Joi.string().trim().required(),
   last_name: Joi.string().trim().required(),
@@ -9,12 +12,7 @@ const userScheme = Joi.object({
     .pattern(new RegExp("@gmail.com$"))
     .lowercase()
     .required(),
-  password: Joi.string()
-    .trim()
-    .min(8)
-    .max(32)
-    .pattern(new RegExp("^\\S+$"))
-    .required(),
+  password: Joi.string().trim().min(8).max(32).regex(strongPasswd).required(),
 });
 
 const updateSchema = Joi.object({

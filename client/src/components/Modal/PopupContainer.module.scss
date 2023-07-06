@@ -12,7 +12,7 @@
 
   // Dimension
   width: 17em;
-  height: 9em;
+  min-height: 9em;
   overflow: hidden;
 
   border-radius: 5px;
@@ -20,13 +20,13 @@
   border: 1px solid var(--primary-clr);
 
   @include s.breakpoint(sm) {
-    height: 10em;
+    min-height: 10em;
     width: 22em;
   }
 
   @include s.breakpoint(md) {
     // Animation
-    height: 11em;
+    min-height: 11em;
     width: 25em;
   }
 

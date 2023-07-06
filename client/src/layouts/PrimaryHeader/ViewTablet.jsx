@@ -15,7 +15,7 @@ import {
 
 // Component
 import PrimaryNav from "./PrimaryNav";
-import ShopLogo from "../../components/Logo/ShopLogo";
+import ShopLogo from "../../components/Logo";
 
 //Style
 import classNames from "classnames/bind";

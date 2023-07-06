@@ -55,10 +55,31 @@ class UserController {
     }
   };
 
-  verifyEmailRegistrationReq = async (req, res, next) => {
+  verifyEmailReq = async (req, res, next) => {
     try {
       const { cipher, token } = req.params;
-      await userServices.verifyEmailRegistration(cipher, token);
+
+      const service = await userServices.getServiceFromVerifyToken(
+        cipher,
+        token
+      );
+
+      if (service === "registration") {
+        await userServices.verifyEmailRegistration(cipher, token);
+      } else if (service === "unlock") {
+        await userServices.verifyEmailUnlockAccount(cipher, token);
+      }
+
+      res.status(200).json({ status: "success", message: null });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  verifyEmailUnlockAccountReq = async (req, res, next) => {
+    try {
+      const { cipher, token } = req.params;
+      await userServices.verifyEmailUnlockAccount(cipher, token);
 
       res.status(200).json({ status: "success", message: null });
     } catch (error) {

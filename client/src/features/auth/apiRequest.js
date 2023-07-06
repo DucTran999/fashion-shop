@@ -52,6 +52,12 @@ const logInReq = async (user, dispatch, navigate, location) => {
       dispatch(loginFailed("Input not valid"));
     } else if (err.response?.status === 401) {
       dispatch(loginFailed("Wrong email or password"));
+    } else if (err.response?.status === 423) {
+      dispatch(
+        loginFailed(
+          "Lockout! Try again after 5 mins or confirm email to unlock!"
+        )
+      );
     } else if (err.response?.status === 403) {
       dispatch(loginFailed("Account not verified!"));
     } else {

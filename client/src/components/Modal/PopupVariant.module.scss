@@ -3,6 +3,7 @@
 .popup-box {
   &__message {
     height: auto;
+
     &--loading,
     &--success,
     &--fail,
@@ -10,6 +11,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 0.5em 0.5em;
 
       font-weight: 500;
       font-size: 1.6rem;
@@ -51,7 +53,7 @@
 
   &__btn {
     width: 80%;
-    height: 20%;
+    padding: 0.3em 0;
     margin-bottom: 1em;
 
     display: flex;

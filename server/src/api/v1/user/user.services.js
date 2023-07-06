@@ -1,10 +1,13 @@
 import createHttpError from "http-errors";
 import userRepository from "./user.repository.js";
+
+import sessionModel from "../session/session.model.js";
 import emailSender from "../email/emailSender.js";
-import { hashPassword, isPasswordMatch } from "../../utils/passwordHandler.js";
-import { EMAIL_TYPE } from "../../utils/constVariable.js";
-import { encryptUserPayload, decrypt } from "../../utils/normalizeData.js";
+
 import { emitUserVerifySuccess } from "../helpers/helper.socket.js";
+import { hashPassword, isPasswordMatch } from "../../utils/passwordHandler.js";
+import { encryptUserPayload, decrypt } from "../../utils/normalizeData.js";
+import { EMAIL_TYPE } from "../../utils/constVariable.js";
 
 class UserService {
   getAllUsers = async () => {
@@ -92,18 +95,24 @@ class UserService {
     emailSender.sendEmail(EMAIL_TYPE.verifyNewRegister, email, firstName);
   };
 
-  verifyEmailRegistration = async (cipher, token) => {
+  getServiceFromVerifyToken = async (cipher, token) => {
     const email = decrypt(decodeURIComponent(cipher));
-    const isTokenExpired = await userRepository.checkVerifyEmailTokenExist(
+    const service = await userRepository.checkVerifyEmailTokenExist(
       email,
       token
     );
 
     // Check token expired
-    if (!isTokenExpired)
+    if (!service)
       throw createHttpError.NotFound(
         `Verification link expired! Please request a new verification link!`
       );
+
+    return service;
+  };
+
+  verifyEmailRegistration = async (cipher, token) => {
+    const email = decrypt(decodeURIComponent(cipher));
 
     // Check tempUser exist when verifying
     const tempUser = await userRepository.findOneByEmailInRedis(email);
@@ -120,6 +129,22 @@ class UserService {
     await userRepository.deleteVerifyEmailToken(email, token);
 
     await emitUserVerifySuccess(email);
+  };
+
+  sendVerifyEmailUnlockAccount = async (email) => {
+    // Delete current token
+    await userRepository.deleteVerifyEmailToken(email, "");
+
+    // send new email verify
+    emailSender.sendEmail(EMAIL_TYPE.verifyUnlockLogin, email, "customer");
+  };
+
+  verifyEmailUnlockAccount = async (cipher, token) => {
+    const email = decrypt(decodeURIComponent(cipher));
+
+    // remove token
+    await userRepository.deleteVerifyEmailToken(email, token);
+    await sessionModel.deleteAttemptRecord(email);
   };
 }
 

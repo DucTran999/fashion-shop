@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 
 import styles from "./SimpleHeader.module.scss";
-import Logo from "../../components/Logo/Logo";
+import ShopLogo from "../../components/Logo";
 import Button from "../../components/Button";
 
 const cx = classNames.bind(styles);
@@ -18,12 +18,12 @@ function SimpleHeader() {
           <Col xs={4} className={cx("col-items-center", "d-sm-none")}>
             <Button
               linkTo="/"
-              icon={"backArrow"}
-              styles={"line-style-center light-theme"}
+              icon="backArrow"
+              styles="line-style-center light-theme"
             />
           </Col>
           <Col xs={4} sm={4} md={3} lg={2} className={cx("col-items-center")}>
-            <Logo />
+            <ShopLogo />
           </Col>
           <Col xs={4} sm={4} md={3} lg={2} className={cx("col-items-center")}>
             <Button
