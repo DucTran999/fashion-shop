@@ -33,7 +33,7 @@ const isPasswordStrong = (input) => {
     lengthRequire &&
     containSymbols.test(input) &&
     containNumber.test(input) &&
-    containUpperCase(input) &&
+    containUpperCase.test(input) &&
     containLowerCase.test(input)
   );
 };
