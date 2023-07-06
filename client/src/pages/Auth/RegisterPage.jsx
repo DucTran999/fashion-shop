@@ -188,14 +188,14 @@ function RegisterPage() {
           value={formData.password}
           onInput={handleInput}
           validator={{
-            validateMethod: validateMethod.isLengthValid,
-            errorMsg: ERROR_MESSAGES.lengthError,
+            validateMethod: validateMethod.isPasswordStrong,
+            errorMsg: ERROR_MESSAGES.passwordWeak,
           }}
           extraElements={["passwordStrengthBar"]}
         />
         <Button
           styles={`box-style-cm sign-up-style mg-tb-4 ${buttonState}`}
-          type={"submit"}
+          type="submit"
           title="Sign Up"
         />
       </form>

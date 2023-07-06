@@ -22,8 +22,24 @@ const isLengthValid = (input) => {
   return input.length >= 8 && input.length <= 32;
 };
 
+const isPasswordStrong = (input) => {
+  const containUpperCase = /[A-Z]+/g;
+  const containLowerCase = /[a-z]+/g;
+  const containNumber = /[0-9]+/g;
+  const containSymbols = /[!"#$%&'()*+,-./:<;= ?>@[\]^_`{|}~]+/g;
+  const lengthRequire = input.length >= 8 && input.length <= 32;
+
+  return (
+    lengthRequire &&
+    containSymbols.test(input) &&
+    containNumber.test(input) &&
+    containUpperCase(input) &&
+    containLowerCase.test(input)
+  );
+};
+
 const isNotEmpty = (input) => {
   return input.trim().length > 0;
 };
 
-export { isName, isEmail, isNotEmpty, isLengthValid };
+export { isName, isEmail, isNotEmpty, isLengthValid, isPasswordStrong };
