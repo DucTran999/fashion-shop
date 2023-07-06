@@ -5,6 +5,7 @@ const ERROR_MESSAGES = {
   lengthError: "Length allow 8 to 32",
   emptyError: "Empty not allow",
   numberError: "Enter number only",
+  passwordWeak: "Password weak or too long!",
 };
 
 export default ERROR_MESSAGES;
