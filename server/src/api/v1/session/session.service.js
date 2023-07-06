@@ -2,10 +2,19 @@ import createHttpError from "http-errors";
 import userRepository from "../user/user.repository.js";
 import jwtHelper from "../helpers/helper.jwt.js";
 import { isPasswordMatch } from "../../utils/passwordHandler.js";
+import userServices from "../user/user.services.js";
+import sessionModel from "./session.model.js";
 
 class SessionService {
   authenticate = async (payload) => {
     const { email, password } = payload;
+
+    // check login failed attempt
+    const attempt = await sessionModel.getCurrentAttempt(email);
+    if (+attempt > 2) {
+      await userServices.sendVerifyEmailUnlockAccount(email);
+      throw createHttpError.Locked();
+    }
 
     // Check account is verified
     const isAccountVerified = await userRepository.findOneByEmailInRedis(email);
@@ -27,7 +36,18 @@ class SessionService {
     const accessToken = await jwtHelper.signAccessToken(user);
     const refreshToken = await jwtHelper.signRefreshToken(user);
 
+    await sessionModel.deleteAttemptRecord(email);
     return [accessToken, refreshToken];
+  };
+
+  updateLoginAttempt = async (payload) => {
+    const { email } = payload;
+    let currentAttempt = await sessionModel.getCurrentAttempt(email);
+    if (!currentAttempt) {
+      await sessionModel.createNewAttemptRecord(email);
+    } else {
+      await sessionModel.increaseAttempt(email);
+    }
   };
 
   removeRefreshToken = async (key) => {
