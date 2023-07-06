@@ -9,11 +9,7 @@
 
   // Responsive
   @include u.breakpoint("sm") {
-    height: 6em;
-  }
-
-  @include u.breakpoint("md") {
-    height: 8em;
+    height: 7rem;
   }
 }
 
