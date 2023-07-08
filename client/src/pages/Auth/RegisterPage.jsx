@@ -2,23 +2,24 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-// Util
-import socket from "../../utils/init.socket";
-import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
+// Hooks, utils, redux, ...
 import useForm from "../../hooks/useForm";
+import socket from "../../utils/init.socket";
+import { EMAIL_TYPE } from "../../utils/constVariable";
 import * as validateMethod from "../../utils/Validator";
 import { registerReq } from "../../features/auth/apiRequest";
-import { sendNewVerifyEmailReq } from "../../features/user/userRequest";
+import { sendNewVerifyEmailReq } from "../../features/email/emailAction";
 
 // Component
 import FormSwitch from "./FormSwitch";
+import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
 import ModalContainer from "../../components/Modal/ModalContainer";
 import Popup from "../../components/Modal/PopupContainer";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import {
   LoadingAlert,
-  SuccessAlertNavigate,
+  ConfirmAlert,
   ErrorAlert,
 } from "../../components/Modal/PopupVariant";
 
@@ -42,7 +43,10 @@ function RegisterPage() {
   );
   const errorCause = useSelector((state) => state.auth.register.errorCause);
   const isSending = useSelector(
-    (state) => state.user.sendVerifyEmail.isSending
+    (state) => state.email.sendVerifyEmail.isSending
+  );
+  const resendFailed = useSelector(
+    (state) => state.email.sendVerifyEmail.errorCause
   );
 
   const [formState, handleInput] = useForm(
@@ -66,19 +70,19 @@ function RegisterPage() {
       password: String(formData.password).trim(),
     };
 
-    await registerReq(user, dispatch);
+    if (showModal === false) {
+      await registerReq(user, dispatch);
+    }
   };
 
-  const handleResendVerifyEmail = async (e) => {
-    e.preventDefault();
+  const handleResendVerifyEmail = async () => {
+    const payload = {
+      email: formData.email.trim().toLowerCase(),
+      first_name: formData.firstName.trim().toLowerCase(),
+      service: EMAIL_TYPE.newRegister,
+    };
     if (!isSending) {
-      await sendNewVerifyEmailReq(
-        {
-          email: formData.email.trim().toLowerCase(),
-          first_name: formData.firstName.trim().toLowerCase(),
-        },
-        dispatch
-      );
+      await sendNewVerifyEmailReq(payload, dispatch);
     }
   };
 
@@ -96,6 +100,12 @@ function RegisterPage() {
 
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (resendFailed) {
+      setShowModal(false);
+    }
+  }, [resendFailed]);
 
   useEffect(() => {
     if (registerLoading) {
@@ -133,14 +143,19 @@ function RegisterPage() {
         <Popup header="Announcement">
           {alert === "loading" ? (
             <LoadingAlert />
-          ) : alert === "error" ? (
-            <ErrorAlert message={errorCause} onClose={handleCloseModal} />
           ) : (
-            <SuccessAlertNavigate
-              onClickEvent={handleResendVerifyEmail}
-              message="A verified email has been sent!"
-              btnTitle="Resend verify email"
-            />
+            alert === "error" &&
+            (errorCause.includes("verify") ? (
+              <ConfirmAlert
+                alertStyle="success"
+                message="A verified email has been sent!"
+                actionTitle="Resend verify email"
+                onAction={handleResendVerifyEmail}
+                onClose={handleCloseModal}
+              />
+            ) : (
+              <ErrorAlert message={errorCause} onClose={handleCloseModal} />
+            ))
           )}
         </Popup>
       </ModalContainer>

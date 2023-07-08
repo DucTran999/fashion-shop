@@ -14,4 +14,4 @@ function ModalContainer({ children, modalStyle, onClose }) {
   );
 }
 
-export default ModalContainer;
+export default React.memo(ModalContainer);

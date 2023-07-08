@@ -1,4 +1,3 @@
-import CryptoJS from "crypto-js";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -24,13 +23,6 @@ const packingProductVariant = (variations) => {
   return Object.keys(products).map((key) => products[key]);
 };
 
-const convertHyphenStringToLowerCase = (str) => {
-  // from all-products to all product
-  let arr = str.toLowerCase().trim().split("-");
-
-  return arr.join(" ");
-};
-
 const hideEmail = (email) => {
   let pivot = 0;
   for (let i = email.length - 1; i > 0; --i) {
@@ -45,17 +37,6 @@ const hideEmail = (email) => {
 
 const hidePhoneNum = (phone) => {
   return `********${phone.at(-2)}${phone.at(-1)}`;
-};
-
-const encrypt = (plain) => {
-  return CryptoJS.AES.encrypt(plain, process.env.AES_KEY).toString();
-};
-
-const decrypt = (cipher) => {
-  let bytes = CryptoJS.AES.decrypt(cipher, process.env.AES_KEY);
-  let originalText = bytes.toString(CryptoJS.enc.Utf8);
-
-  return originalText;
 };
 
 const encryptUserPayload = (user) => {
@@ -84,11 +65,4 @@ const extractVariantId = (objects) => {
   return values;
 };
 
-export {
-  packingProductVariant,
-  convertHyphenStringToLowerCase,
-  extractVariantId,
-  encryptUserPayload,
-  encrypt,
-  decrypt,
-};
+export { packingProductVariant, extractVariantId, encryptUserPayload };

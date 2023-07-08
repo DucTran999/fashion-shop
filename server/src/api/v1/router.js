@@ -11,6 +11,7 @@ import cartRouter from "./cart/cart.route.js";
 import ordersRouter from "./order/order.route.js";
 import sessionRouter from "./session/session.route.js";
 import notificationRouter from "./notification/notification.route.js";
+import emailRouter from "./email/email.route.js";
 
 dotenv.config();
 const route = express.Router();
@@ -36,6 +37,8 @@ route.use("/carts", cartRouter);
 route.use("/orders", ordersRouter);
 
 route.use("/notifications", notificationRouter);
+
+route.use("/emails", emailRouter);
 
 route.use("/", (req, res, next) => {
   res.status(200);

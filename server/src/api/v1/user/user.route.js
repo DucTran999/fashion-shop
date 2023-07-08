@@ -5,8 +5,6 @@ import userPayloadMiddleware from "./user.validation.js";
 
 const router = express.Router();
 
-router.post("/verify-email", userController.sendNewVerifyEmailReq);
-
 router.post(
   "/",
   userPayloadMiddleware.validateSignUpPayload,
@@ -26,8 +24,6 @@ router.patch(
   authMiddleware.verifyAccessToken,
   userController.changeUserPasswordReq
 );
-
-router.get("/verify-email/:cipher/:token", userController.verifyEmailReq);
 
 router.get(
   "/:id",

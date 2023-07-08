@@ -2,11 +2,10 @@ import createHttpError from "http-errors";
 import productModel from "./product.model.js";
 
 import { MAGIC_NUMBER } from "../../utils/constVariable.js";
+import { packingProductVariant } from "../../utils/normalizeData.js";
+import { formatHyphenToLowerCase } from "../../utils/formatData.js";
+
 import categoryModel from "../category/category.model.js";
-import {
-  convertHyphenStringToLowerCase,
-  packingProductVariant,
-} from "../../utils/normalizeData.js";
 
 class ProductService {
   findAllProducts = async (page) => {
@@ -25,7 +24,7 @@ class ProductService {
   findAllByCategory = async (category, page) => {
     // Check category existence
     const categoryId = await categoryModel.findByName(
-      convertHyphenStringToLowerCase(category)
+      formatHyphenToLowerCase(category)
     );
 
     if (!categoryId) {

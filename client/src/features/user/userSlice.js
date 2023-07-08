@@ -18,14 +18,6 @@ const userSlice = createSlice({
       success: false,
       errorCause: null,
     },
-    verifyEmail: {
-      isVerifying: false,
-      errorCause: null,
-    },
-    sendVerifyEmail: {
-      isSending: false,
-      errorCause: null,
-    },
   },
   reducers: {
     // fetch user data.
@@ -82,32 +74,6 @@ const userSlice = createSlice({
       state.changePass.success = false;
       state.changePass.errorCause = null;
     },
-
-    // verify email
-    verifyUserEmailStart: (state) => {
-      state.verifyEmail.isVerifying = true;
-    },
-    verifyUserEmailSuccess: (state) => {
-      state.verifyEmail.isVerifying = false;
-      state.verifyEmail.errorCause = null;
-    },
-    verifyUserEmailFailed: (state, action) => {
-      state.verifyEmail.isVerifying = false;
-      state.verifyEmail.errorCause = action.payload;
-    },
-
-    // send Verify Email
-    sendVerifyEmailStart: (state) => {
-      state.sendVerifyEmail.isSending = true;
-    },
-    sendVerifyEmailSuccess: (state) => {
-      state.sendVerifyEmail.isSending = false;
-      state.sendVerifyEmail.errorCause = null;
-    },
-    sendVerifyEmailFailed: (state, action) => {
-      state.sendVerifyEmail.isSending = false;
-      state.sendVerifyEmail.errorCause = action.payload;
-    },
   },
 });
 
@@ -123,12 +89,6 @@ export const {
   changeUserPassSuccess,
   changeUserPassFailed,
   resetUserChangePassState,
-  verifyUserEmailStart,
-  verifyUserEmailSuccess,
-  verifyUserEmailFailed,
-  sendVerifyEmailStart,
-  sendVerifyEmailSuccess,
-  sendVerifyEmailFailed,
 } = userSlice.actions;
 
 export default userSlice.reducer;

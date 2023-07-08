@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 
+import { debounce } from "../../utils/doStuff";
+
 // Style
 import classNames from "classnames/bind";
 import ICONS from "../../assets/icons";
@@ -58,4 +60,42 @@ const InfoAlertNavigate = ({ message, btnTitle, onClickEvent }) => {
   );
 };
 
-export { LoadingAlert, ErrorAlert, SuccessAlertNavigate, InfoAlertNavigate };
+const ConfirmAlert = ({
+  alertStyle,
+  message,
+  actionTitle,
+  onAction,
+  onClose,
+}) => {
+  return (
+    <Fragment>
+      {alertStyle === "success" ? (
+        <div className={cx("popup-box__message--success")}>
+          {ICONS.checkCircle}
+          <div style={{ marginLeft: 10 }}>{message}</div>
+        </div>
+      ) : (
+        <div className={cx("popup-box__message--fail")}>
+          <div style={{ marginLeft: 10 }}>{message}</div>
+        </div>
+      )}
+      <span
+        className={cx("popup-box__btn", "active")}
+        onClick={debounce(onAction, 3000)}
+      >
+        <div className={cx("popup-box__btn--title")}>{actionTitle}</div>
+      </span>
+      <span className={cx("popup-box__btn", "inactive")} onClick={onClose}>
+        <div className={cx("popup-box__btn--title")}>Close</div>
+      </span>
+    </Fragment>
+  );
+};
+
+export {
+  LoadingAlert,
+  ErrorAlert,
+  SuccessAlertNavigate,
+  InfoAlertNavigate,
+  ConfirmAlert,
+};

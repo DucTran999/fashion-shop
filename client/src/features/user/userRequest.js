@@ -1,6 +1,5 @@
 import API_URL from "../../api/init.url";
-import delay from "../../utils/delay";
-import axios from "../../api/init.axios";
+import { delay } from "../../utils/doStuff";
 
 import {
   getUserSuccess,
@@ -12,12 +11,6 @@ import {
   changeUserPassStart,
   changeUserPassSuccess,
   changeUserPassFailed,
-  verifyUserEmailStart,
-  verifyUserEmailSuccess,
-  verifyUserEmailFailed,
-  sendVerifyEmailStart,
-  sendVerifyEmailSuccess,
-  sendVerifyEmailFailed,
 } from "./userSlice";
 
 const getUserReq = async (userId, axiosPrivate, dispatch) => {
@@ -89,52 +82,4 @@ const changePasswordReq = async (userId, newPass, axiosPrivate, dispatch) => {
   }
 };
 
-const verifyEmailReq = async (cipher, token, dispatch) => {
-  dispatch(verifyUserEmailStart());
-
-  try {
-    await axios.get(`${API_URL.users}/verify-email/${cipher}/${token}`, {
-      timeout: 5000,
-    });
-    dispatch(verifyUserEmailSuccess());
-  } catch (err) {
-    if (!err?.response) {
-      dispatch(verifyUserEmailFailed("Server is busy"));
-    } else if (err.response?.status === 400) {
-      dispatch(verifyUserEmailFailed(err.response.data.message));
-    } else if (err.response?.status === 404) {
-      dispatch(verifyUserEmailFailed(err.response.data.message));
-    } else {
-      dispatch(verifyUserEmailFailed("Error"));
-    }
-  }
-};
-
-const sendNewVerifyEmailReq = async (payload, dispatch) => {
-  dispatch(sendVerifyEmailStart());
-
-  try {
-    await axios.post(`${API_URL.users}/verify-email`, payload, {
-      timeout: 5000,
-    });
-    dispatch(sendVerifyEmailSuccess());
-  } catch (err) {
-    if (!err?.response) {
-      dispatch(sendVerifyEmailFailed("Server is busy"));
-    } else if (err.response?.status === 400) {
-      dispatch(sendVerifyEmailFailed(err.response.data.message));
-    } else if (err.response?.status === 404) {
-      dispatch(sendVerifyEmailFailed(err.response.data.message));
-    } else {
-      dispatch(sendVerifyEmailFailed("Error"));
-    }
-  }
-};
-
-export {
-  getUserReq,
-  updateUserReq,
-  changePasswordReq,
-  verifyEmailReq,
-  sendNewVerifyEmailReq,
-};
+export { getUserReq, updateUserReq, changePasswordReq };
