@@ -12,6 +12,8 @@ const API_URL = {
   orders: "/api/v1/orders",
 
   notifications: "/api/v1/notifications",
+
+  emails: "api/v1/emails",
 };
 
 export default API_URL;

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row } from "react-bootstrap";
 
 import ICONS from "../../assets/icons";
-import { verifyEmailReq } from "../../features/user/userRequest";
+import { verifyEmailReq } from "../../features/email/emailAction";
 
 import classNames from "classnames/bind";
 import style from "./VerificationEmail.module.scss";
@@ -59,9 +59,9 @@ const VerificationEmail = () => {
   const dirs = location.pathname.split("/");
 
   const isVerifying = useSelector(
-    (state) => state.user.verifyEmail.isVerifying
+    (state) => state.email.verifyEmail.isVerifying
   );
-  const errorCause = useSelector((state) => state.user.verifyEmail.errorCause);
+  const errorCause = useSelector((state) => state.email.verifyEmail.errorCause);
 
   useEffect(() => {
     if (!isMounted.current) {
