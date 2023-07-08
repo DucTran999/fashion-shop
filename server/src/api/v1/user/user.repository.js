@@ -5,6 +5,8 @@ import redisClient from "../helpers/init.redis.client.js";
 
 class UserRepository {
   /* This class provides methods to interact with users' tables */
+
+  // Get Information
   selectAll = async () => {
     const query =
       "SELECT first_name, last_name, email, gender, phone \
@@ -66,6 +68,7 @@ class UserRepository {
     }
   };
 
+  // update info
   updateOne = async (userId, firstName, lastName, address, phone, gender) => {
     const query = `
       UPDATE users
@@ -81,6 +84,7 @@ class UserRepository {
     }
   };
 
+  // Create account
   save = async ({ first_name, last_name, email, password }) => {
     const tempUserKey = `registration:user#${email}`;
 
@@ -104,6 +108,15 @@ class UserRepository {
       await redisClient.set(key, JSON.stringify(user), { EX: 3 * 3600 });
     } catch (error) {
       throw new createHttpError.InternalServerError();
+    }
+  };
+
+  resetUserTempExpireTime = async (email) => {
+    try {
+      const userTempKey = `registration:user#${email}`;
+      await redisClient.expire(userTempKey, 3600);
+    } catch (error) {
+      throw createHttpError.InternalServerError();
     }
   };
 
@@ -141,43 +154,6 @@ class UserRepository {
       await pool.query(query, [newPassword, userId]);
     } catch (err) {
       throw new createHttpError.InternalServerError();
-    }
-  };
-
-  checkVerifyEmailTokenExist = async (email, token) => {
-    try {
-      const key = `verification:${email}#${token}`;
-
-      return await redisClient.get(key);
-    } catch (error) {
-      throw createHttpError.InternalServerError();
-    }
-  };
-
-  deleteVerifyEmailToken = async (email, token) => {
-    try {
-      if (token) {
-        const key = `verification:${email}#${token}`;
-        await redisClient.del(key);
-      } else {
-        const pattern = `verification:${email}#*`;
-        const keys = await redisClient.keys(pattern);
-
-        if (keys.length > 0) {
-          await redisClient.del(keys[0]);
-        }
-      }
-    } catch (error) {
-      throw createHttpError.InternalServerError();
-    }
-  };
-
-  resetUserTempExpireTime = async (email) => {
-    try {
-      const userTempKey = `registration:user#${email}`;
-      await redisClient.expire(userTempKey, 3600);
-    } catch (error) {
-      throw createHttpError.InternalServerError();
     }
   };
 }

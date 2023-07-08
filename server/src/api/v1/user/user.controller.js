@@ -1,5 +1,6 @@
 import createHttpError from "http-errors";
 import userServices from "./user.services.js";
+import { EMAIL_TYPE } from "../../utils/constVariable.js";
 
 class UserController {
   signUpReq = async (payload, req, res, next) => {
@@ -44,17 +45,6 @@ class UserController {
     }
   };
 
-  sendNewVerifyEmailReq = async (req, res, next) => {
-    try {
-      const { email, first_name } = req.body;
-      await userServices.sendVerifyEmailRegistration(email, first_name);
-
-      res.status(201).json({ status: "success", message: null });
-    } catch (error) {
-      next(error);
-    }
-  };
-
   verifyEmailReq = async (req, res, next) => {
     try {
       const { cipher, token } = req.params;
@@ -64,25 +54,15 @@ class UserController {
         token
       );
 
-      if (service === "registration") {
+      if (service === EMAIL_TYPE.verifyNewRegister) {
         await userServices.verifyEmailRegistration(cipher, token);
-      } else if (service === "unlock") {
+      } else if (service === EMAIL_TYPE.verifyUnlockLogin) {
         await userServices.verifyEmailUnlockAccount(cipher, token);
       }
 
       res.status(200).json({ status: "success", message: null });
     } catch (error) {
-      next(error);
-    }
-  };
-
-  verifyEmailUnlockAccountReq = async (req, res, next) => {
-    try {
-      const { cipher, token } = req.params;
-      await userServices.verifyEmailUnlockAccount(cipher, token);
-
-      res.status(200).json({ status: "success", message: null });
-    } catch (error) {
+      console.log(error);
       next(error);
     }
   };

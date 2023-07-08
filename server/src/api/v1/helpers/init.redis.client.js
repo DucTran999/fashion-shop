@@ -8,7 +8,7 @@ const client = redis.createClient({
 });
 
 client.on("connect", () => console.log(">>> Redis ::: Connected"));
-client.on("ready", () => console.log(">>> Redis ready"));
+client.on("ready", () => console.log(">>> Redis ::: Ready"));
 client.on("error", (err) => console.log("Redis Client Error", err));
 
 process.on("SIGINT", async () => {

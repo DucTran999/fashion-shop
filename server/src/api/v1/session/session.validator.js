@@ -18,14 +18,14 @@ const userLoginScheme = Joi.object({
 const validateLoginPayload = (req, res, next) => {
   const { error } = userLoginScheme.validate(req.body);
   if (error) {
-    next(createHttpError.Unauthorized());
+    next(createHttpError.BadRequest());
+  } else {
+    // Clean up payload
+    const { email, password } = req.body;
+    const emailCleaned = email.toLowerCase().trim();
+    const passwordCleaned = password.trim();
+    next({ email: emailCleaned, password: passwordCleaned });
   }
-  // Clean up payload
-  const { email, password } = req.body;
-  const emailCleaned = email.toLowerCase().trim();
-  const passwordCleaned = password.trim();
-
-  next({ email: emailCleaned, password: passwordCleaned });
 };
 
 export default {
