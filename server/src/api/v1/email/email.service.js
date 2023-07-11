@@ -23,12 +23,20 @@ class EmailService {
       );
     }
 
-    // Delete current token and reset account expire time
-    emailTokenManager.deleteToken(cusEmail, EMAIL_TYPE.verifyNewRegister);
-    userRepository.resetUserTempExpireTime(cusEmail);
+    const tokenLifeTime = await emailTokenManager.getTokenTTL(
+      cusEmail,
+      EMAIL_TYPE.verifyNewRegister
+    );
 
-    // send new email verify
-    emailSender.sendEmail(EMAIL_TYPE.verifyNewRegister, cusEmail, name);
+    // Prevent to send email contiguous (Time to wait: 5 mins)
+    if (tokenLifeTime < 3600 - 60 * 5) {
+      // Delete current token and reset account expire time
+      emailTokenManager.deleteToken(cusEmail, EMAIL_TYPE.verifyNewRegister);
+      userRepository.resetUserTempExpireTime(cusEmail);
+
+      // send new email verify
+      emailSender.sendEmail(EMAIL_TYPE.verifyNewRegister, cusEmail, name);
+    }
   };
 
   sendEmailUnlockAccount = async (cusEmail, name) => {
@@ -37,17 +45,20 @@ class EmailService {
       throw createHttpError.NotFound("Account is not blocked");
     }
 
+    // Check user is already in system
     const userInSystem = await userRepository.findOneByEmail(cusEmail);
-    if (userInSystem.length) {
-      // Delete current token
-      await emailTokenManager.deleteToken(
-        cusEmail,
-        EMAIL_TYPE.verifyUnlockLogin
-      );
+    if (!userInSystem.length) return;
 
-      // send new email verify
-      emailSender.sendEmail(EMAIL_TYPE.verifyUnlockLogin, cusEmail, name);
-    }
+    // Prevent to send email contiguous (Time to wait: 2 mins)
+    const tokenLifeTime = await emailTokenManager.getTokenTTL(
+      cusEmail,
+      EMAIL_TYPE.verifyNewRegister
+    );
+    if (tokenLifeTime > 5 * 60 - 120) return;
+
+    // Delete old token and send new email verify with new token
+    emailTokenManager.deleteToken(cusEmail, EMAIL_TYPE.verifyUnlockLogin);
+    emailSender.sendEmail(EMAIL_TYPE.verifyUnlockLogin, cusEmail, name);
   };
 
   verifyEmailRegistration = async (email, token) => {

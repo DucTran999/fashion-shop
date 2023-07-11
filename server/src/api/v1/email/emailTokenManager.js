@@ -10,6 +10,15 @@ const getToken = async (email, service) => {
   }
 };
 
+const getTokenTTL = async (email, service) => {
+  try {
+    const key = `verification:${email}#${service}`;
+    return await redisClient.TTL(key);
+  } catch (error) {
+    throw createHttpError.InternalServerError();
+  }
+};
+
 const saveToken = async (email, token, service, time) => {
   try {
     const key = `verification:${email}#${service}`;
@@ -28,4 +37,4 @@ const deleteToken = async (email, service) => {
   }
 };
 
-export default { getToken, saveToken, deleteToken };
+export default { getToken, getTokenTTL, saveToken, deleteToken };
