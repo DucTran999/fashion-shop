@@ -81,14 +81,21 @@ const getDateFromTimestamp = (timestamp) => {
   return new Date(timestamp.replace(" ", "T"));
 };
 
+const formatUrlPath = (req) => {
+  const baseUrl = req.baseUrl;
+  const url = decodeURIComponent(req.url).replaceAll(/\s/g, "");
+  return `${baseUrl}${url}`;
+};
+
 export {
   formatMoney,
+  formatUrlPath,
   formatColorCode,
   formatCapitalize,
-  formatHyphenToCapitalize,
   formatHyphenToLowerCase,
-  formatHyphenToLowerCaseNoSpace,
   formatHyphenToUpperCase,
+  formatHyphenToCapitalize,
+  formatHyphenToLowerCaseNoSpace,
   formatVietnameseToNonAccent,
   convertStateToStateCode,
   getDateFromTimestamp,

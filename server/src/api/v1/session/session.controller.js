@@ -1,5 +1,8 @@
-import sessionService from "./session.service.js";
 import * as dotenv from "dotenv";
+
+import sessionService from "./session.service.js";
+import ipMonitor from "../helpers/helper.ipMonitor.js";
+
 dotenv.config();
 
 class SessionController {
@@ -10,6 +13,7 @@ class SessionController {
         payload
       );
 
+      await ipMonitor.trackingReqPerMinutes(req);
       res
         .status(201)
         .cookie("refresh_token", refreshToken, {
@@ -25,9 +29,8 @@ class SessionController {
           elements: [{ access_token: accessToken }],
         });
     } catch (err) {
-      if (err.status === 401) {
-        sessionService.updateLoginAttempt(payload);
-      }
+      await ipMonitor.trackingReqPerMinutes(req);
+      if (err.status === 401) sessionService.updateLoginAttempt(payload);
       next(err);
     }
   };

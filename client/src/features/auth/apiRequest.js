@@ -3,6 +3,7 @@ import API_URL from "../../api/init.url";
 import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
 import io from "../../utils/init.socket";
 import { resetNotificationList } from "../notification/notificationSlice";
+import { resetCart } from "../cart/cartSlice";
 
 import {
   loginFailed,
@@ -33,7 +34,7 @@ const logInReq = async (user, dispatch, navigate, location) => {
         "Content-Type": "application/json",
       },
       withCredentials: true,
-      timeout: 5000,
+      timeout: 2000,
     });
     const userInfo = getUserCredential(res);
     dispatch(loginSuccess(userInfo));
@@ -58,6 +59,8 @@ const logInReq = async (user, dispatch, navigate, location) => {
           "Lockout! Try again after 5 mins or confirm email to unlock!"
         )
       );
+    } else if (err.response?.status === 429) {
+      dispatch(loginFailed("Too many request. Try later"));
     } else if (err.response?.status === 403) {
       dispatch(loginFailed("Account not verified!"));
     } else {
@@ -82,6 +85,8 @@ const registerReq = async (user, dispatch) => {
       dispatch(registerFailed("Input not valid"));
     } else if (err.response?.status === 409) {
       dispatch(registerFailed("Email already in use!"));
+    } else if (err.response?.status === 422) {
+      dispatch(registerFailed("Need verify"));
     } else {
       dispatch(registerFailed("Register Failed!"));
     }
@@ -100,7 +105,7 @@ const logOutReq = async (userId, axiosPrivate, dispatch, navigate) => {
     // browser remember account is logout
     localStorage.setItem(LOCAL_STORAGE_KEY.isLogged, false);
     dispatch(resetNotificationList());
-
+    dispatch(resetCart());
     navigate("/login", { replace: true });
   } catch (error) {
     dispatch(logOutFailed());

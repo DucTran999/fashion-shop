@@ -1,80 +1,86 @@
-import nodemailer from "nodemailer";
-import * as dotenv from "dotenv";
-import { EMAIL_TYPE } from "../../utils/constVariable.js";
-import {
-  emailVerifyLoginAttempt,
-  emailVerifyNewRegister,
-} from "./templateEmail.js";
-import { encrypt } from "../../utils/normalizeData.js";
-import { formatHyphenToLowerCaseNoSpace } from "../../utils/formatData.js";
 import { v4 as uuidv4 } from "uuid";
-import redisClient from "../helpers/init.redis.client.js";
+import * as dotenv from "dotenv";
+
+import transporter from "../helpers/init.smtp.js";
+
+import { encryptAES } from "../../utils/crypto.js";
+import { EMAIL_TYPE } from "../../utils/constVariable.js";
+import { formatHyphenToLowerCaseNoSpace } from "../../utils/formatData.js";
+
+import emailTemplate from "./templateEmail.js";
+import emailTokenManager from "./emailTokenManager.js";
 
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  host:
-    process.env.NODE_ENV === "production"
-      ? process.env.SERVER_URL
-      : "localhost",
-  service: "gmail",
-  auth: {
-    user: process.env.ADMIN_EMAIL,
-    pass: process.env.ADMIN_MAIL_PASSWORD,
-  },
-});
-
-const sendEmail = (type, customerEmail, customerName) => {
-  let mailContent;
+const newRegistrationMail = async (customerEmail, customerName) => {
   const token = formatHyphenToLowerCaseNoSpace(uuidv4());
+  const credentials = {
+    email: customerEmail,
+    service: EMAIL_TYPE.verifyNewRegister,
+  };
 
-  if (type === EMAIL_TYPE.verifyNewRegister) {
-    const emailEncoded = encodeURIComponent(encrypt(customerEmail));
+  const cipher = encodeURIComponent(encryptAES(JSON.stringify(credentials)));
 
-    mailContent = {
-      from: process.env.ADMIN_EMAIL,
-      to: customerEmail,
-      subject: "Verify email for new registration!",
-      html: emailVerifyNewRegister(customerName, emailEncoded, token),
-    };
+  const mailContent = {
+    from: process.env.ADMIN_EMAIL,
+    to: customerEmail,
+    subject: "Verify email for new registration!",
+    html: emailTemplate.emailNewRegistration(customerName, cipher, token),
+  };
 
-    redisClient.set(`verification:${customerEmail}#${token}`, "registration", {
-      EX: 3600,
-      NX: true,
-    });
-  }
+  await emailTokenManager.saveToken(
+    customerEmail,
+    token,
+    EMAIL_TYPE.verifyNewRegister,
+    3600
+  );
 
-  if (type === EMAIL_TYPE.verifyUnlockLogin) {
-    const emailEncoded = encodeURIComponent(encrypt(customerEmail));
-
-    mailContent = {
-      from: process.env.ADMIN_EMAIL,
-      to: customerEmail,
-      subject: "Confirm to unlock account!",
-      html: emailVerifyLoginAttempt(customerName, emailEncoded, token),
-    };
-
-    redisClient.set(`verification:${customerEmail}#${token}`, "unlock", {
-      EX: 60 * 5,
-      NX: true,
-    });
-  }
-
-  transporter.sendMail(mailContent, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
+  return mailContent;
 };
 
-transporter.verify(function (error, success) {
-  if (error) {
+const unlockAccountMail = async (customerEmail, customerName) => {
+  const token = formatHyphenToLowerCaseNoSpace(uuidv4());
+  const credentials = {
+    email: customerEmail,
+    service: EMAIL_TYPE.verifyUnlockLogin,
+  };
+
+  const cipher = encodeURIComponent(encryptAES(JSON.stringify(credentials)));
+
+  const mailContent = {
+    from: process.env.ADMIN_EMAIL,
+    to: customerEmail,
+    subject: "Confirm email to unlock account!",
+    html: emailTemplate.emailUnlockAccount(customerName, cipher, token),
+  };
+
+  await emailTokenManager.saveToken(
+    customerEmail,
+    token,
+    EMAIL_TYPE.verifyUnlockLogin,
+    60 * 5
+  );
+
+  return mailContent;
+};
+
+const getMailStrategies = {
+  [EMAIL_TYPE.verifyNewRegister]: newRegistrationMail,
+  [EMAIL_TYPE.verifyUnlockLogin]: unlockAccountMail,
+};
+
+const sendEmail = async (type, customerEmail, customerName) => {
+  try {
+    let mailContent = await getMailStrategies[type](
+      customerEmail,
+      customerName
+    );
+
+    const info = await transporter.sendMail(mailContent);
+    console.log("Email sent: " + info.response);
+  } catch (error) {
     console.log(error);
-  } else {
-    console.log(">>> SMTP ::: Ready");
   }
-});
+};
 
 export default { sendEmail };

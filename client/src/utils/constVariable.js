@@ -31,4 +31,15 @@ const COMMON_PATH = {
   notification: "/account/notifications",
 };
 
-export { ORDER_STATE_MAP, ORDER_STATE_CODE, ORDER_STATE_ORIGINAL, COMMON_PATH };
+const EMAIL_TYPE = {
+  newRegister: "register",
+  unlockAccount: "unlock",
+};
+
+export {
+  ORDER_STATE_MAP,
+  ORDER_STATE_CODE,
+  ORDER_STATE_ORIGINAL,
+  COMMON_PATH,
+  EMAIL_TYPE,
+};

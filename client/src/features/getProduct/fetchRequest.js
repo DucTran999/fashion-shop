@@ -23,6 +23,8 @@ const fetchProductReq = async (productId, dispatch) => {
       dispatch(fetchProductFailed());
     } else if (err.response?.status === 404) {
       dispatch(fetchProductFailed());
+    } else {
+      dispatch(fetchProductFailed());
     }
   }
 };

@@ -26,7 +26,7 @@ const ProductMainLayout = ({ variant, categoryId }) => {
   return (
     <>
       <Breadcrumb productName={variant.name} />
-      <Container>
+      <Container className={cx("product-layout")}>
         <Row className={cx("row-cent")}>
           <Gallery variantInfo={variant} />
           <Col lg="6" className={cx("col-cent")}>
@@ -93,10 +93,10 @@ function Product() {
 
   return (
     <main className={cx("theme")}>
-      {isError ? (
-        <MissingPage />
-      ) : isLoading ? (
+      {isLoading ? (
         <PageLoadingSpinner />
+      ) : isError ? (
+        <MissingPage />
       ) : (
         productVariants &&
         currentVariant && (

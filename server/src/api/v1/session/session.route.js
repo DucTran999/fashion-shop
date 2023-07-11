@@ -1,7 +1,9 @@
 import express from "express";
+
 import sessionController from "./session.controller.js";
 import payloadValidator from "./session.validator.js";
 import authMiddleware from "../middleware/auth.middleware.js";
+import rateLimitMiddleware from "../middleware/rateLimit.middleware.js";
 
 const router = express.Router();
 
@@ -19,6 +21,7 @@ router.post(
 
 router.post(
   "/",
+  rateLimitMiddleware.rateLimit(5, 120),
   payloadValidator.validateLoginPayload,
   sessionController.handleSignInReq
 );

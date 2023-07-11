@@ -1,6 +1,7 @@
 import createHttpError from "http-errors";
 import productService from "./product.service.js";
 import productModel from "./product.model.js";
+import cacheMiddleware from "../middleware/cache.middleware.js";
 
 class ProductController {
   getAll = async (req, res, next) => {
@@ -15,24 +16,30 @@ class ProductController {
     }
   };
 
-  getOneById = async (req, res, next) => {
+  getOneById = async (payload, req, res, next) => {
     try {
-      const { id } = req.params;
-      const product = await productModel.findOneById(id);
+      if (payload instanceof Error) throw payload;
 
-      res
-        .status(200)
-        .json({ status: "success", message: null, elements: product });
+      const product = await productModel.findOneById(payload.id);
+
+      // Cached in 5 mins
+      const response = { status: "success", message: null, elements: product };
+      await cacheMiddleware.cacheResponse(req, response, 60 * 5);
+
+      res.status(200).json(response);
     } catch (error) {
       next(error);
     }
   };
 
-  getAllWithBriefVariant = async (req, res, next) => {
+  getAllWithBriefVariant = async (payload, req, res, next) => {
     try {
-      const { category, page } = req.query;
+      // Pass the error to error handler middleware
+      if (payload instanceof Error) throw payload;
 
       let totalPage, products;
+      const { category, page } = payload;
+
       if (category === "all-products") {
         [totalPage, products] = await productService.findAllProducts(page);
       } else {
@@ -42,15 +49,19 @@ class ProductController {
         );
       }
 
-      res.status(200).json({
+      const response = {
         status: "success",
         message: null,
-        pages: {
-          total_page: totalPage,
-          current_page: +page,
-        },
+        pages: { total_page: totalPage, current_page: +page },
         elements: products,
-      });
+      };
+
+      // Caching response
+      if (products.length > 0) {
+        await cacheMiddleware.cacheResponse(req, response, 3600 * 2);
+      }
+
+      res.status(200).json(response);
     } catch (error) {
       next(error);
     }
@@ -72,6 +83,7 @@ class ProductController {
         elements: products,
       });
     } catch (err) {
+      console.log("3");
       next(err);
     }
   };

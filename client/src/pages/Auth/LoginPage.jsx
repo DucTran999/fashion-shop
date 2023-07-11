@@ -8,6 +8,8 @@ import useRefreshToken from "../../hooks/useRefreshToken";
 import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
 import * as validateMethod from "../../utils/Validator";
 import { logInReq } from "../../features/auth/apiRequest";
+import { sendNewVerifyEmailReq } from "../../features/email/emailAction";
+import { EMAIL_TYPE } from "../../utils/constVariable";
 
 // Component
 import useForm from "../../hooks/useForm";
@@ -15,7 +17,11 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import ModalContainer from "../../components/Modal/ModalContainer";
 import Popup from "../../components/Modal/PopupContainer";
-import { LoadingAlert, ErrorAlert } from "../../components/Modal/PopupVariant";
+import {
+  LoadingAlert,
+  ErrorAlert,
+  ConfirmAlert,
+} from "../../components/Modal/PopupVariant";
 import SocialAuth from "./SocialAuth";
 import FormSwitch from "./FormSwitch";
 
@@ -48,6 +54,12 @@ function LoginPage() {
 
   const loginLoading = useSelector((state) => state.auth.login.isFetching);
   const errorCause = useSelector((state) => state.auth.login.errorCause);
+  const resending = useSelector(
+    (state) => state.email.sendVerifyEmail.isSending
+  );
+  const resendError = useSelector(
+    (state) => state.email.sendVerifyEmail.errorCause
+  );
 
   const [buttonState, setButtonState] = useState("inactive");
 
@@ -61,7 +73,9 @@ function LoginPage() {
       email: formData.email,
       password: formData.password,
     };
-    await logInReq(user, dispatch, navigate, from);
+    if (showModal === false) {
+      await logInReq(user, dispatch, navigate, from);
+    }
   };
 
   useEffect(() => {
@@ -96,6 +110,13 @@ function LoginPage() {
     }
   }, [loginLoading, errorCause]);
 
+  useEffect(() => {
+    if (resendError) {
+      document.body.style.overflowY = "scroll";
+      setShowModal(false);
+    }
+  }, [resendError]);
+
   // Change button state by form status
   useEffect(() => {
     const buttonSwitchState = ({ email, password }) => {
@@ -115,13 +136,30 @@ function LoginPage() {
       setShowModal(false);
     };
 
+    const handleResendUnlockAccountEmail = async () => {
+      const payload = {
+        email: formData.email.toLowerCase().trim(),
+        first_name: "customer",
+        service: EMAIL_TYPE.unlockAccount,
+      };
+      if (!resending) await sendNewVerifyEmailReq(payload, dispatch);
+    };
+
     return (
       <ModalContainer>
         <Popup header="Announcement">
           {alert === "loading" && <LoadingAlert />}
-          {alert === "error" && (
-            <ErrorAlert message={errorCause} onClose={handleCloseModal} />
-          )}
+          {alert === "error" &&
+            (errorCause.includes("Lockout") ? (
+              <ConfirmAlert
+                message={errorCause}
+                actionTitle={"Resend unlock email"}
+                onAction={handleResendUnlockAccountEmail}
+                onClose={handleCloseModal}
+              />
+            ) : (
+              <ErrorAlert message={errorCause} onClose={handleCloseModal} />
+            ))}
         </Popup>
       </ModalContainer>
     );
