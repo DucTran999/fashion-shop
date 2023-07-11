@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import ICONS from "../../assets/icons";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { debounce } from "../../utils/doStuff";
 import {
   addProductToCartReq,
   getCartReq,
@@ -37,17 +38,14 @@ const UtilitySection = ({ currentVariant, quantity }) => {
       variant_id: String(currentVariant.id),
       qty: String(quantity),
     };
+
     await addProductToCartReq(user.user_id, payload, axiosPrivate, dispatch);
     await getCartReq(user.user_id, axiosPrivate, dispatch);
+    setShowModal(true);
   };
 
   const handleAddToCartOnClick = async () => {
-    if (user) {
-      await addToCartProcess();
-      setShowModal(true);
-    } else {
-      navigate("/login", { replace: false });
-    }
+    await addToCartProcess();
   };
 
   const handleBuyOnClick = async () => {
@@ -89,7 +87,11 @@ const UtilitySection = ({ currentVariant, quantity }) => {
         <Col className={cx("col-cent")}>
           <span
             className={cx("btn-user-action")}
-            onClick={handleAddToCartOnClick}
+            onClick={
+              user
+                ? debounce(handleAddToCartOnClick, 2000)
+                : navigate("/login", { replace: false })
+            }
           >
             <span className={cx("btn-user-action__icon")}>{ICONS.cart}</span>
             <span className={cx("btn-user-action__title")}>Add to Cart</span>
