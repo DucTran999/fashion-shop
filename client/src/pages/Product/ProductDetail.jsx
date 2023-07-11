@@ -41,11 +41,11 @@ const UtilitySection = ({ currentVariant, quantity }) => {
 
     await addProductToCartReq(user.user_id, payload, axiosPrivate, dispatch);
     await getCartReq(user.user_id, axiosPrivate, dispatch);
-    setShowModal(true);
   };
 
   const handleAddToCartOnClick = async () => {
     await addToCartProcess();
+    setShowModal(true);
   };
 
   const handleBuyOnClick = async () => {
@@ -89,8 +89,8 @@ const UtilitySection = ({ currentVariant, quantity }) => {
             className={cx("btn-user-action")}
             onClick={
               user
-                ? debounce(handleAddToCartOnClick, 2000)
-                : navigate("/login", { replace: false })
+                ? debounce(handleAddToCartOnClick, 800)
+                : () => navigate("/login", { replace: false })
             }
           >
             <span className={cx("btn-user-action__icon")}>{ICONS.cart}</span>
