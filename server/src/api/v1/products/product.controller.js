@@ -23,11 +23,10 @@ class ProductController {
       const product = await productModel.findOneById(payload.id);
 
       // Cached in 5 mins
-      await cacheMiddleware.cacheResponse(req, product, 60 * 5);
+      const response = { status: "success", message: null, elements: product };
+      await cacheMiddleware.cacheResponse(req, response, 60 * 5);
 
-      res
-        .status(200)
-        .json({ status: "success", message: null, elements: product });
+      res.status(200).json(response);
     } catch (error) {
       next(error);
     }

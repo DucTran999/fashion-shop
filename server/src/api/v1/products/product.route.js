@@ -20,7 +20,7 @@ router.get("/filter", productController.getAllWithFilter);
 
 router.get(
   "/:id",
-  rateLimitMiddleware.rateLimit(20, 60),
+  // rateLimitMiddleware.rateLimit(20, 60),
   validatePayloadMiddleware.validateGetProductPayload,
   cacheMiddleware.getResponseCached,
   productController.getOneById

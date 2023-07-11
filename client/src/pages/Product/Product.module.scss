@@ -5,7 +5,11 @@
   position: relative;
   background-color: var(--medium-black-clr);
   padding: 2em 0;
-  min-height: 30vh;
+  min-height: 45vh;
+}
+
+.product-layout {
+  animation: fadeIn 1.5s;
 }
 
 .row-cent {

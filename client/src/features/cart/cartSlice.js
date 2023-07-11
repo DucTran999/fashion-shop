@@ -20,6 +20,11 @@ const cartSlice = createSlice({
     },
   },
   reducers: {
+    // reset cart
+    resetCart: (state) => {
+      state.get.info = null;
+    },
+
     // fetch user data.
     getCartStart: (state) => {
       state.get.isLoading = true;
@@ -68,6 +73,7 @@ const cartSlice = createSlice({
 });
 
 export const {
+  resetCart,
   getCartStart,
   getCartFailed,
   getCartSuccess,
