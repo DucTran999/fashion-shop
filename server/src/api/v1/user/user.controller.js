@@ -1,15 +1,20 @@
 import createHttpError from "http-errors";
-import userServices from "./user.services.js";
+
 import { EMAIL_TYPE } from "../../utils/constVariable.js";
+import ipMonitor from "../helpers/helper.ipMonitor.js";
+import userServices from "./user.services.js";
 
 class UserController {
   signUpReq = async (payload, req, res, next) => {
     try {
       if (payload instanceof Error) throw payload;
+
       await userServices.createTempUser(payload);
+      await ipMonitor.trackingReqPerMinutes(req);
 
       res.status(201).json({ status: "success", message: null });
     } catch (err) {
+      await ipMonitor.trackingReqPerMinutes(req);
       next(err);
     }
   };
