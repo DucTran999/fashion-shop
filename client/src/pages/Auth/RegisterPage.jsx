@@ -104,6 +104,7 @@ function RegisterPage() {
   useEffect(() => {
     if (resendFailed) {
       setShowModal(false);
+      document.body.style.overflowY = "scroll";
     }
   }, [resendFailed]);
 
@@ -143,6 +144,14 @@ function RegisterPage() {
         <Popup header="Announcement">
           {alert === "loading" ? (
             <LoadingAlert />
+          ) : alert === "success" ? (
+            <ConfirmAlert
+              alertStyle="success"
+              message="A verified email has been sent!"
+              actionTitle="Resend verify email"
+              onAction={handleResendVerifyEmail}
+              onClose={handleCloseModal}
+            />
           ) : (
             alert === "error" &&
             (errorCause.includes("verify") ? (

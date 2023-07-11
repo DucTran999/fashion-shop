@@ -112,6 +112,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (resendError) {
+      document.body.style.overflowY = "scroll";
       setShowModal(false);
     }
   }, [resendError]);
