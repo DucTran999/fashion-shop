@@ -1,15 +1,13 @@
 import express from "express";
-import cors from "cors";
 import helmet from "helmet";
-import morgan from "morgan";
+import cors from "cors";
 
-import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import createError from "http-errors";
-import { v4 as uuidv4 } from "uuid";
+import cookieParser from "cookie-parser";
+import createHttpError from "http-errors";
 
 import corsOptions from "./configs/cors.config.js";
-import logger from "./middleware/logger.js";
+import ipFilter from "./middleware/ipFilter.js";
 import apiRouter from "./api/api.route.js";
 
 const createApp = () => {
@@ -18,13 +16,14 @@ const createApp = () => {
   // cross-site origin request share
   app.use(cors(corsOptions));
 
-  // products image
+  // public products image
   app.use(express.static("public"));
 
-  if (process.env.NODE_ENV === "production") {
-    app.use(helmet());
-    // app.use(morgan("common"));
-  }
+  // hiding some information about server
+  if (process.env.NODE_ENV === "production") app.use(helmet());
+
+  // filter IP
+  app.use(async (req, res, next) => ipFilter.refuseBlackIp(req, res, next));
 
   // body-parser
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,13 +37,12 @@ const createApp = () => {
   // api routing.
   apiRouter(app);
 
-  // Handle request error
+  // Error handler middleware
   app.use((req, res, next) => {
-    next(createError.NotFound("Not Found!"));
+    next(createHttpError.NotFound());
   });
 
   app.use((err, req, res, next) => {
-    // logger(uuidv4(), req, err.message);
     res.status(err.status || 500).json({
       status: "error",
       message: err.message,

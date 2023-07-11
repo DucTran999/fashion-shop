@@ -9,7 +9,9 @@ const client = redis.createClient({
 
 client.on("connect", () => console.log(">>> Redis ::: Connected"));
 client.on("ready", () => console.log(">>> Redis ::: Ready"));
-client.on("error", (err) => console.log("Redis Client Error", err));
+client.on("error", (err) => {
+  console.log("!!! Redis ::: Error", err.code);
+});
 
 process.on("SIGINT", async () => {
   console.log("Redis ::: Closed <<<");
