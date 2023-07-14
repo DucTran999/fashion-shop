@@ -9,13 +9,16 @@ src/tests
 rests
 coverage
 
+# docker
+.docker
+local
+
 # Logs
 src/logs
 
 # production
 /build
 src/db
-docker-compose.yml
 
 # misc
 .env

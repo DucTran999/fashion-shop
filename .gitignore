@@ -16,7 +16,6 @@ server/node_modules
 # production
 /build
 /server/src/db
-/server/docker-compose.yml
 
 # misc
 .env

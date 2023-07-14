@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    image: server_app:1.3.0-apline
+    container_name: api-server
+    restart: unless-stopped
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - PG_HOST=${PG_HOST}
+      - PG_PORT=${PG_PORT}
+      - PG_USER=${PG_USER}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - PG_DATABASE=${PG_DATABASE}
+      - PG_MAX_CONNECTION=${PG_MAX_CONNECTION}
+      - REDIS_URI=${REDIS_URI}
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - mynet
+
+  postgres:
+    image: postgres:15.3-alpine
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - POSTGRES_DB=${PG_DATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - .docker/postgres-data:/var/lib/postgresql/data
+      - ./shared/atlanashop_db.sql:/docker-entrypoint-initdb.d/atlanashop_db.sql
+    networks:
+      - mynet
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    container_name: redis-db
+    ports:
+      - "6379:6379"
+    volumes:
+      - .docker/redis-data:/data
+    networks:
+      - mynet
+
+volumes:
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  mynet:
+    driver: bridge
