@@ -1,6 +1,5 @@
-@use "../../styles/" as s;
+@use "../../../styles/" as s;
 
-// General
 .row-cent {
   position: relative;
   display: flex;
@@ -22,42 +21,8 @@
   align-items: center;
 }
 
-.no-gutter {
-  padding: 0;
-}
-
 .sidebar-header__title {
   text-align: center;
-}
-
-// Mobile style
-.btn-back-home {
-  display: flex;
-  font-size: 2rem;
-  font-weight: 500;
-  color: var(--dark-black-clr);
-
-  &:hover {
-    transition: 1s;
-    color: var(--primary-clr);
-  }
-}
-
-.menu {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 2rem;
-  font-weight: 500;
-  color: var(--dark-black-clr);
-  padding: 1em;
-
-  &:hover {
-    cursor: pointer;
-    color: var(--primary-clr);
-  }
 }
 
 .sidebar-wrap {

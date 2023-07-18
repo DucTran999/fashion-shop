@@ -7,9 +7,9 @@ import useWindowDimension from "../../hooks/useWindowDimension";
 import { getCartReq } from "../../features/cart/cartRequest";
 import { getNotificationsReq } from "../../features/notification/notificationRequest";
 
-import ViewDesktop from "./ViewDesktop";
-import ViewTablet from "./ViewTablet";
-import ViewMobile from "./ViewMobile";
+import ViewDesktop from "./Desktop/DesktopView";
+import ViewTablet from "./Tablet/ViewTablet";
+import ViewMobile from "./Mobile/ViewMobile";
 
 //Style
 import classNames from "classnames/bind";
@@ -26,19 +26,15 @@ const PrimaryHeader = () => {
   const [fix, setFix] = useState(false);
 
   const setFixed = () => {
-    if (window.scrollY >= 250) {
-      setFix(true);
-    } else {
-      setFix(false);
-    }
+    return window.scrollY >= 250 ? setFix(true) : setFix(false);
   };
 
   window.addEventListener("scroll", setFixed);
 
-  // Fetch notification and cart after login or refresh
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
+      // If user in session fetch cart, notifications
       if (user) {
         getCartReq(user.user_id, axiosPrivate, dispatch);
         getNotificationsReq(user.user_id, axiosPrivate, dispatch);
@@ -52,6 +48,7 @@ const PrimaryHeader = () => {
       }
     };
 
+    // listening on event user has new notification
     socket.on("new-notification", onFetchNotifications);
 
     return () => socket.off("new-notification", onFetchNotifications);

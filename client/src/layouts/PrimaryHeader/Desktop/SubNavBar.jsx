@@ -1,93 +1,22 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Col, Row } from "react-bootstrap";
 
-import ICONS from "../../assets/icons";
-import IMAGES from "../../assets/images";
-import { COMMON_PATH } from "../../utils/constVariable";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { logOutReq } from "../../features/auth/apiRequest";
-import { formatCapitalize } from "../../utils/formatData";
-
-// Component
-import ShopLogo from "../../components/Logo";
-import PrimaryNav from "./PrimaryNav";
+import ICONS from "../../../assets/icons";
+import IMAGES from "../../../assets/images";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { COMMON_PATH } from "../../../utils/constVariable";
+import { formatCapitalize } from "../../../utils/formatData";
 import {
   updateSelection,
   updateSidebarSelection,
-} from "../../features/activeNav/navAction";
+} from "../../../features/activeNav/navAction";
+import { logOutReq } from "../../../features/auth/apiRequest";
 
-//Style
+// Style
+import style from "./SubNavBar.module.scss";
 import classNames from "classnames/bind";
-import styles from "./ViewDesktop.module.scss";
-const cx = classNames.bind(styles);
-
-/* Sub nav component */
-const SubNav = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const location = useLocation();
-
-  const currentPath = location.pathname;
-
-  const user = useSelector((state) => state.auth.login.currentUser);
-  const cart = useSelector((state) => state.cart.get.info);
-  const hasUnreadNotification = useSelector(
-    (state) => state.notification.hasUnread
-  );
-
-  const handleIconNavigateOnClick = (path, subNavActive, sidebarActive) => {
-    if (path !== currentPath) {
-      updateSelection(subNavActive, dispatch);
-      updateSidebarSelection(sidebarActive, dispatch);
-      navigate(path, { replace: true });
-    }
-  };
-
-  return (
-    <ul className={cx("sub-nav")}>
-      <li className={cx("sub-nav__item")}>
-        <Link to="/search" className={cx("sub-nav__link")}>
-          {ICONS.search}
-        </Link>
-      </li>
-      <li className={cx("sub-nav__item")}>
-        <div
-          className={cx("sub-nav__link")}
-          onClick={() =>
-            handleIconNavigateOnClick(
-              COMMON_PATH.notification,
-              "notifications",
-              "news"
-            )
-          }
-        >
-          {ICONS.bellSlime}
-          {hasUnreadNotification && <span className={cx("bell-dot")}></span>}
-        </div>
-      </li>
-      <li className={cx("sub-nav__item", "user")}>
-        {user ? <UserBarIsLogged /> : <UserBarIsNotLogged />}
-      </li>
-      <li className={cx("sub-nav__item")}>
-        <div
-          className={cx("sub-nav__link")}
-          onClick={() => navigate(COMMON_PATH.cart, { replace: true })}
-        >
-          {ICONS.cart}
-        </div>
-        {cart ? (
-          <span className={cx("cart__num-products")}>
-            {cart.products.length}
-          </span>
-        ) : (
-          <span className={cx("cart__num-products")}>0</span>
-        )}
-      </li>
-    </ul>
-  );
-};
+const cx = classNames.bind(style);
 
 const UserBarIsLogged = () => {
   const loggedOptions = [
@@ -120,8 +49,7 @@ const UserBarIsLogged = () => {
   const currentPath = location.pathname;
 
   /* handle user action */
-  const handleLogOut = async (e) => {
-    e.preventDefault();
+  const handleLogOut = async () => {
     await logOutReq(user.user_id, axiosPrivate, dispatch, navigate);
   };
 
@@ -203,22 +131,72 @@ const UserBarIsNotLogged = () => {
   );
 };
 
-const ViewDesktop = () => {
+const SubNavBar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const currentPath = location.pathname;
+
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const cart = useSelector((state) => state.cart.get.info);
+  const hasUnreadNotification = useSelector(
+    (state) => state.notification.hasUnread
+  );
+
+  const handleIconNavigateOnClick = (path, subNavActive, sidebarActive) => {
+    if (path !== currentPath) {
+      updateSelection(subNavActive, dispatch);
+      updateSidebarSelection(sidebarActive, dispatch);
+      navigate(path, { replace: true });
+    }
+  };
+
   return (
-    <Container>
-      <Row className={cx("row-cent")}>
-        <Col lg="2" className={cx("col-cent")}>
-          <ShopLogo />
-        </Col>
-        <Col lg="7" xl="8">
-          <PrimaryNav />
-        </Col>
-        <Col lg="2">
-          <SubNav />
-        </Col>
-      </Row>
-    </Container>
+    <ul className={cx("sub-nav")}>
+      <li className={cx("sub-nav__item")}>
+        <div
+          className={cx("sub-nav__link")}
+          onClick={() => navigate("/search", { replace: true })}
+        >
+          {ICONS.search}
+        </div>
+      </li>
+      <li className={cx("sub-nav__item")}>
+        <div
+          className={cx("sub-nav__link")}
+          onClick={() =>
+            handleIconNavigateOnClick(
+              COMMON_PATH.notification,
+              "notifications",
+              "news"
+            )
+          }
+        >
+          {ICONS.bellSlime}
+          {hasUnreadNotification && <span className={cx("bell-dot")}></span>}
+        </div>
+      </li>
+      <li className={cx("sub-nav__item", "user")}>
+        {user ? <UserBarIsLogged /> : <UserBarIsNotLogged />}
+      </li>
+      <li className={cx("sub-nav__item")}>
+        <div
+          className={cx("sub-nav__link")}
+          onClick={() => navigate(COMMON_PATH.cart, { replace: true })}
+        >
+          {ICONS.cart}
+        </div>
+        {cart ? (
+          <span className={cx("cart__num-products")}>
+            {cart.products.length}
+          </span>
+        ) : (
+          <span className={cx("cart__num-products")}>0</span>
+        )}
+      </li>
+    </ul>
   );
 };
 
-export default ViewDesktop;
+export default SubNavBar;

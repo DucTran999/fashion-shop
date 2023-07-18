@@ -1,0 +1,18 @@
+@use "../../../styles/" as s;
+
+.menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--dark-black-clr);
+  padding: 1em;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--primary-clr);
+  }
+}
