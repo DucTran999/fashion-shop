@@ -5,7 +5,7 @@ import { Container, Col, Row } from "react-bootstrap";
 
 // custom hook, helper func, ...
 import { fetchProductReq } from "../../features/product/productAction";
-import { fetchProductFailed } from "../../features/getProduct/productSlice";
+import { fetchProductFailed } from "../../features/product/productSlice";
 
 // Component Injected
 import Breadcrumb from "../../components/Breadcrumb";

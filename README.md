@@ -1,4 +1,5 @@
 # Fashion Online Shop
+
 <p align="center">
   <a href="https://nodejs.org/en"><img alt="Static Badge" src="https://img.shields.io/badge/node_js-v18.16.1-jade?logo=nodedotjs"></a>
   <a href="https://www.npmjs.com/package/react"><img alt="Static Badge" src="https://img.shields.io/badge/react-v18.2.0-blue?logo=react"></a>
@@ -11,8 +12,9 @@
 This online shop project was built with PERN stack (PostgreSQL, Express, React, and Node.js). The project allows users to browse products, add items to their cart, and check out their purchases, get notifications in real time.
 
 ## Preview
+
 1. Login Page:
-  
+
 ![image](https://github.com/DucTran999/fashion-shop/assets/124438914/c5cdf8c6-4734-451a-bee8-4e20cedb073b)
 
 2. Home Page:
@@ -28,36 +30,46 @@ This online shop project was built with PERN stack (PostgreSQL, Express, React, 
 ![image](https://github.com/DucTran999/fashion-shop/assets/124438914/58e9bdff-edb8-44b7-8821-ddc88631153b)
 
 ## Browser support
+
 - Chrome
 - Firefox
 - Safari
 - Microsoft Edge
 
-## Installation 
+## Installation
+
 Requirement:
+
 - Free space: minimum 2GB
 - Docker: version 24.0.2 or the latest
-- docker-compose:  v2.19.1 or the latest
+- docker-compose: v2.19.1 or the latest
 
 Build steps:
+
 1. Clone the repository to your local machine.
+
 ```
 $ git clone https://github.com/DucTran999/fashion-shop.git
 ```
+
 2. Run the setup scripts and follow the instuctions.
+
 ```
 $ ./setup.sh
 ```
 
 **Default account for accessing admin Page:**
+
 ```
 admintest@gmail.com
 ```
+
 ```
 Azxjxa~sd-!ahs65
 ```
 
 ## License
+
 - This project is just for practicing my web development skills and is not used for e-commerce purposes.
 - **The images copyright** I'm using in the project are **possessed by [the MARC brand], [Freepik], and [Pixels]**, and I want to give many thanks to them for the beautiful images.
 
