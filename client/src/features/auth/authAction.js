@@ -1,9 +1,10 @@
 import axios from "../../api/init.axios";
-import API_URL from "../../api/init.url";
-import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
-import io from "../../utils/init.socket";
-import { resetNotificationList } from "../notification/notificationSlice";
+import API_URL from "../../api/endpoint";
+
+import io from "../../utils/initSocket";
+import { LOCAL_STORAGE_KEY } from "../../utils/constVariable";
 import { resetCart } from "../cart/cartSlice";
+import { resetNotificationList } from "../notification/notificationSlice";
 
 import {
   loginFailed,

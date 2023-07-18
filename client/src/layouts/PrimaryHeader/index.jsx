@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import socket from "../../utils/init.socket";
+import socket from "../../utils/initSocket";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useWindowDimension from "../../hooks/useWindowDimension";
-import { getCartReq } from "../../features/cart/cartRequest";
-import { getNotificationsReq } from "../../features/notification/notificationRequest";
+import { getCartReq } from "../../features/cart/cartAction";
+import { getNotificationsReq } from "../../features/notification/notificationAction";
 
 import ViewDesktop from "./Desktop/DesktopView";
 import ViewTablet from "./Tablet/ViewTablet";

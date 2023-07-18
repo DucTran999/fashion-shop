@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 
 // custom hook, helper func, ...
-import { fetchProductReq } from "../../features/getProduct/fetchRequest";
+import { fetchProductReq } from "../../features/product/productAction";
 import { fetchProductFailed } from "../../features/getProduct/productSlice";
 
 // Component Injected

@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { getUserReq } from "../../../features/user/userRequest";
+import { getUserReq } from "../../../features/user/userAction";
 import { updateSidebarSelection } from "../../../features/activeNav/navAction";
 
 import FilterBar from "./FilterBar";

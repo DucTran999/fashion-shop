@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import classNames from "classnames/bind";
 import styles from "./Input.module.scss";
-import gradingPasswordStrength from "../../utils/PasswordStrengthMeter";
+import { gradingPasswordStrength } from "../../utils/inputValidation";
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +12,7 @@ const PASSWORD_STRENGTH = {
   STRONG: (grade) => 14 < grade,
 };
 
-function PasswordStrengthMeter({ password }) {
+const PasswordStrengthMeter = ({ password }) => {
   let [grade, setGrade] = useState(0);
   let [boxState, setBoxState] = useState({ box1: "", box2: "", box3: "" });
 
@@ -49,6 +49,6 @@ function PasswordStrengthMeter({ password }) {
       <div className={cx("state-bar__box3", boxState.box3)}></div>
     </div>
   );
-}
+};
 
 export default PasswordStrengthMeter;

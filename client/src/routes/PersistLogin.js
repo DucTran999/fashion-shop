@@ -1,10 +1,11 @@
+import React, { useEffect, useRef } from "react";
 import { Outlet } from "react-router-dom";
-import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 import useRefreshToken from "../hooks/useRefreshToken";
+import { LOCAL_STORAGE_KEY } from "../utils/constVariable";
+
 import PageLoadingSpinner from "../components/LoadingSpinner/PageLoadingSpinner";
-import LOCAL_STORAGE_KEY from "../api/init.localStorage";
 
 const PersistLogin = () => {
   const isMounted = useRef(false);

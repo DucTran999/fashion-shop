@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // custom hook, util func, ...
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { getUserReq } from "../../features/user/userRequest";
+import { getUserReq } from "../../features/user/userAction";
 
 // Component Injected
 import Padding from "../../components/Padding";

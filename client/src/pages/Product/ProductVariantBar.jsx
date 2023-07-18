@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 // Redux, custom hook, const variable, ...
 import { formatColorCode } from "../../utils/formatData";
-import { changeVariantSelected } from "../../features/getProduct/fetchRequest";
+import { changeVariantSelected } from "../../features/product/productAction";
 
 // Style
 import classNames from "classnames/bind";

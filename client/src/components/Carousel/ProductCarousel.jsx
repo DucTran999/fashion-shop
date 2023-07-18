@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 // custom hook, helper func, utils ...
 import axios from "../../api/init.axios";
-import API_URL from "../../api/init.url";
+import API_URL from "../../api/endpoint";
 
 // Component Injected
 import ProductCard from "../../components/Card/ProductCard";

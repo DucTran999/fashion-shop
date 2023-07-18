@@ -10,7 +10,7 @@ import {
   deleteProductFormCartStart,
 } from "./cartSlice";
 
-import API_URL from "../../api/init.url";
+import API_URL from "../../api/endpoint";
 
 const getCartReq = async (cart_id, axiosPrivate, dispatch) => {
   dispatch(getCartStart());

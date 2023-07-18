@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 // custom hook, util, helper func
 import ICONS from "../../../assets/icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { changePasswordReq } from "../../../features/user/userRequest";
+import { changePasswordReq } from "../../../features/user/userAction";
 import { resetUserChangePassState } from "../../../features/user/userSlice";
 
 // Component Injected

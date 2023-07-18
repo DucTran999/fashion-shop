@@ -10,7 +10,7 @@ import {
   updateSelection,
   updateSidebarSelection,
 } from "../../../features/activeNav/navAction";
-import { logOutReq } from "../../../features/auth/apiRequest";
+import { logOutReq } from "../../../features/auth/authAction";
 import { setNotificationFilter } from "../../../features/notification/notificationSlice";
 
 //Style

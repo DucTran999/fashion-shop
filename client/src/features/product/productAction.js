@@ -1,5 +1,5 @@
 import axios from "../../api/init.axios";
-import API_URL from "../../api/init.url";
+import API_URL from "../../api/endpoint";
 import {
   fetchProductStart,
   fetchProductSuccess,

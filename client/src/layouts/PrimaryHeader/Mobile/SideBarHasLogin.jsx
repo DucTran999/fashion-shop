@@ -6,7 +6,7 @@ import ICONS from "../../../assets/icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { COMMON_PATH } from "../../../utils/constVariable";
 import { formatCapitalize } from "../../../utils/formatData";
-import { logOutReq } from "../../../features/auth/apiRequest";
+import { logOutReq } from "../../../features/auth/authAction";
 import { setNotificationFilter } from "../../../features/notification/notificationSlice";
 
 import ModalContainer from "../../../components/Modal/ModalContainer";
