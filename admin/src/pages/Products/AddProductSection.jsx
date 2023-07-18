@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import API_URL from "../../api/url.init";
+import API_URL from "../../api/endpoint";
 
 import classNames from "classnames/bind";
 import style from "./AddProductSection.module.scss";

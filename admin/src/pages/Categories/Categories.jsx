@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
 
-import { sortById } from "../../utils/compareFunc";
-import API_URL from "../../api/url.init";
-
+import API_URL from "../../api/endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate, useLocation } from "react-router-dom";
+import { sortById } from "../../utils/compareFunc";
 
 import Header from "../../layouts/Header";
+
 import classNames from "classnames/bind";
 import style from "./Categories.module.scss";
-
 const cx = classNames.bind(style);
 
 function Categories() {

@@ -10,7 +10,7 @@ import {
   updateOrderStateStart,
 } from "./orderSlice";
 
-import API_URL from "../../api/url.init";
+import API_URL from "../../api/endpoint";
 
 const getAllOrdersReq = async (stateId, axiosPrivate, dispatch) => {
   dispatch(getAllOrdersStart());

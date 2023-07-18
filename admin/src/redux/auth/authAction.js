@@ -9,7 +9,7 @@ import {
   logOutSuccess,
 } from "./authSlice";
 
-import API_URL from "../../api/url.init";
+import API_URL from "../../api/endpoint";
 
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];

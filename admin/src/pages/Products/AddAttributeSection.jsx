@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 
+import API_URL from "../../api/endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import API_URL from "../../api/url.init";
 
 import classNames from "classnames/bind";
 import style from "./AddAttributeSection.module.scss";

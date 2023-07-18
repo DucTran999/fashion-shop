@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-import API_URL from "../../api/url.init";
+import API_URL from "../../api/endpoint";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 import classNames from "classnames/bind";
 import style from "./UploadImageForm.module.scss";

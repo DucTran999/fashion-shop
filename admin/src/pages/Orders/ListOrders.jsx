@@ -12,7 +12,7 @@ import {
   getAllOrdersReq,
   updateOrderStateReq,
   cancelOrderShippingFailedReq,
-} from "../../redux/order/orderRequest";
+} from "../../redux/order/orderAction";
 import {
   formatHyphenToUpperCase,
   formatMoney,
