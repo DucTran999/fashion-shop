@@ -8,6 +8,7 @@
   <a href="https://www.npmjs.com/package/@reduxjs/toolkit"><img alt="Static Badge" src="https://img.shields.io/badge/redux--toolkit-v1.9.5-purple?logo=redux"></a>
   <a href="https://react-bootstrap.netlify.app/docs/getting-started/introduction"><img alt="Static Badge" src="https://img.shields.io/badge/react--bootstrap-v2.7.4-navy?logo=bootstrap&logoColor=f5f5f5"></a>
   <a href="https://www.docker.com/"><img alt="Static Badge" src="https://img.shields.io/badge/docker--compose-v2.19.1-blue?logo=docker"></a>
+    <a href="https://https://www.npmjs.com/package/socket.io"><img alt="Static Badge" src="https://img.shields.io/badge/socket.io-v6.7.2-jade?logo=socket.io"></a>
 </p>
 This online shop project was built with PERN stack (PostgreSQL, Express, React, and Node.js). The project allows users to browse products, add items to their cart, and check out their purchases, get notifications in real time.
 
