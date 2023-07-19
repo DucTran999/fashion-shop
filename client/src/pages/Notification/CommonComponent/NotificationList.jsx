@@ -9,7 +9,7 @@ import {
   changeNotificationMarkReq,
   getNotificationsReq,
   deleteNotificationReq,
-} from "../../../features/notification/notificationRequest";
+} from "../../../features/notification/notificationAction";
 
 import classNames from "classnames/bind";
 import style from "./NotificationList.module.scss";

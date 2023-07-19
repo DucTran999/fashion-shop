@@ -4,24 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 
 // Hooks, utils, redux, ...
 import useForm from "../../hooks/useForm";
-import socket from "../../utils/init.socket";
-import { EMAIL_TYPE } from "../../utils/constVariable";
-import * as validateMethod from "../../utils/Validator";
-import { registerReq } from "../../features/auth/apiRequest";
+import socket from "../../utils/initSocket";
+import * as validateMethod from "../../utils/inputValidation";
+import { EMAIL_TYPE, INPUT_ERROR_MESSAGE } from "../../utils/constVariable";
+import { registerReq } from "../../features/auth/authAction";
 import { sendNewVerifyEmailReq } from "../../features/email/emailAction";
 
 // Component
 import FormSwitch from "./FormSwitch";
-import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
-import ModalContainer from "../../components/Modal/ModalContainer";
-import Popup from "../../components/Modal/PopupContainer";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
 import {
   LoadingAlert,
   ConfirmAlert,
   ErrorAlert,
 } from "../../components/Modal/PopupVariant";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import Popup from "../../components/Modal/PopupContainer";
+import ModalContainer from "../../components/Modal/ModalContainer";
 
 // Style
 import classNames from "classnames/bind";
@@ -183,7 +182,7 @@ function RegisterPage() {
           onInput={handleInput}
           validator={{
             validateMethod: validateMethod.isName,
-            errorMsg: ERROR_MESSAGES.nameInvalid,
+            errorMsg: INPUT_ERROR_MESSAGE.nameInvalid,
           }}
         />
         <Input
@@ -193,7 +192,7 @@ function RegisterPage() {
           onInput={handleInput}
           validator={{
             validateMethod: validateMethod.isName,
-            errorMsg: ERROR_MESSAGES.nameInvalid,
+            errorMsg: INPUT_ERROR_MESSAGE.nameInvalid,
           }}
         />
         <Input
@@ -203,7 +202,7 @@ function RegisterPage() {
           onInput={handleInput}
           validator={{
             validateMethod: validateMethod.isEmail,
-            errorMsg: ERROR_MESSAGES.emailInvalid,
+            errorMsg: INPUT_ERROR_MESSAGE.emailInvalid,
           }}
         />
         <Input
@@ -213,7 +212,7 @@ function RegisterPage() {
           onInput={handleInput}
           validator={{
             validateMethod: validateMethod.isPasswordStrong,
-            errorMsg: ERROR_MESSAGES.passwordWeak,
+            errorMsg: INPUT_ERROR_MESSAGE.passwordWeak,
           }}
           extraElements={["passwordStrengthBar"]}
         />

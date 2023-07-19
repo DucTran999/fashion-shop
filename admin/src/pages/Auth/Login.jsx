@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { loginReq } from "../../redux/auth/apiCall";
+
+import { loginReq } from "../../redux/auth/authAction";
 
 import classNames from "classnames/bind";
 import style from "./Login.module.scss";
-
 const cx = classNames.bind(style);
 
 function Login() {

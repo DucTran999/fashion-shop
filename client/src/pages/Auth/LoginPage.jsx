@@ -2,21 +2,21 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-// Util
-import LOCAL_STORAGE_KEY from "../../api/init.localStorage";
+// Util, custom hooks, etc.
+import useForm from "../../hooks/useForm";
 import useRefreshToken from "../../hooks/useRefreshToken";
-import ERROR_MESSAGES from "../../components/Input/InputErrorMessage";
-import * as validateMethod from "../../utils/Validator";
-import { logInReq } from "../../features/auth/apiRequest";
+import * as validateMethod from "../../utils/inputValidation";
+import { LOCAL_STORAGE_KEY } from "../../utils/constVariable";
+import { EMAIL_TYPE, INPUT_ERROR_MESSAGE } from "../../utils/constVariable";
+import { logInReq } from "../../features/auth/authAction";
 import { sendNewVerifyEmailReq } from "../../features/email/emailAction";
-import { EMAIL_TYPE } from "../../utils/constVariable";
 
 // Component
-import useForm from "../../hooks/useForm";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import ModalContainer from "../../components/Modal/ModalContainer";
 import Popup from "../../components/Modal/PopupContainer";
+import ModalContainer from "../../components/Modal/ModalContainer";
+
 import {
   LoadingAlert,
   ErrorAlert,
@@ -177,7 +177,7 @@ function LoginPage() {
           onInput={handleInput}
           validator={{
             validateMethod: validateMethod.isEmail,
-            errorMsg: ERROR_MESSAGES.emailInvalid,
+            errorMsg: INPUT_ERROR_MESSAGE.emailInvalid,
           }}
         />
         <Input

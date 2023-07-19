@@ -19,7 +19,7 @@ import {
   deleteProductFromCartReq,
   getCartReq,
   changeProductQtyReq,
-} from "../../features/cart/cartRequest";
+} from "../../features/cart/cartAction";
 
 // Component Injected
 import ModalContainer from "../../components/Modal/ModalContainer";

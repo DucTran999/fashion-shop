@@ -1,4 +1,4 @@
-import API_URL from "../../api/init.url";
+import API_URL from "../../api/endpoint";
 import {
   getNotificationStart,
   getNotificationSuccess,

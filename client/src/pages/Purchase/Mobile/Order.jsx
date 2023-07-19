@@ -8,7 +8,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import IMAGES from "../../../assets/images";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { ORDER_STATE_MAP } from "../../../utils/constVariable";
-import { cancelOrderReq } from "../../../features/order/orderRequest";
+import { cancelOrderReq } from "../../../features/order/orderAction";
 import { setRefreshTrue } from "../../../features/order/orderSlice";
 import {
   getDateFromTimestamp,

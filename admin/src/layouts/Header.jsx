@@ -1,15 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { logOutReq } from "../redux/auth/apiCall";
-
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+
+import { logOutReq } from "../redux/auth/authAction";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-
 const cx = classNames.bind(styles);
 
 function Header() {

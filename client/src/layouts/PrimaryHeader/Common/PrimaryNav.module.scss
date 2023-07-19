@@ -1,4 +1,4 @@
-@use "../../styles/" as s;
+@use "../../../styles/" as s;
 
 // General
 .row-cent {
@@ -33,6 +33,7 @@
     &.active {
       cursor: default;
       user-select: none;
+      pointer-events: none;
       color: var(--primary-clr);
     }
 
@@ -122,65 +123,6 @@
       transition: 0.5s;
       color: var(--turquoise-clr);
       border-bottom: 1px solid var(--turquoise-clr);
-    }
-  }
-}
-
-// Dropdown
-.menu--tablet {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 2rem;
-  font-weight: 500;
-  color: var(--dark-black-clr);
-  padding: 1em;
-
-  &:hover {
-    cursor: pointer;
-    color: var(--primary-clr);
-  }
-
-  &:hover .menu__dropdown--tablet {
-    display: block;
-  }
-}
-
-.menu__dropdown--tablet {
-  display: none;
-  position: absolute;
-  z-index: 5;
-  top: 3em;
-  right: -2em;
-  width: 12em;
-
-  animation: fadeIn 0.5s;
-
-  padding: 0.5em;
-  font-size: 1.6rem;
-  font-weight: 400;
-  border-radius: 5px;
-  background-color: var(--dark-black-clr);
-
-  .dropdown__service {
-    display: flex;
-    flex-direction: column;
-
-    border-bottom: 1px solid var(--primary-clr);
-
-    &.last {
-      border-bottom: none;
-    }
-  }
-
-  &__element {
-    margin: 0.5em 0 0.5em 1em;
-    color: var(--dark-white-clr);
-
-    &:hover {
-      color: var(--tiffany-blue-clr);
     }
   }
 }

@@ -1,40 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Col, Row } from "react-bootstrap";
 
-import ICONS from "../../assets/icons";
-import { COMMON_PATH } from "../../utils/constVariable";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { logOutReq } from "../../features/auth/apiRequest";
-import { setNotificationFilter } from "../../features/notification/notificationSlice";
+import ICONS from "../../../assets/icons";
+import { COMMON_PATH } from "../../../utils/constVariable";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+
 import {
   updateSelection,
   updateSidebarSelection,
-} from "../../features/activeNav/navAction";
-
-// Component
-import PrimaryNav from "./PrimaryNav";
-import ShopLogo from "../../components/Logo";
+} from "../../../features/activeNav/navAction";
+import { logOutReq } from "../../../features/auth/authAction";
+import { setNotificationFilter } from "../../../features/notification/notificationSlice";
 
 //Style
 import classNames from "classnames/bind";
-import styles from "./ViewTablet.module.scss";
+import styles from "./MenuDropDown.module.scss";
 const cx = classNames.bind(styles);
 
-/* Sub nav component */
-const MenuDropDown = () => {
-  const user = useSelector((state) => state.auth.login?.currentUser);
-
-  return (
-    <div className={cx("menu--tablet")}>
-      {ICONS.menu}
-      {user ? <MenuDropDownServiceHasLogin /> : <MenuDropDownServiceNoLogin />}
-    </div>
-  );
-};
-
-const MenuDropDownServiceHasLogin = () => {
+const MenuHasLogin = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
 
   const navigate = useNavigate();
@@ -105,7 +89,7 @@ const MenuDropDownServiceHasLogin = () => {
   );
 };
 
-const MenuDropDownServiceNoLogin = () => {
+const MenuNoLogin = () => {
   const navigate = useNavigate();
 
   return (
@@ -136,22 +120,19 @@ const MenuDropDownServiceNoLogin = () => {
   );
 };
 
-const ViewTablet = () => {
+const MenuDropDown = () => {
+  const [showMenu, setShowMenu] = useState(false);
+  const user = useSelector((state) => state.auth.login?.currentUser);
+  const menuSwitch = () => {
+    return setShowMenu(!showMenu);
+  };
+
   return (
-    <Container>
-      <Row className={cx("row-cent")}>
-        <Col md="2">
-          <ShopLogo />
-        </Col>
-        <Col md="8" className={cx("col-cent")}>
-          <PrimaryNav />
-        </Col>
-        <Col md="2">
-          <MenuDropDown />
-        </Col>
-      </Row>
-    </Container>
+    <div className={cx("menu--tablet")} onClick={menuSwitch}>
+      {ICONS.menu}
+      {!showMenu ? <></> : user ? <MenuHasLogin /> : <MenuNoLogin />}
+    </div>
   );
 };
 
-export default ViewTablet;
+export default MenuDropDown;

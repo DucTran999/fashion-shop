@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 // Util, custom hook, ...
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { getAllUsersReq } from "../../redux/user/userRequest";
+import { getAllUsersReq } from "../../redux/user/userAction";
 
 // Component
 import Header from "../../layouts/Header";

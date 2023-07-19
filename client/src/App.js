@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import socket from "./utils/init.socket";
+import socket from "./utils/initSocket";
 import useRefreshToken from "./hooks/useRefreshToken";
-import LOCAL_STORAGE_KEY from "./api/init.localStorage";
+import { LOCAL_STORAGE_KEY } from "./utils/constVariable";
 
 import { AuthLayout, PrimaryLayout } from "./layouts";
 import {

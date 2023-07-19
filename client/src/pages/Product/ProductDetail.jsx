@@ -9,7 +9,7 @@ import { debounce } from "../../utils/doStuff";
 import {
   addProductToCartReq,
   getCartReq,
-} from "../../features/cart/cartRequest";
+} from "../../features/cart/cartAction";
 
 import ProductInfo from "./ProductInfo";
 import ProductVariantBar from "./ProductVariantBar";

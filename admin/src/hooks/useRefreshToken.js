@@ -1,7 +1,8 @@
 import axios from "../api/init.axios";
 import { useDispatch } from "react-redux";
+
+import API_URL from "../api/endpoint";
 import { loginSuccess } from "../redux/auth/authSlice";
-import API_URL from "../api/url.init";
 
 const getUserCredential = (res) => {
   const { access_token } = res.data.elements[0];

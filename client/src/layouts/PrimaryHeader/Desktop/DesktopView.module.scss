@@ -1,0 +1,16 @@
+@use "../../../styles/" as s;
+
+// General
+.row-cent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-cent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
