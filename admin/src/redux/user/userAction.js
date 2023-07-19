@@ -4,7 +4,7 @@ import {
   getAllUsersSuccess,
 } from "./userSlice";
 
-import API_URL from "../../api/url.init";
+import API_URL from "../../api/endpoint";
 
 const getAllUsersReq = async (axiosPrivate, dispatch) => {
   dispatch(getAllUsersStart());

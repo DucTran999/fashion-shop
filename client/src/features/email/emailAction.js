@@ -1,5 +1,5 @@
-import { encryptAES } from "../../utils/helper.crypto";
-import API_URL from "../../api/init.url";
+import API_URL from "../../api/endpoint";
+import { encryptAES } from "../../utils/cryptography";
 import axios from "../../api/init.axios";
 
 import {

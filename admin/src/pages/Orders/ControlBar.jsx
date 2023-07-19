@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { getAllOrdersReq } from "../../redux/order/orderRequest";
+import { getAllOrdersReq } from "../../redux/order/orderAction";
 
 import classNames from "classnames/bind";
 import style from "./ControlBar.module.scss";

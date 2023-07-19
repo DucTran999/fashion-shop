@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import IMAGES from "../../../assets/images";
 import ICONS from "../../../assets/icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { getUserReq, updateUserReq } from "../../../features/user/userRequest";
+import { getUserReq, updateUserReq } from "../../../features/user/userAction";
 import { resetUpdateState } from "../../../features/user/userSlice";
 
 // Component Injected

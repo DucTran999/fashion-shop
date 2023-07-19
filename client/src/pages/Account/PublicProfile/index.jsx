@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import IMAGES from "../../../assets/images";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { formatCapitalize } from "../../../utils/formatData";
-import { getUserReq } from "../../../features/user/userRequest";
+import { getUserReq } from "../../../features/user/userAction";
 
 // Component Injected
 import PageSpinner from "../../../components/LoadingSpinner/LoadingSpinner";

@@ -1,4 +1,4 @@
-import gradingPassStrength from "../utils/PasswordStrengthMeter";
+import { gradingPassStrength } from "../utils/inputValidation";
 
 describe("grading pass strength function", () => {
   // Given

@@ -4,8 +4,8 @@ import { useLocation } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 
 // custom hook, helper func, ...
-import { fetchProductReq } from "../../features/getProduct/fetchRequest";
-import { fetchProductFailed } from "../../features/getProduct/productSlice";
+import { fetchProductReq } from "../../features/product/productAction";
+import { fetchProductFailed } from "../../features/product/productSlice";
 
 // Component Injected
 import Breadcrumb from "../../components/Breadcrumb";

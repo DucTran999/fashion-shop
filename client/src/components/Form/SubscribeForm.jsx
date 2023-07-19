@@ -3,8 +3,8 @@ import classNames from "classnames/bind";
 
 import Button from "../Button";
 import styles from "./SubscribeForm.module.scss";
-import { isEmail } from "../../utils/Validator";
-import InputErrorMessage from "../Input/InputErrorMessage";
+import { isEmail } from "../../utils/inputValidation";
+import { INPUT_ERROR_MESSAGE } from "../../utils/constVariable";
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +19,7 @@ function SubscribeForm() {
       setErrMessage("");
     } else {
       setButtonState("inactive");
-      setErrMessage(InputErrorMessage.emailInvalid);
+      setErrMessage(INPUT_ERROR_MESSAGE.emailInvalid);
     }
   }, [formData]);
 

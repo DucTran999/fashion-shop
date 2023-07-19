@@ -1,0 +1,28 @@
+@use "../../../styles/" as s;
+
+// General
+.row-cent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-cent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-back-home {
+  display: flex;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--dark-black-clr);
+
+  &:hover {
+    transition: 1s;
+    color: var(--primary-clr);
+  }
+}

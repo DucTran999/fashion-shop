@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { format, addDays } from "date-fns";
 
-import { getOrderListReq } from "../../../features/order/orderRequest";
+import { getOrderListReq } from "../../../features/order/orderAction";
 import {
   convertStateToStateCode,
   formatMoney,

@@ -3,20 +3,20 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { format, addDays } from "date-fns";
 
-import { formatCapitalize } from "../../../utils/formatData";
-import { getOrderListReq } from "../../../features/order/orderRequest";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { getOrderListReq } from "../../../features/order/orderAction";
 import {
   convertStateToStateCode,
   formatMoney,
   getDateFromTimestamp,
 } from "../../../utils/formatData";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { formatCapitalize } from "../../../utils/formatData";
 
-import DateFilterBar from "./DateFilterBar";
 import SectionHeader from "../../../components/SectionHeader";
 import ErrorBlock from "../../../components/ErrorBlock";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import ModalContainer from "../../../components/Modal/ModalContainer";
+import DateFilterBar from "./DateFilterBar";
 import Order from "./Order";
 
 import classNames from "classnames/bind";

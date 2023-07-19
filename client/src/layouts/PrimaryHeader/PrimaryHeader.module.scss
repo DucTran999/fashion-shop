@@ -1,21 +1,5 @@
 @use "../../styles/" as s;
 
-// General
-.row-center {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.col-center {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-// Header
 .header {
   position: relative;
   display: flex;

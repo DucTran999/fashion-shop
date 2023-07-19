@@ -2,14 +2,14 @@ import React, { useRef, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUserReq } from "../../features/user/userRequest";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { getCartReq } from "../../features/cart/cartRequest";
+import { getUserReq } from "../../features/user/userAction";
+import { getCartReq } from "../../features/cart/cartAction";
 
 // Component Injected
-import Padding from "../../components/Padding";
-import DeliveryForm from "./DeliveryForm";
 import CartSummary from "./CartSummary";
+import DeliveryForm from "./DeliveryForm";
+import Padding from "../../components/Padding";
 
 // Style
 import classNames from "classnames/bind";

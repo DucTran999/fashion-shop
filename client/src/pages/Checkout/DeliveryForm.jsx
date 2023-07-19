@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
 // Custom hook, helper func, global var..
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { formatCapitalize } from "../../utils/formatData";
-import { placeOrderReq } from "../../features/order/orderRequest";
-import { getCartReq } from "../../features/cart/cartRequest";
+import { getCartReq } from "../../features/cart/cartAction";
+import { placeOrderReq } from "../../features/order/orderAction";
 import { updateSelection } from "../../features/activeNav/navAction";
 import { resetPlaceOrderState } from "../../features/order/orderSlice";
-import { useNavigate } from "react-router-dom";
 
 // Component Injected
 import SectionHeader from "../../components/SectionHeader";

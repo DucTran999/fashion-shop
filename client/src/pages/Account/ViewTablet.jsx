@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { getUserReq } from "../../features/user/userRequest";
+import { getUserReq } from "../../features/user/userAction";
 
 // Component
 import Padding from "../../components/Padding";

@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 // Custom hook, util func
-import API_URL from "../../api/url.init";
+import API_URL from "../../api/endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { convertSizeCode, convertColorCode } from "../../utils/convertData";
 import { sortByValue } from "../../utils/compareFunc";

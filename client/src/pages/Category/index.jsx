@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-import API_URL from "../../api/init.url";
+import API_URL from "../../api/endpoint";
 import axios from "../../api/init.axios";
 import { formatHyphenToCapitalize } from "../../utils/formatData";
 

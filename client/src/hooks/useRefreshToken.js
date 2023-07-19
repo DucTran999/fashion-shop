@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 
 import axios from "../api/init.axios";
-import io from "../utils/init.socket";
-import API_URL from "../api/init.url";
-import LOCAL_STORAGE_KEY from "../api/init.localStorage";
+import io from "../utils/initSocket";
+import API_URL from "../api/endpoint";
+import { LOCAL_STORAGE_KEY } from "../utils/constVariable";
 import { resetNotificationList } from "../features/notification/notificationSlice";
 import {
   loginStart,

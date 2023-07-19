@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { updateSelection } from "../../features/activeNav/navAction";
-import { getCartReq } from "../../features/cart/cartRequest";
+import { getCartReq } from "../../features/cart/cartAction";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 // Component Injected
