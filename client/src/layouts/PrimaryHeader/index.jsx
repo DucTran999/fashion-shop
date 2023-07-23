@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import socket from "../../utils/initSocket";
@@ -6,6 +6,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useWindowDimension from "../../hooks/useWindowDimension";
 import { getCartReq } from "../../features/cart/cartAction";
 import { getNotificationsReq } from "../../features/notification/notificationAction";
+import { syncUserWishlistReq } from "../../features/wishlist/wishlistAction";
 
 import ViewDesktop from "./Desktop/DesktopView";
 import ViewTablet from "./Tablet/ViewTablet";
@@ -25,9 +26,9 @@ const PrimaryHeader = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [fix, setFix] = useState(false);
 
-  const setFixed = () => {
+  const setFixed = useCallback(() => {
     return window.scrollY >= 250 ? setFix(true) : setFix(false);
-  };
+  }, []);
 
   window.addEventListener("scroll", setFixed);
 
@@ -38,6 +39,7 @@ const PrimaryHeader = () => {
       if (user) {
         getCartReq(user.user_id, axiosPrivate, dispatch);
         getNotificationsReq(user.user_id, axiosPrivate, dispatch);
+        syncUserWishlistReq(user.user_id, axiosPrivate, dispatch);
       }
     }
 

@@ -1,0 +1,16 @@
+@use "../../../styles/" as s;
+
+.product-layout {
+  animation: fadeIn 1.5s;
+}
+
+.row-cent {
+  display: flex;
+  justify-content: center;
+}
+
+.col-cent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

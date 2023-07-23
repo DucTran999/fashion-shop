@@ -28,6 +28,8 @@ const SubNavBar = () => {
 
   const user = useSelector((state) => state.auth.login.currentUser);
   const cart = useSelector((state) => state.cart.get.info);
+  const wishlist = useSelector((state) => state.wishlist.wishlist);
+
   const hasUnreadNotification = useSelector(
     (state) => state.notification.hasUnread
   );
@@ -67,6 +69,23 @@ const SubNavBar = () => {
       </li>
       <li className={cx("sub-nav__item", "user")}>
         {user ? <UserDropDownLogged /> : <UserDropDownNoLogin />}
+      </li>
+      <li className={cx("sub-nav__item")}>
+        <div
+          className={cx("sub-nav__link")}
+          onClick={() =>
+            handleIconNavigateOnClick(COMMON_PATH.wishlist, "wishlist", "")
+          }
+        >
+          {ICONS.favourite}
+        </div>
+        {wishlist ? (
+          <span className={cx("cart__num-products")}>
+            {Object.keys(wishlist).length}
+          </span>
+        ) : (
+          <span className={cx("cart__num-products")}>0</span>
+        )}
       </li>
       <li className={cx("sub-nav__item")}>
         <div

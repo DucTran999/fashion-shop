@@ -1,15 +1,4 @@
-@use "../../styles/" as s;
-.row-cent {
-  display: flex;
-  justify-content: center;
-}
-
-.row-btw {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+@use "../../../styles/" as s;
 .row-mg {
   margin: 1em 0;
 }
@@ -18,18 +7,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.col-mg {
-  margin-bottom: 1.5em;
-}
-
-.col-lg-none {
-  display: block;
-
-  @include s.breakpoint(lg) {
-    display: none;
-  }
 }
 
 // product quantity section
@@ -45,7 +22,7 @@
   height: 2em;
 
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
 
   font-weight: 500;
   font-size: 1.6rem;
@@ -72,7 +49,8 @@
   font-size: 1.8rem;
   font-weight: 500;
 
-  border-radius: 10px;
+  border-radius: 5px;
+
   background: var(--primary-clr);
   color: var(--light-grey-clr);
   width: 100%;
@@ -103,13 +81,6 @@
 
   &__title {
     margin-right: 0.5em;
-    display: none;
-  }
-
-  @include s.breakpoint(xxl) {
-    &__title {
-      display: block;
-    }
   }
 }
 

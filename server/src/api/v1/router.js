@@ -12,6 +12,7 @@ import ordersRouter from "./order/order.route.js";
 import sessionRouter from "./session/session.route.js";
 import notificationRouter from "./notification/notification.route.js";
 import emailRouter from "./email/email.route.js";
+import wishlistRouter from "./wishlist/wishlist.route.js";
 
 dotenv.config();
 const route = express.Router();
@@ -39,6 +40,8 @@ route.use("/orders", ordersRouter);
 route.use("/notifications", notificationRouter);
 
 route.use("/emails", emailRouter);
+
+route.use("/wishlists", wishlistRouter);
 
 route.use("/", (req, res, next) => {
   res.status(200);

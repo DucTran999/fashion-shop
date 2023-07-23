@@ -10,3 +10,4 @@ export { default as Checkout } from "./Checkout";
 export { default as Purchase } from "./Purchase";
 export { default as Notification } from "./Notification";
 export { default as VerificationEmail } from "./VerificationEmail";
+export { default as WishList } from "./WishList";

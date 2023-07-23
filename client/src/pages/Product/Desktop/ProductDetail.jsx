@@ -3,19 +3,18 @@ import { Container, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import ICONS from "../../assets/icons";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { debounce } from "../../utils/doStuff";
+import ICONS from "../../../assets/icons";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { debounce } from "../../../utils/doStuff";
 import {
   addProductToCartReq,
   getCartReq,
-} from "../../features/cart/cartAction";
+} from "../../../features/cart/cartAction";
 
 import ProductInfo from "./ProductInfo";
-import ProductVariantBar from "./ProductVariantBar";
-import PolicySection from "./PolicySection";
-import ModalContainer from "../../components/Modal/ModalContainer";
-import Dialog from "../../components/Dialog";
+import ProductVariantBar from "./VariantBar";
+import ModalContainer from "../../../components/Modal/ModalContainer";
+import Dialog from "../../../components/Dialog";
 
 // Style
 import style from "./ProductDetail.module.scss";
@@ -62,9 +61,7 @@ const UtilitySection = ({ currentVariant, quantity }) => {
       {showModal && (
         <ModalContainer
           modalStyle="transparent"
-          onClose={() => {
-            setShowModal(false);
-          }}
+          onClose={() => setShowModal(false)}
         >
           {errorCause ? (
             <Dialog
@@ -117,17 +114,23 @@ const UtilitySection = ({ currentVariant, quantity }) => {
           </span>
         </Col>
       )}
-      <Col className={cx("col-cent")}>
-        <span className={cx("btn-user-action")}>
-          <span className={cx("btn-user-action__icon")}>{ICONS.favourite}</span>
-          <span className={cx("btn-user-action__title")}>Wishlist</span>
-        </span>
-      </Col>
     </Row>
   );
 };
 
-const ProductDetail = ({ variant }) => {
+const Description = ({ currentVariant }) => {
+  const lines = currentVariant.description.trim().split("-");
+  return (
+    <Row>
+      <p className={cx("description__header")}>Description</p>
+      {lines.map((line, idx) => {
+        return line && <p key={idx}> - {line}</p>;
+      })}
+    </Row>
+  );
+};
+
+const ProductDetail = ({ allVariants, variant }) => {
   const [currentQty, setCurrentQty] = useState(1);
 
   const handleIncreaseQty = () => {
@@ -169,28 +172,17 @@ const ProductDetail = ({ variant }) => {
     );
   };
 
-  const Description = () => {
-    const lines = variant.description.trim().split("-");
-    return lines.map((line, idx) => {
-      return line && <p key={idx}> - {line}</p>;
-    });
-  };
-
   useEffect(() => {
     setCurrentQty(1);
   }, [variant]);
 
   return (
     <Container className={cx("product-detail")}>
-      <ProductInfo />
+      <ProductInfo allVariants={allVariants} />
       <ProductVariantBar />
       <ChangeProductQtySection />
       <UtilitySection currentVariant={variant} quantity={currentQty} />
-      <Row>
-        <p className={cx("description__header")}>Description</p>
-        <Description />
-      </Row>
-      <PolicySection />
+      <Description currentVariant={variant} />
     </Container>
   );
 };

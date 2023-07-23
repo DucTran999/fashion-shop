@@ -45,6 +45,7 @@ function ProductCarousel({ title, typeFilter, categoryId, limit }) {
     autoplay: true,
     swipeToSlide: true,
     lazyLoad: true,
+    arrows: false,
     autoplaySpeed: 5000,
     pauseOnHover: true,
     responsive: [

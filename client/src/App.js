@@ -19,6 +19,7 @@ import {
   Purchase,
   Notification,
   VerificationEmail,
+  WishList,
 } from "./pages";
 import PersistLogin from "./routes/PersistLogin";
 import RequireAuth from "./routes/RequireAuth";
@@ -55,12 +56,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public route */}
         <Route
           path="/auth/verify-email/:cipher/:token"
           element={<VerificationEmail />}
         />
 
+        {/* Auth Layout */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -68,7 +69,9 @@ function App() {
 
         {/* Persist login */}
         <Route element={<PersistLogin />}>
+          {/* Primary Layout */}
           <Route path="/" element={<PrimaryLayout />}>
+            {/* Public route */}
             <Route index element={<Home />} />
 
             {/* Category path */}
@@ -84,6 +87,9 @@ function App() {
               path="/product"
               element={<Navigate to="/category/all-products" replace={true} />}
             />
+
+            {/* wishlist route */}
+            <Route path="/wishlist" element={<WishList />} />
 
             {/* Protected route */}
             <Route element={<RequireAuth />}>

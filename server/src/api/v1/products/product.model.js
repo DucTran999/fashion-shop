@@ -1,6 +1,12 @@
-import pool from "../helpers/init.postgres.pool.js";
 import createHttpError from "http-errors";
-import { packingProductVariant } from "../../utils/normalizeData.js";
+
+import {
+  packingProductVariant,
+  categorizeProductVariations,
+} from "../../utils/normalizeData.js";
+
+import pool from "../helpers/init.postgres.pool.js";
+import redisClient from "../helpers/init.redis.client.js";
 
 class ProductModel {
   findAll = async () => {
@@ -194,11 +200,46 @@ class ProductModel {
     }
   };
 
-  countProducts = async () => {
-    const query = "SELECT COUNT(id) as total FROM products;";
+  findProductsBriefVariationByListIds = async (productIds) => {
+    const query = `
+      SELECT v.id, cat.id as category_id, v.product_id, v.sku, p.name, v.image,
+             c.value as color, s.value as size, v.price, v.in_stock
+        FROM variants as v
+         JOIN colors as c
+           ON c.id = v.color_id
+         JOIN sizes as s
+           ON s.id = v.size_id
+         JOIN products as p
+           ON p.id = v.product_id
+         JOIN categories as cat
+           ON p.category_id = cat.id
+        WHERE v.size_id = 1 AND p.id = ANY($1)
+    `;
+
     try {
+      const { rows } = await pool.query(query, [productIds]);
+      // format data before send to client
+      return rows.length > 0 ? categorizeProductVariations(rows) : {};
+    } catch (error) {
+      throw new createHttpError.InternalServerError();
+    }
+  };
+
+  countProducts = async () => {
+    try {
+      // get total product from cached
+      const key = `atlanashop:product#total`;
+      const cached = await redisClient.get(key);
+      if (cached) return cached;
+
+      // Get from DB
+      const query = "SELECT COUNT(id) as total FROM products;";
       const { rows } = await pool.query(query);
-      return rows[0].total;
+      const totalProduct = rows[0].total;
+
+      // Cached the totalProduct
+      await redisClient.set(key, totalProduct);
+      return totalProduct;
     } catch (err) {
       throw new createHttpError.InternalServerError();
     }
