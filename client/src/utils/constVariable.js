@@ -25,6 +25,7 @@ const ORDER_STATE_MAP = {
 const COMMON_PATH = {
   home: "/",
   cart: "/cart",
+  wishlist: "/wishlist",
   category: "/category/all-products",
   account: "/account/profile",
   purchase: "/account/purchases",
@@ -49,6 +50,12 @@ const INPUT_ERROR_MESSAGE = {
 const LOCAL_STORAGE_KEY = {
   isLogged: "@atlana/logged",
   cartLocal: "@atlana/cart",
+  wishlistLocal: "@atlana/wishlist",
+};
+
+const SCREEN_MIN_SIZE = {
+  desktop: 992,
+  tablet: 768,
 };
 
 export {
@@ -59,4 +66,5 @@ export {
   LOCAL_STORAGE_KEY,
   COMMON_PATH,
   EMAIL_TYPE,
+  SCREEN_MIN_SIZE,
 };

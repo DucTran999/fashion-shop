@@ -21,6 +21,12 @@ const formatCapitalize = (original) => {
   return arr.join(" ");
 };
 
+const formatCapitalizeFirstWord = (original) => {
+  return `${original.charAt(0).toUpperCase()}${original
+    .slice(1)
+    .toLowerCase()}`;
+};
+
 const formatHyphenToCapitalize = (original) => {
   const arr = original.trim().split("-");
 
@@ -79,6 +85,7 @@ export {
   formatMoney,
   formatColorCode,
   formatCapitalize,
+  formatCapitalizeFirstWord,
   formatHyphenToCapitalize,
   formatHyphenToLowerCase,
   formatHyphenToUpperCase,

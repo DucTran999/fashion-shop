@@ -81,3 +81,24 @@
     transform: translateX(100%);
   }
 }
+
+@keyframes bright {
+  from {
+    filter: brightness(100%);
+  }
+  to {
+    filter: brightness(150%);
+  }
+}
+
+@keyframes upAndDown {
+  0% {
+    transform: translateY(10%);
+  }
+  50% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
