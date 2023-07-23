@@ -89,6 +89,17 @@ class ProductService {
       return [];
     }
   };
+
+  findProductsByListIds = async (productIds) => {
+    const variants = await productModel.findProductsBriefVariationByListIds(
+      productIds
+    );
+    return variants || {};
+  };
+
+  getTotalProducts = async () => {
+    return await productModel.countProducts();
+  };
 }
 
 export default new ProductService();
