@@ -1,0 +1,94 @@
+@use "../../../styles/" as s;
+
+.variant-section {
+  color: var(--light-grey-clr);
+  border-top: 2px solid var(--primary-clr);
+  border-bottom: 2px solid var(--primary-clr);
+  padding: 1em 0;
+
+  .variant__header {
+    font-size: 1.6rem;
+    margin-bottom: 0.25em;
+    margin-left: 0.1em;
+  }
+}
+
+.radio__input {
+  display: none;
+}
+
+.color-image-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  width: 5em;
+  padding: 0;
+  margin: 0em 0.4em 0.5em 0.4em;
+
+  border-radius: 2px;
+
+  &.active {
+    border: 2px solid var(--tiffany-blue-clr);
+  }
+
+  &.inactive {
+    border: 2px solid var(--light-grey-clr);
+    transition: 0.25s;
+
+    &:hover {
+      border: 2px solid var(--tiffany-blue-clr);
+      cursor: pointer;
+    }
+    &:hover > .color-label {
+      cursor: pointer;
+      color: var(--tiffany-blue-clr);
+    }
+  }
+}
+
+.image-section {
+  width: 100%;
+}
+
+.color-label {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  color: var(--dark-white-clr);
+  background: var(--dark-opacity-black-clr);
+  font-size: 0.9em;
+
+  &.active {
+    color: var(--tiffany-blue-clr);
+  }
+
+  &.inactive {
+    color: var(--light-grey-clr);
+  }
+}
+
+.size-label {
+  height: 2em;
+  border: 2px solid white;
+  border-radius: 5px;
+  margin: 0.5em 0.5em 0em 0em;
+  padding: 0.1em 0.5em;
+
+  font-size: 1.4rem;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid var(--tiffany-blue-clr);
+    color: var(--tiffany-blue-clr);
+  }
+
+  &.active {
+    cursor: default;
+    user-select: none;
+    color: var(--tiffany-blue-clr);
+    border: 2px solid var(--tiffany-blue-clr);
+  }
+}

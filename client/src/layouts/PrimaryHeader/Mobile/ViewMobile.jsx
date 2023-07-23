@@ -53,4 +53,4 @@ const ViewMobile = () => {
   );
 };
 
-export default ViewMobile;
+export default React.memo(ViewMobile);

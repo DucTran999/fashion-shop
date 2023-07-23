@@ -66,6 +66,12 @@ const AccountSection = ({ onChangeOption }) => {
         >
           Cart
         </div>
+        <div
+          className={cx("service-item")}
+          onClick={() => onChangeOption(COMMON_PATH.wishlist, "wishlist", "")}
+        >
+          Wishlist
+        </div>
         <Link to="/login" className={cx("service-item")}>
           Sign in
         </Link>

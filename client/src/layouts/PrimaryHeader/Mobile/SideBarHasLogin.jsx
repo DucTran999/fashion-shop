@@ -89,6 +89,12 @@ const ServiceLoggedSection = ({ onChangeOption }) => {
         >
           Cart
         </div>
+        <div
+          className={cx("service-item")}
+          onClick={() => onChangeOption(COMMON_PATH.wishlist, "wishlist", "")}
+        >
+          Wishlist
+        </div>
       </nav>
     </section>
   );

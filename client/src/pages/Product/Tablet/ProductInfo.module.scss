@@ -1,0 +1,83 @@
+@use "../../../styles/" as s;
+
+.row-mg {
+  margin: 1em 0;
+  flex-wrap: wrap;
+}
+
+.col-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.col-lg-none {
+  display: block;
+
+  @include s.breakpoint(lg) {
+    display: none;
+  }
+}
+
+.product-info {
+  position: relative;
+  width: 100%;
+  color: var(--light-grey-clr);
+  font-weight: 500;
+
+  &__name {
+    color: var(--tiffany-blue-clr);
+    font-size: 1.5em;
+
+    @include s.breakpoint(xxl) {
+      font-size: 2.5em;
+    }
+  }
+
+  &__sku {
+    font-size: 1em;
+  }
+
+  &__price {
+    font-size: 1em;
+    color: var(--gold-clr);
+  }
+
+  &__stock {
+    font-size: 1em;
+    max-width: 10em;
+
+    &.sold-out {
+      color: var(--orange-red-clr);
+    }
+  }
+}
+
+.add-wishlist-btn {
+  position: absolute;
+  bottom: 0;
+  right: 1em;
+
+  border: none;
+  border-radius: 45px;
+  background-color: var(--dark-white-clr);
+
+  padding: 0.2em;
+  width: 1.5em;
+  height: 1.5em;
+
+  font-size: 1.6em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .btn-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-clr);
+  }
+}

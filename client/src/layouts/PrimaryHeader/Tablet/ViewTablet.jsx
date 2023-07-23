@@ -15,13 +15,13 @@ const ViewTablet = () => {
   return (
     <Container>
       <Row className={cx("row-cent")}>
-        <Col md="2">
+        <Col md="2" className={cx("col-cent")}>
           <ShopLogo />
         </Col>
-        <Col md="8" className={cx("col-cent")}>
+        <Col md="8">
           <PrimaryNav />
         </Col>
-        <Col md="2">
+        <Col md="2" className={cx("col-cent")}>
           <MenuDropDown />
         </Col>
       </Row>
@@ -29,4 +29,4 @@ const ViewTablet = () => {
   );
 };
 
-export default ViewTablet;
+export default React.memo(ViewTablet);
