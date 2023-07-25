@@ -4,7 +4,6 @@ const errorHandler = (app) => {
   });
 
   app.use((err, req, res, next) => {
-    console.log("Handle by middleware");
     res.status(err.status || 500).json({
       status: "error",
       message: err.message,
