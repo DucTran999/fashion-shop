@@ -1,12 +1,31 @@
-@use "../../styles";
+@use "../../styles" as s;
 
 .wrapper {
-  background-color: var(--dark-black-clr);
+  background-color: var(--very-dark-black-clr);
   padding: 1.5em 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.banner-wrap {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-bottom: calc(0.3125 * 85%); // image ratio
+}
+
+.banner {
+  width: 80%;
+  height: auto;
+  user-select: none;
+  display: none;
+  margin: auto;
+
+  @include s.breakpoint(lg) {
+    display: block;
+  }
 }
 
 .header {
@@ -34,8 +53,8 @@
   background: var(--light-grey-clr);
 
   &:hover {
-    transition: 0.15s;
-    color: white;
+    transition: 0.5s;
     background: var(--dark-gradient-3-clr);
+    color: white;
   }
 }
