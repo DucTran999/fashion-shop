@@ -16,6 +16,8 @@ const API_URL = {
   emails: "api/v1/emails",
 
   wishlist: "api/v1/wishlists",
+
+  search: "api/v1/search",
 };
 
 export default API_URL;
