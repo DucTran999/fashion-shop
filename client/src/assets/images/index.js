@@ -62,6 +62,9 @@ const IMAGES = {
 
   // Search
   searchBg: require("./search/search.webp"),
+
+  // Missing Page:
+  missingPage: require("./missingPage/missing404.webp"),
 };
 
 export default IMAGES;

@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import IMAGES from "../../assets/images";
+import useWindowDimensions from "../../hooks/useWindowDimension";
+import { SCREEN_MIN_SIZE } from "../../utils/constVariable";
 import { updateSelection } from "../../features/activeNav/navAction";
 
 import classNames from "classnames/bind";
@@ -11,6 +14,7 @@ const cx = classNames.bind(style);
 function MissingPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { width } = useWindowDimensions();
 
   const handleClick = () => {
     updateSelection("home", dispatch);
@@ -23,13 +27,27 @@ function MissingPage() {
 
   return (
     <div className={cx("wrapper")}>
-      <p className={cx("header")}>404 Not Found</p>
-      <p className={cx("message")}>Sorry, We can not find this page.</p>
+      {width > SCREEN_MIN_SIZE.desktop ? (
+        <div className={cx("banner-wrap")}>
+          <img
+            className={cx("banner")}
+            src={IMAGES.missingPage}
+            alt="missing Page"
+            draggable={false}
+          />
+        </div>
+      ) : (
+        <>
+          <p className={cx("header")}>404 Not Found</p>
+          <p className={cx("message")}>Sorry, We can not find this page.</p>
+        </>
+      )}
+
       <button className={cx("back-home-btn")} onClick={handleClick}>
-        Back to Home Page
+        Come Back Home
       </button>
     </div>
   );
 }
 
-export default MissingPage;
+export default React.memo(MissingPage);

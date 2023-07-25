@@ -16,7 +16,18 @@
   color: var(--primary-opacity-clr);
 }
 
+.banner-wrap {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-bottom: calc(0.375 * 80%); // image ratio
+}
+
 .banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
   pointer-events: none;
   user-select: none;
 }

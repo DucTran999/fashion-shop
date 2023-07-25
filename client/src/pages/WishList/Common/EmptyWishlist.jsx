@@ -29,12 +29,14 @@ const EmptyWishlist = () => {
   return (
     <div className={cx("wrapper")}>
       {width >= SCREEN_MIN_SIZE.tablet ? (
-        <img
-          src={IMAGES.emptyWishlist}
-          alt="Empty wishlist"
-          className={cx("banner")}
-          draggable={false}
-        />
+        <div className={cx("banner-wrap")}>
+          <img
+            src={IMAGES.emptyWishlist}
+            alt="Empty wishlist"
+            className={cx("banner")}
+            draggable={false}
+          />
+        </div>
       ) : (
         <p className={cx("header")}>My wishlist</p>
       )}
