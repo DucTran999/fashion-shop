@@ -7,10 +7,11 @@ import { Container, Col, Row } from "react-bootstrap";
 import IMAGES from "../../assets/images";
 import { updateSelection } from "../../features/activeNav/navAction";
 
+import SectionSeparator from "../../components/SectionSeparator";
+
 // Style
 import classNames from "classnames/bind";
 import styles from "./SectionCategory.module.scss";
-
 const cx = classNames.bind(styles);
 
 function SectionCategory() {
@@ -39,7 +40,7 @@ function SectionCategory() {
 
   return (
     <Container>
-      <div className={cx("category__header")}>CATEGORIES</div>
+      <SectionSeparator title="Category" noPadding={true} />
       <Row className={cx("row-space-between")}>
         {categories.map((category, index) => {
           return (

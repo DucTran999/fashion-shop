@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Col } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// Style
 import classNames from "classnames/bind";
 import style from "./Gallery.module.scss";
 const cx = classNames.bind(style);
@@ -20,6 +21,7 @@ const Gallery = ({ variantInfo }) => {
     slidesToShow: 3,
     lazyLoad: true,
     vertical: true,
+    speed: 700,
     focusOnSelect: true,
     arrows: false,
   };
@@ -28,12 +30,13 @@ const Gallery = ({ variantInfo }) => {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
+    speed: 700,
     arrows: false,
   };
 
   return (
-    <>
-      <Col lg={1} className="d-none d-lg-block">
+    <Fragment>
+      <Col lg="1" className="d-none d-lg-block">
         <div className={cx("gallery-wrap")}>
           <Slider
             asNavFor={nav1}
@@ -53,7 +56,7 @@ const Gallery = ({ variantInfo }) => {
           </Slider>
         </div>
       </Col>
-      <Col lg={5}>
+      <Col xs="12" md="8" lg="5">
         <Slider
           asNavFor={nav2}
           ref={(slider1) => setNav1(slider1)}
@@ -71,8 +74,8 @@ const Gallery = ({ variantInfo }) => {
           })}
         </Slider>
       </Col>
-    </>
+    </Fragment>
   );
 };
 
-export default React.memo(Gallery);
+export default Gallery;

@@ -3,32 +3,36 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
 // Redux, custom hook, const variable, ...
-import { formatColorCode } from "../../utils/formatData";
-import { changeVariantSelected } from "../../features/product/productAction";
+import { changeVariantSelected } from "../../../features/product/productAction";
 
 // Style
 import classNames from "classnames/bind";
-import style from "./ProductVariantBar.module.scss";
+import style from "./VariantBar.module.scss";
 const cx = classNames.bind(style);
+
+const IMG_URL = process.env.REACT_APP_API_SERVER_URL;
 
 const ProductVariantBar = () => {
   const productVariants = useSelector(
     (state) => state.product.variants?.allVariants
   );
-
   const currentVariant = useSelector(
     (state) => state.product.variants?.selected
   );
 
   const dispatch = useDispatch();
 
-  const filterColor = () => {
+  const getColorsList = () => {
     let colorList = [];
+    let imageColorList = [];
     productVariants.forEach((variant) => {
-      if (!colorList.includes(variant.color)) colorList.push(variant.color);
+      if (!colorList.includes(variant.color)) {
+        colorList.push(variant.color);
+        imageColorList.push({ image: variant.image, color: variant.color });
+      }
     });
 
-    return colorList;
+    return imageColorList;
   };
 
   const findVariant = (size, color) => {
@@ -42,12 +46,11 @@ const ProductVariantBar = () => {
     }
   };
 
-  const colors = filterColor();
+  const imageColors = getColorsList();
   const [sizeSelected, setSizeSelected] = useState(currentVariant.size);
   const [colorSelected, setColorSelected] = useState(currentVariant.color);
 
-  const handleChangeColor = (e) => {
-    const newClr = e.target.value;
+  const handleChangeColor = (newClr) => {
     setColorSelected(newClr);
     const variant = findVariant(sizeSelected, newClr);
     changeVariantSelected(variant, dispatch);
@@ -62,48 +65,52 @@ const ProductVariantBar = () => {
 
   return (
     <Container fluid={true} className={cx("variant-section")}>
-      <Row>
-        <Col className={cx("variant__header")}>
-          {`Size: ${sizeSelected} - Color: ${colorSelected}`}
-        </Col>
-      </Row>
       {/* Color Bar*/}
-      <Row className={cx("row-mg-2")}>
-        <Col>
-          {colors.map((color, idx) => {
-            return (
-              <span key={idx}>
-                <input
-                  className={cx("radio__input")}
-                  type="radio"
-                  name="productVariants-clr"
-                  value={color}
-                  id={color}
-                  onChange={(e) => handleChangeColor(e)}
-                />
-                <label
-                  htmlFor={color}
-                  className={cx(
-                    "color-label",
-                    `${formatColorCode(color)}`,
-                    colorSelected === color ? "active" : "inactive"
-                  )}
-                ></label>
-              </span>
-            );
-          })}
-        </Col>
+      <Row>
+        {imageColors.map((variation) => {
+          return (
+            <span
+              key={variation.color}
+              className={cx(
+                "color-image-wrap",
+                colorSelected === variation.color ? "active" : "inactive"
+              )}
+              onClick={() => handleChangeColor(variation.color)}
+            >
+              <img
+                className={cx("image-section")}
+                src={`${IMG_URL}/product/${variation.image}`}
+                alt="select img"
+              />
+              <input
+                className={cx("radio__input")}
+                type="radio"
+                name="productVariants-clr"
+                value={variation.color}
+                id={variation.color}
+              />
+              <label
+                htmlFor={variation.color}
+                className={cx(
+                  "color-label",
+                  colorSelected === variation.color ? "active" : "inactive"
+                )}
+              >
+                {variation.color}
+              </label>
+            </span>
+          );
+        })}
       </Row>
-
       {/* Size Bar */}
-      <Row className={cx("row-mg-2")}>
+      <Row>
         <Col>
           <input
             className={cx("radio__input")}
             type="radio"
             name="productVariants-sz"
             value="Small"
-            id={"size-s"}
+            id="size-s"
             onChange={(e) => handleChangeSize(e)}
           />
           <label
@@ -113,14 +120,14 @@ const ProductVariantBar = () => {
               sizeSelected === "small" ? "active" : "inactive"
             )}
           >
-            S
+            Small
           </label>
           <input
             className={cx("radio__input")}
             type="radio"
             name="productVariants-sz"
             value="Medium"
-            id={"size-m"}
+            id="size-m"
             onChange={(e) => handleChangeSize(e)}
           />
           <label
@@ -130,14 +137,14 @@ const ProductVariantBar = () => {
               sizeSelected === "medium" ? "active" : "inactive"
             )}
           >
-            M
+            Medium
           </label>
           <input
             className={cx("radio__input")}
             type="radio"
             name="productVariants-sz"
             value="Large"
-            id={"size-l"}
+            id="size-l"
             onChange={(e) => handleChangeSize(e)}
           />
           <label
@@ -147,7 +154,7 @@ const ProductVariantBar = () => {
               sizeSelected === "large" ? "active" : "inactive"
             )}
           >
-            L
+            Large
           </label>
         </Col>
       </Row>

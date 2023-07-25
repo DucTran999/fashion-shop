@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 // Custom hook, util func, variables ...
 import ICONS from "../../assets/icons";
 import IMAGES from "../../assets/images";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useWindowDimensions from "../../hooks/useWindowDimension";
+import { LOCAL_STORAGE_KEY } from "../../utils/constVariable";
 import { updateSelection } from "../../features/activeNav/navAction";
 import {
   formatMoney,
@@ -15,6 +17,10 @@ import {
   formatCapitalize,
   formatVietnameseToNonAccent,
 } from "../../utils/formatData";
+import {
+  addProductToWishlistReq,
+  removeProductFromWishlistReq,
+} from "../../features/wishlist/wishlistAction";
 
 // Style
 import classNames from "classnames/bind";
@@ -23,19 +29,45 @@ const cx = classNames.bind(style);
 
 const IMG_URL = process.env.REACT_APP_API_SERVER_URL;
 
-function ProductCard({ productInfo }) {
+const checkProductInWishlist = (productId) => {
+  const wishlist = JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_KEY.wishlistLocal)
+  );
+  return wishlist?.[productId] ? true : false;
+};
+
+const ProductCard = ({ productInfo }) => {
   const [currentVariant, setVariant] = useState(0);
-  const [isWishlistAdded, setIsWishlistAdded] = useState("inactive");
+  const [inWishlist, setInWishlist] = useState(
+    checkProductInWishlist(productInfo[0].product_id)
+  );
+
   const [mouseMoved, setMouseMoved] = useState(false);
   const { width } = useWindowDimensions();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
+  const user = useSelector((state) => state.auth.login?.currentUser);
 
-  const handleAddToWishlist = () => {
-    setIsWishlistAdded((prev) => {
-      return prev === "active" ? "inactive" : "active";
-    });
+  const handleAddToWishlist = async () => {
+    if (inWishlist === false) {
+      await addProductToWishlistReq(
+        user?.user_id,
+        productInfo,
+        axiosPrivate,
+        dispatch
+      );
+      setInWishlist(!inWishlist);
+    } else {
+      await removeProductFromWishlistReq(
+        user?.user_id,
+        productInfo,
+        axiosPrivate,
+        dispatch
+      );
+      setInWishlist(!inWishlist);
+    }
   };
 
   const handleNavigateOnClick = () => {
@@ -117,17 +149,15 @@ function ProductCard({ productInfo }) {
             src={`${IMG_URL}/product/${productInfo[currentVariant].image}`}
             className={cx("product-img")}
             placeholderSrc={IMAGES.defaultImg}
-            effect="blur"
             alt="Product IMG"
             onMouseMove={() => setMouseMoved(true)}
             onMouseDown={() => setMouseMoved(false)}
             onMouseUp={handleNavigateOnClick}
           />
-          <div
-            className={cx("add-wishlist-btn", `${isWishlistAdded}`)}
-            onClick={handleAddToWishlist}
-          >
-            {ICONS.favourite}
+          <div className={cx("add-wishlist-btn")} onClick={handleAddToWishlist}>
+            <span className={cx("btn-icon")}>
+              {inWishlist ? ICONS.heart : ICONS.favourite}
+            </span>
           </div>
         </div>
       ) : (
@@ -140,11 +170,10 @@ function ProductCard({ productInfo }) {
             alt="Product IMG"
             onClick={handleOnTouch}
           />
-          <div
-            className={cx("add-wishlist-btn", `${isWishlistAdded}`)}
-            onClick={handleAddToWishlist}
-          >
-            {ICONS.favourite}
+          <div className={cx("add-wishlist-btn")} onClick={handleAddToWishlist}>
+            <span className={cx("btn-icon")}>
+              {inWishlist ? ICONS.heart : ICONS.favourite}
+            </span>
           </div>
         </div>
       )}
@@ -155,6 +184,6 @@ function ProductCard({ productInfo }) {
       <p className={cx("product-price")}>Price: {`${productPrice()}`}</p>
     </div>
   );
-}
+};
 
-export default React.memo(ProductCard);
+export default ProductCard;

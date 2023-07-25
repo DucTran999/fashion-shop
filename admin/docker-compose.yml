@@ -4,7 +4,7 @@ version: "3.8"
 services:
   admin:
     build: .
-    image: admin_app:1.3.0-apline
+    image: admin_app:1.4.0-apline
     container_name: admin-app
     restart: unless-stopped
     ports:

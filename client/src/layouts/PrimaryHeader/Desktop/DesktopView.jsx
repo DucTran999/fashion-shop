@@ -15,13 +15,13 @@ const DesktopView = () => {
   return (
     <Container>
       <Row className={cx("row-cent")}>
-        <Col lg="2" className={cx("col-cent")}>
+        <Col lg="2" xl="2" className={cx("col-cent")}>
           <ShopLogo />
         </Col>
-        <Col lg="7" xl="8">
+        <Col lg="6" xl="8">
           <PrimaryNav />
         </Col>
-        <Col lg="2">
+        <Col lg="4" xl="2" className={cx("col-cent")}>
           <SubNavBar />
         </Col>
       </Row>
@@ -29,4 +29,4 @@ const DesktopView = () => {
   );
 };
 
-export default DesktopView;
+export default React.memo(DesktopView);

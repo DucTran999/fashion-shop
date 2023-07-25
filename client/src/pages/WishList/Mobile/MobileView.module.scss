@@ -1,0 +1,20 @@
+@use "../../../styles/" as s;
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
+
+// General
+.theme {
+  position: relative;
+  min-height: 85vh;
+}
+
+.header {
+  color: var(--primary-opacity-clr);
+  text-align: center;
+  font-size: 2.5em;
+  padding-bottom: 1em;
+  font-family: "Dancing Script", cursive;
+}
+
+.catalog-wrapper {
+  animation: fadeIn 0.5s;
+}

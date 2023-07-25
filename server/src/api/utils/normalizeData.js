@@ -3,6 +3,7 @@ dotenv.config();
 
 /**
  * Pack variations into respective products
+ * @function packingProductVariant
  * @param  {[List Object]} variations List product variations.
  *
  * @return {[List Array]}   An array holds variations are classified by product_id.
@@ -21,6 +22,27 @@ const packingProductVariant = (variations) => {
   }
 
   return Object.keys(products).map((key) => products[key]);
+};
+
+/**
+ * Categorize variations for products by productId.
+ * @function categorizeProductVariations
+ * @param  { Array<variation> } variations The list of variations.
+ * @return { {productId: string, productVariations: Array<variation>} } An object with key is productId and value is list of it variations.
+ */
+const categorizeProductVariations = (variations) => {
+  let products = {};
+
+  for (let variation of variations) {
+    const { product_id } = variation;
+
+    // Create a new array if currentVariant is not belong to any existed.
+    if (typeof products[product_id] === "undefined") products[product_id] = [];
+
+    // save variation
+    products[product_id].push(variation);
+  }
+  return products;
 };
 
 const hideEmail = (email) => {
@@ -65,4 +87,9 @@ const extractVariantId = (objects) => {
   return values;
 };
 
-export { packingProductVariant, extractVariantId, encryptUserPayload };
+export {
+  packingProductVariant,
+  categorizeProductVariations,
+  extractVariantId,
+  encryptUserPayload,
+};

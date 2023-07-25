@@ -1,53 +1,4 @@
-@use "../../styles/" as s;
-
-// General
-.theme {
-  background-color: var(--medium-black-clr);
-  padding: 2em 0;
-}
-
-.row-cent {
-  display: flex;
-  justify-content: center;
-}
-
-.row-btw {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.row-mg {
-  margin: 1em 0;
-}
-
-.col-cent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.col-right {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.col-no-gd {
-  padding: 0;
-  margin: 0;
-}
-
-.col-mg {
-  margin-bottom: 1.5em;
-}
-
-.col-lg-none {
-  display: block;
-
-  @include s.breakpoint(lg) {
-    display: none;
-  }
-}
+@use "../../../styles/" as s;
 
 .variant-section {
   color: var(--light-grey-clr);
@@ -173,8 +124,8 @@
 }
 
 .size-label {
-  width: 2em;
   height: 2em;
+  width: 2em;
   border: 2px solid white;
   border-radius: 5px;
   margin: 0.2em;

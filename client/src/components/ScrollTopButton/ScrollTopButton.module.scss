@@ -1,0 +1,14 @@
+@use "../../styles/" as s;
+
+.scroll-top-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+
+  font-size: 2em;
+  color: var(--primary-opacity-clr);
+
+  &:hover {
+    cursor: pointer;
+  }
+}

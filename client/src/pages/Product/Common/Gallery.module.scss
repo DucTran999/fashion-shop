@@ -1,0 +1,11 @@
+@use "../../../styles/" as s;
+
+.gallery-wrap {
+  width: 100%;
+  height: fit-content;
+}
+
+.img-gallery {
+  margin: 1em 0;
+  cursor: pointer;
+}
