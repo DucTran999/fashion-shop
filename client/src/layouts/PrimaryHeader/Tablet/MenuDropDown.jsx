@@ -11,6 +11,7 @@ import {
   updateSidebarSelection,
 } from "../../../features/activeNav/navAction";
 import { logOutReq } from "../../../features/auth/authAction";
+import { formatCapitalizeFirstWord } from "../../../utils/formatData";
 import { setNotificationFilter } from "../../../features/notification/notificationSlice";
 
 //Style
@@ -38,12 +39,15 @@ const MenuHasLogin = () => {
   return (
     <nav className={cx("menu__dropdown--tablet")}>
       <section className={cx("dropdown__service")}>
-        <Link to="/search" className={cx("menu__dropdown--tablet__element")}>
-          Search
-        </Link>
         <div
           className={cx("menu__dropdown--tablet__element")}
-          onClick={() => handleNavigateOnClick(COMMON_PATH.cart, "Cart")}
+          onClick={() => handleNavigateOnClick(COMMON_PATH.search, "search")}
+        >
+          Search
+        </div>
+        <div
+          className={cx("menu__dropdown--tablet__element")}
+          onClick={() => handleNavigateOnClick(COMMON_PATH.cart, "cart")}
         >
           Cart
         </div>
@@ -64,9 +68,14 @@ const MenuHasLogin = () => {
         >
           My Purchases
         </div>
-        <Link to="/wishlist" className={cx("menu__dropdown--tablet__element")}>
+        <div
+          className={cx("menu__dropdown--tablet__element")}
+          onClick={() =>
+            handleNavigateOnClick(COMMON_PATH.wishlist, "wishlist")
+          }
+        >
           Wishlist
-        </Link>
+        </div>
       </section>
       <section className={cx("dropdown__service", "last")}>
         <div
@@ -91,22 +100,32 @@ const MenuHasLogin = () => {
 
 const MenuNoLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleNavigateOnClick = (linkTo, pageName) => {
+    updateSelection(pageName, dispatch);
+    navigate(linkTo, { replace: true });
+  };
+  const services = [
+    { link: COMMON_PATH.search, title: "search" },
+    { link: COMMON_PATH.cart, title: "cart" },
+    { link: COMMON_PATH.wishlist, title: "wishlist" },
+  ];
 
   return (
     <nav className={cx("menu__dropdown--tablet")}>
       <section className={cx("dropdown__service")}>
-        <Link to="/search" className={cx("menu__dropdown--tablet__element")}>
-          Search
-        </Link>
-        <div
-          className={cx("menu__dropdown--tablet__element")}
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(COMMON_PATH.cart, { replace: true });
-          }}
-        >
-          Cart
-        </div>
+        {services.map((service) => {
+          return (
+            <div
+              key={service.title}
+              className={cx("menu__dropdown--tablet__element")}
+              onClick={() => handleNavigateOnClick(service.link, service.title)}
+            >
+              {formatCapitalizeFirstWord(service.title)}
+            </div>
+          );
+        })}
       </section>
       <section className={cx("dropdown__service", "last")}>
         <Link to="/login" className={cx("menu__dropdown--tablet__element")}>

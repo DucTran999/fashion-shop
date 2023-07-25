@@ -1,7 +1,14 @@
 import createHttpError from "http-errors";
-import redisClient from "../helpers/init.redis.client.js";
-import { formatUrlPath } from "../../utils/formatData.js";
 
+import { formatUrlPath } from "../../utils/formatData.js";
+import redisClient from "../helpers/init.redis.client.js";
+
+/**
+ * Limit the number of requests per Ip in a specific period.
+ * @param {number} limit - number of requests
+ * @param {number} duration - time limit (seconds)
+ * @return {(req,res, next) => Promise<any>} A asynchronous function for caching the rate.
+ */
 const rateLimit = (limit, duration) => async (req, res, next) => {
   try {
     const ip = req.socket.remoteAddress;
@@ -15,12 +22,14 @@ const rateLimit = (limit, duration) => async (req, res, next) => {
       return next();
     }
 
+    // refuse requests when hit the limit.
     if (hitTimes >= limit) {
       return res
         .status(429)
         .json({ status: "error", message: "Too Many Request!" });
     }
 
+    // cached the number of request
     await redisClient.INCR(key);
     return next();
   } catch (error) {

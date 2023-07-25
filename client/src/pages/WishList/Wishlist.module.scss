@@ -1,0 +1,8 @@
+@use "../../styles/" as s;
+
+// General
+.theme {
+  position: relative;
+  background-color: var(--darker-black-clr);
+  padding: 2em 0;
+}

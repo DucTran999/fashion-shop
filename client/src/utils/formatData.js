@@ -21,6 +21,12 @@ const formatCapitalize = (original) => {
   return arr.join(" ");
 };
 
+const formatCapitalizeFirstWord = (original) => {
+  return `${original.charAt(0).toUpperCase()}${original
+    .slice(1)
+    .toLowerCase()}`;
+};
+
 const formatHyphenToCapitalize = (original) => {
   const arr = original.trim().split("-");
 
@@ -63,6 +69,22 @@ const formatVietnameseToNonAccent = (original) => {
   return formatted;
 };
 
+const formatVietnameseToNonAccentNoHyphen = (original) => {
+  // Lowercase
+  let formatted = original.toLowerCase();
+
+  // remove accent
+  formatted = formatted.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  formatted = formatted.replace(/[đĐ]/g, "d");
+
+  // remove redundant space
+  formatted = formatted.replace(/(\s+)/g, " ");
+
+  formatted = formatted.trim();
+
+  return formatted;
+};
+
 const convertStateToStateCode = (plainText) => {
   if (plainText.toLowerCase() === "orders pending") return "1";
   if (plainText.toLowerCase() === "on delivery") return "2";
@@ -79,10 +101,12 @@ export {
   formatMoney,
   formatColorCode,
   formatCapitalize,
+  formatCapitalizeFirstWord,
   formatHyphenToCapitalize,
   formatHyphenToLowerCase,
   formatHyphenToUpperCase,
   formatVietnameseToNonAccent,
+  formatVietnameseToNonAccentNoHyphen,
   convertStateToStateCode,
   getDateFromTimestamp,
 };

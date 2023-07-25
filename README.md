@@ -3,8 +3,8 @@
 <p align="center">
   <a href="https://nodejs.org/en"><img alt="Static Badge" src="https://img.shields.io/badge/node_js-v18.16.1-jade?logo=nodedotjs"></a>
   <a href="https://www.npmjs.com/package/react"><img alt="Static Badge" src="https://img.shields.io/badge/react-v18.2.0-blue?logo=react"></a>
-  <a href="https://www.npmjs.com/package/pg"><img alt="Static Badge" src="https://img.shields.io/badge/postgreSQL-v15.3-blue?logo=postgresql&logoColor=f5f5f5"></a>
-  <a href="https://www.npmjs.com/package/redis"><img alt="Static Badge" src="https://img.shields.io/badge/redis-v7.2-red?logo=redis&logoColor=f5f5f5"></a>
+  <a href="https://hub.docker.com/_/postgres"><img alt="Static Badge" src="https://img.shields.io/badge/postgreSQL-v15.3-blue?logo=postgresql&logoColor=f5f5f5"></a>
+  <a href="https://hub.docker.com/_/redis"><img alt="Static Badge" src="https://img.shields.io/badge/redis-v7.2-red?logo=redis&logoColor=f5f5f5"></a>
   <a href="https://www.npmjs.com/package/@reduxjs/toolkit"><img alt="Static Badge" src="https://img.shields.io/badge/redux--toolkit-v1.9.5-purple?logo=redux"></a>
   <a href="https://react-bootstrap.netlify.app/docs/getting-started/introduction"><img alt="Static Badge" src="https://img.shields.io/badge/react--bootstrap-v2.7.4-navy?logo=bootstrap&logoColor=f5f5f5"></a>
   <a href="https://www.docker.com/"><img alt="Static Badge" src="https://img.shields.io/badge/docker--compose-v2.19.1-blue?logo=docker"></a>
@@ -20,15 +20,23 @@ This online shop project was built with PERN stack (PostgreSQL, Express, React, 
 
 2. Home Page:
 
-![image](https://github.com/DucTran999/fashion-shop/assets/74949792/44a5b880-15fe-4d4d-81d0-b3a77573d148)
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/6bc577a3-6211-46a5-8c76-88f7112bc825)
 
 3. Products list:
 
-![image](https://github.com/DucTran999/fashion-shop/assets/74949792/9bbbb091-b54e-4e31-8a4b-f03043fe2050)
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/26661af3-a349-4ff5-838a-348d86fd1265)
 
 4. Product details:
 
-![image](https://github.com/DucTran999/fashion-shop/assets/124438914/58e9bdff-edb8-44b7-8821-ddc88631153b)
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/baccd6d0-f1c5-479b-b2ca-44822f06daee)
+
+5. Search:
+
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/b140f179-ef10-4647-9d9b-1e984dc177bd)
+
+7. Wishlist:
+
+![image](https://github.com/DucTran999/fashion-shop/assets/74949792/f0fef38c-0a13-4e4b-8248-55e949ec5cc1)
 
 ## Browser support
 
@@ -41,7 +49,7 @@ This online shop project was built with PERN stack (PostgreSQL, Express, React, 
 
 Requirement:
 
-- Free space: minimum 2GB
+- Free space: minimum 2.5GB
 - Docker: version 24.0.2 or the latest
 - docker-compose: v2.19.1 or the latest
 

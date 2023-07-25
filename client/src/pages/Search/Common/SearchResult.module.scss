@@ -1,0 +1,21 @@
+@use "../../../styles/" as s;
+
+.header {
+  text-align: center;
+  padding: 1em;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--primary-opacity-clr);
+
+  .empty {
+    height: 10em;
+  }
+
+  @include s.breakpoint(md) {
+    font-size: 1.8rem;
+  }
+
+  @include s.breakpoint(lg) {
+    font-size: 2rem;
+  }
+}

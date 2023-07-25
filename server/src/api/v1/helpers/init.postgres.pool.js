@@ -8,6 +8,9 @@ const { Pool } = pkg;
 
 const pool = new Pool(DB_CONNECT_INFO.pg);
 
+const result = await pool.query("SELECT $1::text as name", ["Connected"]);
+console.log(">>> Postgres ::: ", result.rows[0].name);
+
 // End pool when server down.
 process.on("SIGINT", async () => {
   console.log("Postgres Pool ::: End <<<");

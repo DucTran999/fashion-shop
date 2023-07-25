@@ -7,6 +7,8 @@ import cartReducer from "./cart/cartSlice";
 import orderReducer from "./order/orderSlice";
 import notificationReducer from "./notification/notificationSlice";
 import emailReducer from "./email/emailSlice";
+import wishlistReducer from "./wishlist/wishlistSlice";
+import productListReducer from "./productList/productListSlice";
 
 export default configureStore({
   reducer: {
@@ -18,6 +20,8 @@ export default configureStore({
     order: orderReducer,
     notification: notificationReducer,
     email: emailReducer,
+    wishlist: wishlistReducer,
+    productList: productListReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

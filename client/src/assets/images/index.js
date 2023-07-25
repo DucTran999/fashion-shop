@@ -54,8 +54,17 @@ const IMAGES = {
   category7: require("./category/image_categories-7.webp"),
   category8: require("./category/image_categories-8.webp"),
 
-  //Waiting Image
+  // Waiting Image
   defaultImg: require("./default/blur_img.webp"),
+
+  // Wishlist
+  emptyWishlist: require("./wishlist/empty_wishlist.webp"),
+
+  // Search
+  searchBg: require("./search/search.webp"),
+
+  // Missing Page:
+  missingPage: require("./missingPage/missing404.webp"),
 };
 
 export default IMAGES;
