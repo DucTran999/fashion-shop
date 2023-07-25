@@ -51,7 +51,7 @@ function Category() {
           {products?.length > 0 ? (
             products.map((product, idx) => {
               return (
-                <Col xs="6" lg="3" key={idx} className={cx("col-cent")}>
+                <Col xs="6" md="4" lg="3" key={idx} className={cx("col-cent")}>
                   <ProductCardResponsive productInfo={product} />
                 </Col>
               );

@@ -1,0 +1,74 @@
+@use "../../../styles/" as s;
+
+.tablet-wrap {
+  position: relative;
+}
+
+.banner {
+  position: relative;
+  background-color: var(--darker-black-clr);
+  color: var(--light-grey-clr);
+
+  height: 15em;
+}
+
+.search-box-overlay {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box {
+  position: absolute;
+  top: 5em;
+
+  width: 90%;
+  border: none;
+
+  .search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 1em 2em;
+
+    &::selection {
+      color: var(--light-grey-clr);
+      background: var(--medium-black-clr);
+    }
+  }
+
+  .search-btn {
+    position: absolute;
+    right: 0.8em;
+    font-size: 1.8em;
+    color: var(--primary-opacity-clr);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .list-suggest {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .suggest {
+      padding: 0.5em 2em;
+      background: white;
+      color: var(--very-dark-black-clr);
+
+      &:hover {
+        cursor: pointer;
+        transition: 0.4s;
+        background: var(--dark-white-clr);
+      }
+    }
+  }
+}
+
+.spinner {
+  animation: slideDown 0.5s;
+}

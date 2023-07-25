@@ -20,6 +20,7 @@ import {
   Notification,
   VerificationEmail,
   WishList,
+  Search,
 } from "./pages";
 import PersistLogin from "./routes/PersistLogin";
 import RequireAuth from "./routes/RequireAuth";
@@ -90,6 +91,9 @@ function App() {
 
             {/* wishlist route */}
             <Route path="/wishlist" element={<WishList />} />
+
+            {/* search route */}
+            <Route path="/search" element={<Search />} />
 
             {/* Protected route */}
             <Route element={<RequireAuth />}>

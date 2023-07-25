@@ -47,7 +47,9 @@ const SubNavBar = () => {
       <li className={cx("sub-nav__item")}>
         <div
           className={cx("sub-nav__link")}
-          onClick={() => navigate("/search", { replace: true })}
+          onClick={() =>
+            handleIconNavigateOnClick(COMMON_PATH.search, "search", "")
+          }
         >
           {ICONS.search}
         </div>
