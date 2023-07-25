@@ -10,7 +10,7 @@
   <a href="https://www.docker.com/"><img alt="Static Badge" src="https://img.shields.io/badge/docker--compose-v2.19.1-blue?logo=docker"></a>
     <a href="https://www.npmjs.com/package/socket.io"><img alt="Static Badge" src="https://img.shields.io/badge/socket.io-v6.7.2-jade?logo=socket.io"></a>
 </p>
-This online shop project was built with PERN stack (PostgreSQL, Express, React, and Node.js). The project allows users to browse products, add items to their cart, and check out their purchases, get notifications in real time.
+This online shop project was built with PERN stack (PostgreSQL, Express, React, and Node.js). The project allows users to browse products, add items to their cart, wishlist, search the product, and check out their purchases, get notifications in real time.
 
 ## Preview
 
