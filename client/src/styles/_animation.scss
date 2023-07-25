@@ -82,6 +82,15 @@
   }
 }
 
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
 @keyframes bright {
   from {
     filter: brightness(100%);

@@ -21,4 +21,16 @@ const EMAIL_TYPE = {
   verifyUnlockLogin: "unlock",
 };
 
-export { MAGIC_NUMBER, ORDER_STATE_ID, NOTIFICATION_TYPE, EMAIL_TYPE };
+const SEARCH_TYPE = {
+  byName: "byName",
+  byCategory: "byCategory",
+  byCode: "byCode",
+};
+
+export {
+  MAGIC_NUMBER,
+  ORDER_STATE_ID,
+  NOTIFICATION_TYPE,
+  EMAIL_TYPE,
+  SEARCH_TYPE,
+};

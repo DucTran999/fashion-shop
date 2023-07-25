@@ -59,6 +59,9 @@ const IMAGES = {
 
   // Wishlist
   emptyWishlist: require("./wishlist/empty_wishlist.webp"),
+
+  // Search
+  searchBg: require("./search/search.webp"),
 };
 
 export default IMAGES;

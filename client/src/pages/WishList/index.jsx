@@ -17,6 +17,7 @@ import style from "./Wishlist.module.scss";
 const cx = classNames.bind(style);
 
 const WishList = () => {
+  document.title = "Your wishlist";
   const { width } = useWindowDimensions();
 
   const isMounted = useRef(false);

@@ -1,0 +1,8 @@
+@use "../../styles/" as s;
+
+.theme {
+  position: relative;
+  background-color: var(--darker-black-clr);
+  color: var(--light-grey-clr);
+  width: 100%;
+}

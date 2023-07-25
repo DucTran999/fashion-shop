@@ -25,6 +25,7 @@ const ORDER_STATE_MAP = {
 const COMMON_PATH = {
   home: "/",
   cart: "/cart",
+  search: "/search",
   wishlist: "/wishlist",
   category: "/category/all-products",
   account: "/account/profile",
@@ -58,13 +59,40 @@ const SCREEN_MIN_SIZE = {
   tablet: 768,
 };
 
+const COMMON_SEARCH_TERM = [
+  // category English
+  "blouse",
+  "blazer",
+  "bikini",
+  "croptop",
+  "dress",
+  "polo",
+  "pants",
+  "shorts",
+  "skirt",
+
+  // category Vietnamese
+  "áo kiểu",
+  "áo polo",
+  "áo balzer",
+  "áo croptop",
+  "đầm",
+  "đồ bơi",
+  "váy",
+  "váy mini",
+  "váy demin",
+  "quần",
+  "quần short",
+];
+
 export {
   ORDER_STATE_MAP,
   ORDER_STATE_CODE,
   ORDER_STATE_ORIGINAL,
-  INPUT_ERROR_MESSAGE,
-  LOCAL_STORAGE_KEY,
   COMMON_PATH,
+  COMMON_SEARCH_TERM,
+  LOCAL_STORAGE_KEY,
+  INPUT_ERROR_MESSAGE,
   EMAIL_TYPE,
   SCREEN_MIN_SIZE,
 };

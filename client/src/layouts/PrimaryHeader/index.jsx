@@ -27,7 +27,7 @@ const PrimaryHeader = () => {
   const [fix, setFix] = useState(false);
 
   const setFixed = useCallback(() => {
-    return window.scrollY >= 250 ? setFix(true) : setFix(false);
+    return window.scrollY >= 150 ? setFix(true) : setFix(false);
   }, []);
 
   window.addEventListener("scroll", setFixed);

@@ -24,7 +24,7 @@ import {
 } from "@ant-design/icons";
 
 import { BiMoney } from "react-icons/bi";
-import { BsFillBellFill } from "react-icons/bs";
+import { BsFillBellFill, BsFillArrowUpSquareFill } from "react-icons/bs";
 import { RiBillFill } from "react-icons/ri";
 import { FaBoxOpen } from "react-icons/fa";
 import { SlBell } from "react-icons/sl";
@@ -54,6 +54,7 @@ const ICONS = {
   /* Expression */
   home: <HomeOutlined />,
   help: <QuestionCircleOutlined />,
+  arrowUp: <BsFillArrowUpSquareFill />,
   email: <MailOutlined />,
   emailFilled: <MailFilled />,
   checkCircle: <CheckCircleOutlined />,
