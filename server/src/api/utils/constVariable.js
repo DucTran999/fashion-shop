@@ -27,10 +27,16 @@ const SEARCH_TYPE = {
   byCode: "byCode",
 };
 
+const REDIS_KEY_VAULT = {
+  // Cached service
+  cacheCategoryResult: "cache:category#",
+};
+
 export {
   MAGIC_NUMBER,
   ORDER_STATE_ID,
   NOTIFICATION_TYPE,
   EMAIL_TYPE,
   SEARCH_TYPE,
+  REDIS_KEY_VAULT,
 };

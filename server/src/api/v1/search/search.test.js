@@ -1,5 +1,5 @@
 import { SEARCH_TYPE } from "../../utils/constVariable.js";
-import analyzeSearchTerm from "./analyzeSearchTerm.js";
+import analyzeSearchTerm from "./searchTermAnalyzer.js";
 
 describe("Test AnalyzeSearchTerm", () => {
   describe("test detect term is for searching product by category", () => {

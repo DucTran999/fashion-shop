@@ -1,6 +1,10 @@
 import { formatVietnameseToNonAccentNoHyphen } from "../../utils/formatData.js";
 import { SEARCH_TYPE } from "../../utils/constVariable.js";
 
+/**
+ * Array of category search terms commonly used.
+ * @type {Array<string>}
+ */
 const COMMON_CATEGORY_SEARCH_TERM = [
   // category English
   "blouse",
@@ -26,6 +30,10 @@ const COMMON_CATEGORY_SEARCH_TERM = [
   "quần short",
 ];
 
+/**
+ * The dictionary contains pairs of search terms and respective categories.
+ * @type {{searchTerm: string, category: string}}
+ */
 const CATEGORY_TERM_MAP = {
   blouse: "blouse",
   blazer: "blazer",
@@ -49,6 +57,10 @@ const CATEGORY_TERM_MAP = {
   "quan short": "shorts",
 };
 
+/**
+ * Array of product codes.
+ * @type {Array<string>}
+ */
 const PRODUCT_CODE = [
   "biki",
   "pant",
@@ -61,8 +73,13 @@ const PRODUCT_CODE = [
   "blaz",
 ];
 
+/**
+ * Check search terms is the product code.
+ * @param {string} searchTerm - The term user input
+ * @returns {string | null} The search terms are formatted or null if not satisfied condition.
+ */
 const detectSearchByCode = (searchTerm) => {
-  const searchTermFormatted = formatVietnameseToNonAccentNoHyphen(searchTerm);
+  let searchTermFormatted = formatVietnameseToNonAccentNoHyphen(searchTerm);
 
   for (let prefix of PRODUCT_CODE) {
     const pattern = new RegExp(`^${prefix}[0-9]+`);
@@ -72,6 +89,11 @@ const detectSearchByCode = (searchTerm) => {
   return null;
 };
 
+/**
+ * Check search terms is the name of a category.
+ * @param {string} searchTerm - The term user input
+ * @returns {string | null} The search terms formatted or null if not matched.
+ */
 const detectSearchByCategory = (searchTerm) => {
   let searchTermFormatted = formatVietnameseToNonAccentNoHyphen(searchTerm);
 
@@ -93,25 +115,27 @@ const detectSearchByCategory = (searchTerm) => {
 };
 
 /**
- * Analyze search terms to find the right search strategy
- * @typedef {Object} SearchTerm
- * @property {string} type The name of strategy
- * @property {string} term The search term formatted
- * @param {string} searchTerm The search term
- * @return {SearchTerm} An object hold result after analyzing
+ * Analyze search terms to find the right search strategy. Because category
+ * names and product codes have much in common that will lead to the wrong
+ * search strategy.
+ * The order of the process should be to check the search term is the
+ * product code first. If it does not match check it as a category name else
+ * mark it as search by name.
+ * @param {string} searchTerm - The search term
+ * @returns {{type: string, term: string}} The object holds result after analyzing.
  */
 const analyzeSearchTerm = (searchTerm) => {
-  let res;
+  let termAnalyzed;
 
-  res = detectSearchByCode(searchTerm);
-  if (res) return { type: SEARCH_TYPE.byCode, term: res };
+  termAnalyzed = detectSearchByCode(searchTerm);
+  if (termAnalyzed) return { type: SEARCH_TYPE.byCode, term: termAnalyzed };
 
-  res = detectSearchByCategory(searchTerm);
-  if (res) return { type: SEARCH_TYPE.byCategory, term: res };
+  termAnalyzed = detectSearchByCategory(searchTerm);
+  if (termAnalyzed) return { type: SEARCH_TYPE.byCategory, term: termAnalyzed };
 
-  res = searchTerm.toLocaleLowerCase().trim();
-  res = res.replace(/(\s+)/g, " ");
-  return { type: SEARCH_TYPE.byName, term: res };
+  termAnalyzed = searchTerm.toLocaleLowerCase().trim();
+  termAnalyzed = termAnalyzed.replace(/(\s+)/g, " ");
+  return { type: SEARCH_TYPE.byName, term: termAnalyzed };
 };
 
 export default analyzeSearchTerm;
