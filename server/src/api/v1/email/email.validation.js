@@ -26,8 +26,6 @@ const validateResendMailPayload = async (req, res, next) => {
 
     // Check api key valid
     const { api_mail_key, email, first_name, service } = req.body;
-    console.log(api_mail_key, apiKey);
-    console.log(decryptAES(api_mail_key));
     if (decryptAES(api_mail_key) !== apiKey) throw createHttpError.BadRequest();
 
     // new payload
