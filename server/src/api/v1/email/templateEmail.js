@@ -1,65 +1,63 @@
-import { formatCapitalize } from "../../utils/formatData.js";
+import emailBuilder from "./emailBuilder.js";
 
-const emailNewRegistration = (username, emailEncoded, token) => {
-  let verifyBtn = `
-      <a href="${process.env.REACT_CLIENT_URI}/auth/verify-email/${emailEncoded}/${token}" 
-          style="display: block; width: 250px; height: 50px; font-size: 16px;
-          background-color: #00a86b; color: #fff; font-weight: 500;
-          text-align: center; margin: 10px 0; line-height: 50px;
-          text-decoration: none; border-radius: 10px;"
-      >
-          Verify Email
-      </a>
-      `;
+import * as dotenv from "dotenv";
+dotenv.config();
 
-  let message = `
-      <h1 style="text-align: center; color: #00a86b">
-        <b> VERIFY EMAIL REGISTRATION </b>
-      </h1>
-      Hi ${formatCapitalize(username)},
-      <p> Welcome to our family. Please click the button below to verify your 
-          email address. This email will expired in 1 hour.
-      </p>
-      <div style="text-align: center;">
-          ${verifyBtn}
-      </div>
-      <div> Thank you for using our service! </div>
-      <br> Best regards,</br>
-      <br> The Atlana shop team </br>
-      `;
-  return message;
+const clientUrl = process.env.REACT_CLIENT_URI;
+const baseEndpoint = `${clientUrl}/auth/verify-email`;
+
+/**
+ * The template email for verifying new registration
+ * @param {string} username - Receiver name
+ * @param {{service: string, email: string}} credentials - Auth info encrypted
+ * @param {string} token - email token
+ * @returns {string} email completed
+ */
+const emailNewRegistration = (username, credentials, token) => {
+  const title = "verify email registration";
+  const content = ` 
+    Welcome to our family. Please click the button below to verify your email 
+    address. This email will expired in 1 hour.`;
+  const btnTitle = "Verify Email";
+  const endpoint = `${baseEndpoint}/${credentials}/${token}`;
+
+  return emailBuilder.getVerifyEmail(
+    title,
+    username,
+    content,
+    endpoint,
+    btnTitle
+  );
 };
 
-const emailUnlockAccount = (username, emailEncoded, token) => {
-  let verifyBtn = `
-      <a href="${process.env.REACT_CLIENT_URI}/auth/verify-email/${emailEncoded}/${token}" 
-          style="display: block; width: 250px; height: 50px; font-size: 16px;
-          background-color: #00a86b; color: #fff; font-weight: 500;
-          text-align: center; margin: 10px 0; line-height: 50px;
-          text-decoration: none; border-radius: 10px;"
-      >
-          Yes, I do that.
-      </a>
-      `;
+/**
+ * The template email for verifying to unlock account
+ * @param {string} username - Receiver name
+ * @param {{service: string, email: string}} credentials - Auth info encrypted
+ * @param {string} token - email token
+ * @returns {string} email completed
+ */
+const emailUnlockAccount = (username, credentials, token) => {
+  const emailTitle = "verify email to unlock account";
+  const content = ` 
+    Someone is trying to access your account. We temporarily locked your account
+    in 5 minutes. If it's you, please click the button below we will unlock your
+    account immediately.`;
+  const btnTitle = "Yes, I do that";
+  const endpoint = `${baseEndpoint}/${credentials}/${token}`;
 
-  let message = `
-        <h1 style="text-align: center; color: #00a86b">
-          <b> VERIFY EMAIL TO UNLOCK ACCOUNT </b>
-        </h1>
-        Hi ${formatCapitalize(username)},
-        <p> Someone is trying to access your account. We temporarily locked your account
-          in 5 minutes. If it's you, please click the button below we will unlock your
-          account immediately.
-        </p>
-        <div style="text-align: center;">
-            ${verifyBtn}
-        </div>
-        <div> Thank you for using our service! </div>
-        <br> Best regards,</br>
-        <br> The Atlana shop team </br>
-        `;
+  const email = emailBuilder.getVerifyEmail(
+    emailTitle,
+    username,
+    content,
+    endpoint,
+    btnTitle
+  );
 
-  return message;
+  return email;
 };
 
-export default { emailNewRegistration, emailUnlockAccount };
+export default {
+  emailUnlockAccount: emailUnlockAccount,
+  emailNewRegistration: emailNewRegistration,
+};
