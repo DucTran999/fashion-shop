@@ -1,6 +1,11 @@
 import redisClient from "../helpers/init.redis.client.js";
 import createHttpError from "http-errors";
 
+/**
+ * Get current token
+ * @param {string} email - Customer email
+ * @param {string} service - The name of service need email verification
+ */
 const getToken = async (email, service) => {
   try {
     const key = `verification:${email}#${service}`;
@@ -10,6 +15,11 @@ const getToken = async (email, service) => {
   }
 };
 
+/**
+ * Get lifetime of the token.
+ * @param {string} email - Customer email
+ * @param {string} service - The name of service need email verification
+ */
 const getTokenTTL = async (email, service) => {
   try {
     const key = `verification:${email}#${service}`;
@@ -19,6 +29,13 @@ const getTokenTTL = async (email, service) => {
   }
 };
 
+/**
+ * Create new token to control the email expiration
+ * @param {string} email - Customer email
+ * @param {string} token - The string identify is email still valid.
+ * @param {string} service - The name of service need email verification
+ * @param {number} time - Token expire time
+ */
 const saveToken = async (email, token, service, time) => {
   try {
     const key = `verification:${email}#${service}`;
@@ -28,6 +45,11 @@ const saveToken = async (email, token, service, time) => {
   }
 };
 
+/**
+ * Remove the old token to ensure only one valid email at a time.
+ * @param {string} email - Customer email
+ * @param {string} service - The name of service need email verification
+ */
 const deleteToken = async (email, service) => {
   try {
     const key = `verification:${email}#${service}`;
@@ -37,4 +59,9 @@ const deleteToken = async (email, service) => {
   }
 };
 
-export default { getToken, getTokenTTL, saveToken, deleteToken };
+export default {
+  getToken: getToken,
+  getTokenTTL: getTokenTTL,
+  saveToken: saveToken,
+  deleteToken: deleteToken,
+};

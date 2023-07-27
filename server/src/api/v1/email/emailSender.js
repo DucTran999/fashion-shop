@@ -12,17 +12,23 @@ import emailTokenManager from "./emailTokenManager.js";
 
 dotenv.config();
 
+const adminMail = process.env.ADMIN_EMAIL;
+const unlockMail = EMAIL_TYPE.verifyUnlockLogin;
+const registrationMail = EMAIL_TYPE.verifyNewRegister;
+
+/**
+ * Create verify email for verifying account just registered.
+ * @param {string} customerEmail - The customer email
+ * @param {string} customerName  - The customer name
+ */
 const newRegistrationMail = async (customerEmail, customerName) => {
   const token = formatHyphenToLowerCaseNoSpace(uuidv4());
-  const credentials = {
-    email: customerEmail,
-    service: EMAIL_TYPE.verifyNewRegister,
-  };
+  const credentials = { email: customerEmail, service: registrationMail };
 
   const cipher = encodeURIComponent(encryptAES(JSON.stringify(credentials)));
 
   const mailContent = {
-    from: process.env.ADMIN_EMAIL,
+    from: adminMail,
     to: customerEmail,
     subject: "Verify email for new registration!",
     html: emailTemplate.emailNewRegistration(customerName, cipher, token),
@@ -31,56 +37,59 @@ const newRegistrationMail = async (customerEmail, customerName) => {
   await emailTokenManager.saveToken(
     customerEmail,
     token,
-    EMAIL_TYPE.verifyNewRegister,
+    registrationMail,
     3600
   );
 
   return mailContent;
 };
 
+/**
+ * Create verify email for unlock account
+ * @param {string} customerEmail - The customer email
+ * @param {string} customerName  - The customer name
+ */
 const unlockAccountMail = async (customerEmail, customerName) => {
   const token = formatHyphenToLowerCaseNoSpace(uuidv4());
-  const credentials = {
-    email: customerEmail,
-    service: EMAIL_TYPE.verifyUnlockLogin,
-  };
+  const credentials = { email: customerEmail, service: unlockMail };
 
   const cipher = encodeURIComponent(encryptAES(JSON.stringify(credentials)));
 
   const mailContent = {
-    from: process.env.ADMIN_EMAIL,
+    from: adminMail,
     to: customerEmail,
     subject: "Confirm email to unlock account!",
     html: emailTemplate.emailUnlockAccount(customerName, cipher, token),
   };
 
-  await emailTokenManager.saveToken(
-    customerEmail,
-    token,
-    EMAIL_TYPE.verifyUnlockLogin,
-    60 * 5
-  );
+  await emailTokenManager.saveToken(customerEmail, token, unlockMail, 60 * 5);
 
   return mailContent;
 };
 
-const getMailStrategies = {
-  [EMAIL_TYPE.verifyNewRegister]: newRegistrationMail,
-  [EMAIL_TYPE.verifyUnlockLogin]: unlockAccountMail,
+/**
+ * The map to find suitable strategy for creating email
+ */
+const createEmailStrategies = {
+  [unlockMail]: unlockAccountMail,
+  [registrationMail]: newRegistrationMail,
 };
 
+/**
+ * Create and send emails on demand
+ * @param {string} type - The email type
+ * @param {string} customerEmail - The customer email
+ * @param {string} customerName - The customer name
+ */
 const sendEmail = async (type, customerEmail, customerName) => {
   try {
-    let mailContent = await getMailStrategies[type](
-      customerEmail,
-      customerName
-    );
+    let mail = await createEmailStrategies[type](customerEmail, customerName);
 
-    const info = await transporter.sendMail(mailContent);
+    const info = await transporter.sendMail(mail);
     console.log("Email sent: " + info.response);
   } catch (error) {
     console.log(error);
   }
 };
 
-export default { sendEmail };
+export default { sendEmail: sendEmail };

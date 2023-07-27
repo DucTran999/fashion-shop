@@ -6,6 +6,7 @@ import { EMAIL_TYPE } from "../../utils/constVariable.js";
 import { decryptAES } from "../../utils/crypto.js";
 
 dotenv.config();
+const apiKey = process.env.API_MAIL_SERVICE_KEY;
 
 const resendEmailSchema = Joi.object({
   api_mail_key: Joi.string().trim().required(),
@@ -25,8 +26,7 @@ const validateResendMailPayload = async (req, res, next) => {
 
     // Check api key valid
     const { api_mail_key, email, first_name, service } = req.body;
-    if (decryptAES(api_mail_key) !== process.env.API_MAIL_SERVICE_KEY)
-      throw createHttpError.BadRequest();
+    if (decryptAES(api_mail_key) !== apiKey) throw createHttpError.BadRequest();
 
     // new payload
     const payloadCleaned = { email: email, name: first_name, service: service };
@@ -47,9 +47,7 @@ const credentialSchema = Joi.object({
 const validateVerificationMailPayload = (req, res, next) => {
   try {
     // Check missing params
-    const cipher = req.params?.cipher;
-    const token = req.params?.token;
-    if (!cipher || !token) throw createHttpError.BadRequest();
+    const { cipher, token } = req.params;
 
     // Check credentials
     const credentials = JSON.parse(decryptAES(decodeURIComponent(cipher)));
@@ -63,4 +61,7 @@ const validateVerificationMailPayload = (req, res, next) => {
   }
 };
 
-export default { validateResendMailPayload, validateVerificationMailPayload };
+export default {
+  validateResendMailPayload: validateResendMailPayload,
+  validateVerificationMailPayload: validateVerificationMailPayload,
+};

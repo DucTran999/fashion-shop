@@ -78,7 +78,11 @@ class UserService {
     );
 
     if (!isEmailSent) {
-      emailSender.sendEmail(EMAIL_TYPE.verifyNewRegister, email, first_name);
+      await emailSender.sendEmail(
+        EMAIL_TYPE.verifyNewRegister,
+        email,
+        first_name
+      );
     }
   };
 }

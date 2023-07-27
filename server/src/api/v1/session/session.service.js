@@ -30,10 +30,12 @@ class SessionService {
 
       // If email exist and send unlock email only for first time.
       if (userInDB.length && !isEmailSent) {
-        await emailService.sendEmailUnlockAccount(
-          email,
-          userInDB[0].first_name
-        );
+        const info = {
+          email: email,
+          name: userInDB[0].first_name,
+          service: EMAIL_TYPE.verifyUnlockLogin,
+        };
+        await emailService.sendMailHandler(info);
       }
       throw createHttpError.Locked();
     }
