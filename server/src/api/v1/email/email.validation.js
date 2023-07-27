@@ -23,11 +23,11 @@ const validateResendMailPayload = async (req, res, next) => {
     //validate field's format
     const { error } = resendEmailSchema.validate(req.body);
     if (error) throw createHttpError.BadRequest();
+    console.log(api_mail_key, apiKey);
 
     // Check api key valid
     const { api_mail_key, email, first_name, service } = req.body;
     if (decryptAES(api_mail_key) !== apiKey) throw createHttpError.BadRequest();
-    console.log(decryptAES(api_mail_key));
 
     // new payload
     const payloadCleaned = { email: email, name: first_name, service: service };
