@@ -8,12 +8,28 @@ const { Pool } = pkg;
 
 const pool = new Pool(DB_CONNECT_INFO.pg);
 
-const result = await pool.query("SELECT $1::text as name", ["Connected"]);
-console.log(">>> Postgres ::: ", result.rows[0].name);
+pool.on("error", (err) => {
+  console.log("!!! PG Pool ::: Error", err.code);
+});
+
+pool.addListener("pool-open", () => {
+  console.log(">>> PG Pool ::: Connected");
+});
+
+const testConnectionOnBoost = async () => {
+  try {
+    await pool.query("select 1");
+    pool.emit("pool-open");
+  } catch (error) {
+    pool.emit("error", error);
+  }
+};
+
+testConnectionOnBoost();
 
 // End pool when server down.
 process.on("SIGINT", async () => {
-  console.log("Postgres Pool ::: End <<<");
+  console.log("PG Pool ::: Closed <<<");
   await pool.end();
   process.exit(0);
 });
