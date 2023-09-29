@@ -52,7 +52,7 @@
     "http-errors": "^2.0.0",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
-    "mongodb": "^5.7.0",
+    "mongodb": "^5.8.0",
     "mongoose": "^7.4.0",
     "multer": "^1.4.4",
     "nodemailer": "^6.9.3",
